@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -20,7 +21,7 @@ const store = createStore(
 // applyMiddeware : 스토어에 미들웨어를 적용하는 함수 (만약 여러개라면? -> 괄호 안에
 //루트 리듀서를 불러와서 이를 통해 새로운 스토어를 만들고, provider를 만들어 플젝에 적용
 
-sagaMiddleware.run(rootSaga); // 루트 사가를 실행해줍니다. (문제의 항목이다)
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <BrowserRouter>
