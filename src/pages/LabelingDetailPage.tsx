@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-const LoginPageBody = ({}) => {
-  const [userId, setUserId] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
+const LabelingDetailPageBody = ({}) => {
   return (
     <>
       <div className="bg-white">
@@ -14,45 +11,17 @@ const LoginPageBody = ({}) => {
         ></div>
 
         <header className="relative bg-white">
-          <p className="bg-indigo-600 h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
-            Save 20% when you buy two or more kits
-          </p>
-
           <nav
             aria-label="Top"
             className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
           >
             <div className="border-b border-gray-200">
               <div className="h-16 flex items-center">
-                <button
-                  type="button"
-                  className="bg-white p-2 rounded-md text-gray-400 lg:hidden"
-                >
-                  <span className="sr-only">Open menu</span>
-
-                  <svg
-                    className="h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                </button>
-
                 <div className="ml-4 flex lg:ml-0">
                   <a href="#">
-                    <span className="sr-only">Workflow</span>
                     <img
                       className="h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                      src="https://cdn-icons-png.flaticon.com/512/1137/1137807.png"
                       alt=""
                     />
                   </a>
@@ -67,7 +36,7 @@ const LoginPageBody = ({}) => {
                           className="border-transparent text-gray-700 hover:text-gray-800 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"
                           aria-expanded="false"
                         >
-                          Wireframe Kits
+                          Belloga Home
                         </button>
                       </div>
 
@@ -86,31 +55,10 @@ const LoginPageBody = ({}) => {
                           className="border-transparent text-gray-700 hover:text-gray-800 relative z-10 flex items-center transition-colors ease-out duration-200 text-sm font-medium border-b-2 -mb-px pt-px"
                           aria-expanded="false"
                         >
-                          Icons
+                          Detail Page
                         </button>
                       </div>
-
-                      <div className="absolute z-10 top-full inset-x-0 text-sm text-gray-500">
-                        <div
-                          className="absolute inset-0 top-1/2 bg-white shadow"
-                          aria-hidden="true"
-                        ></div>
-                      </div>
                     </div>
-
-                    <a
-                      href="#"
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      UI Kits
-                    </a>
-
-                    <a
-                      href="#"
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      Themes
-                    </a>
                   </div>
                 </div>
 
@@ -133,73 +81,6 @@ const LoginPageBody = ({}) => {
                       Create account
                     </a>
                   </div>
-
-                  <div className="hidden lg:ml-8 lg:flex">
-                    <a
-                      href="#"
-                      className="text-gray-700 hover:text-gray-800 flex items-center"
-                    >
-                      <img
-                        src="https://tailwindui.com/img/flags/flag-canada.svg"
-                        alt=""
-                        className="w-5 h-auto block flex-shrink-0"
-                      />
-                      <span className="ml-3 block text-sm font-medium">
-                        {" "}
-                        CAD{" "}
-                      </span>
-                      <span className="sr-only">, change currency</span>
-                    </a>
-                  </div>
-
-                  <div className="flex lg:ml-6">
-                    <a
-                      href="#"
-                      className="p-2 text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">Search</span>
-
-                      <svg
-                        className="w-6 h-6"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    </a>
-                  </div>
-
-                  <div className="ml-4 flow-root lg:ml-6">
-                    <a href="#" className="group -m-2 p-2 flex items-center">
-                      <svg
-                        className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                        />
-                      </svg>
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                        0
-                      </span>
-                      <span className="sr-only">items in cart, view bag</span>
-                    </a>
-                  </div>
                 </div>
               </div>
             </div>
@@ -207,6 +88,7 @@ const LoginPageBody = ({}) => {
         </header>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
+          <div> </div>
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
             <div className="lg:row-end-1 lg:col-span-4">
               <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
@@ -220,57 +102,72 @@ const LoginPageBody = ({}) => {
 
             <div className="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3">
               <div className="flex flex-col-reverse">
-                <div className="mt-4">
-                  <h1 className="text-2xl font-extrabold tracking-tight text-gray-900 sm:text-3xl">
-                    Application UI Icon Pack
-                  </h1>
-
-                  <h2 id="information-heading" className="sr-only">
-                    Product information
-                  </h2>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Version 1.0 (Updated{" "}
-                    <time dateTime="2021-06-05">June 5, 2021</time>)
-                  </p>
-                </div>
-
-                <div>
-                  <h3 className="sr-only">Reviews</h3>
-                  <div className="flex items-center">
-                    <svg
-                      className="text-yellow-400 h-5 w-5 flex-shrink-0"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
+                <form action="#">
+                  <div>
+                    <div
+                      className="flex items-center"
+                      aria-orientation="horizontal"
+                      role="tablist"
                     >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
+                      <button
+                        id="tabs-1-tab-1"
+                        className="text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100 px-3 py-1.5 border border-transparent text-sm font-medium rounded-md"
+                        aria-controls="tabs-1-panel-1"
+                        role="tab"
+                        type="button"
+                      >
+                        Write
+                      </button>
+
+                      <button
+                        id="tabs-1-tab-2"
+                        className="text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100 ml-2 px-3 py-1.5 border border-transparent text-sm font-medium rounded-md"
+                        aria-controls="tabs-1-panel-2"
+                        role="tab"
+                        type="button"
+                      >
+                        Preview
+                      </button>
+                    </div>
+                    <div className="mt-2">
+                      <div
+                        id="tabs-1-panel-1"
+                        className="p-0.5 -m-0.5 rounded-lg"
+                        aria-labelledby="tabs-1-tab-1"
+                        role="tabpanel"
+                      >
+                        <div>
+                          <textarea
+                            name="comment"
+                            id="comment"
+                            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                            placeholder="Add your comment..."
+                          ></textarea>
+                        </div>
+                      </div>
+                      <div
+                        id="tabs-1-panel-2"
+                        className="p-0.5 -m-0.5 rounded-lg"
+                        aria-labelledby="tabs-1-tab-2"
+                        role="tabpanel"
+                      >
+                        <div className="border-b">
+                          <div className="mx-px mt-px px-3 pt-2 pb-12 text-sm leading-5 text-gray-800">
+                            Preview content will render here.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <p className="sr-only">4 out of 5 stars</p>
-                </div>
-              </div>
-
-              <p className="text-gray-500 mt-6">
-                The Application UI Icon Pack comes with over 200 icons in 3
-                styles: outline, filled, and branded. This playful icon pack is
-                tailored for complex application user interfaces with a friendly
-                and legible look.
-              </p>
-
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
-                <button
-                  type="button"
-                  className="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
-                >
-                  Pay $220
-                </button>
-                <button
-                  type="button"
-                  className="w-full bg-indigo-50 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
-                >
-                  Preview
-                </button>
+                  <div className="mt-2 flex justify-end">
+                    <button
+                      type="submit"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                      Post
+                    </button>
+                  </div>
+                </form>
               </div>
 
               <div className="border-t border-gray-200 mt-10 pt-10">
@@ -287,7 +184,6 @@ const LoginPageBody = ({}) => {
                   </ul>
                 </div>
               </div>
-
               <div className="border-t border-gray-200 mt-10 pt-10">
                 <h3 className="text-sm font-medium text-gray-900">License</h3>
                 <p className="mt-4 text-sm text-gray-500">
@@ -301,7 +197,6 @@ const LoginPageBody = ({}) => {
                   </a>
                 </p>
               </div>
-
               <div className="border-t border-gray-200 mt-10 pt-10">
                 <h3 className="text-sm font-medium text-gray-900">Share</h3>
                 <ul role="list" className="flex items-center space-x-6 mt-4">
@@ -420,7 +315,7 @@ const LoginPageBody = ({}) => {
 const LabelingDetailPage = ({}) => {
   return (
     <>
-      <LoginPageBody />
+      <LabelingDetailPageBody />
     </>
   );
 };
