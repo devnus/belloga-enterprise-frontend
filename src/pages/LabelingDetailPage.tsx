@@ -140,19 +140,19 @@ const LabelingDetailPageBody = ({}) => {
         </header>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
-          <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16 h-96">
+          <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
             <div className="lg:row-end-1 lg:col-span-4">
               <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
                 <img
                   src={imageUrl}
                   alt="Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles."
-                  className="object-center object-cover"
+                  className="w-full object-contain h-96  "
                 />
               </div>
             </div>
 
-            <div className="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3">
-              <div className="flex flex-col-reverse">
+            <div className="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3 h-96">
+              <div className="flex flex-col-reverse  ">
                 <form action="#">
                   <div>
                     <div
@@ -162,7 +162,12 @@ const LabelingDetailPageBody = ({}) => {
                     >
                       <button
                         id="tabs-1-tab-1"
-                        className="text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100 px-3 py-1.5 border border-transparent text-sm font-medium rounded-md"
+                        className={`
+                        ${
+                          openTab === 1
+                            ? "text-indigo-700 font-bold"
+                            : "text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100"
+                        }  px-3 py-1.5 border border-transparent text-sm font-medium rounded-md`}
                         aria-controls="tabs-1-panel-1"
                         role="tab"
                         type="button"
@@ -176,7 +181,12 @@ const LabelingDetailPageBody = ({}) => {
 
                       <button
                         id="tabs-1-tab-2"
-                        className="text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100 ml-2 px-3 py-1.5 border border-transparent text-sm font-medium rounded-md"
+                        className={`
+                        ${
+                          openTab === 2
+                            ? "text-indigo-700 font-bold"
+                            : "text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100"
+                        }  px-3 py-1.5 border border-transparent text-sm font-medium rounded-md`}
                         aria-controls="tabs-1-panel-2"
                         role="tab"
                         type="button"
@@ -191,14 +201,16 @@ const LabelingDetailPageBody = ({}) => {
                     <div className="mt-2">
                       <div
                         id="tabs-1-panel-2"
-                        className="p-0.5 -m-0.5 rounded-lg"
+                        className="p-0.5 -m-0.5 rounded-lg "
                         aria-labelledby="tabs-1-tab-2"
                         role="tabpanel"
                       >
-                        <div className="border-b">
-                          <div className="mx-px mt-px px-3 pt-2 pb-12 text-sm leading-5 text-gray-800">
+                        <div className="border border-gray-200">
+                          <div className=" mx-px mt-px px-5 pt-3 pb-12 text-sm leading-5 text-gray-800 h-80">
                             <div
-                              className={openTab === 1 ? "block" : "hidden"}
+                              className={
+                                openTab === 1 ? "block h-72" : "hidden"
+                              }
                               id="link1"
                             >
                               {labeledText &&
@@ -210,7 +222,11 @@ const LabelingDetailPageBody = ({}) => {
                             </div>
 
                             <div
-                              className={openTab === 2 ? "block" : "hidden"}
+                              className={
+                                openTab === 2
+                                  ? "overflow-auto h-72"
+                                  : "hidden overflow-auto"
+                              }
                               id="link2"
                             >
                               <ReactJson src={labelingResultJSON} />
