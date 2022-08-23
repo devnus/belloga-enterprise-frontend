@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactJson from "react-json-view";
 
 type BoundingBoxInfo = {
@@ -18,9 +18,16 @@ const LabelingDetailPageBody = ({}) => {
   const [imageUrl, setImageUrl] = useState("");
   const [labeledText, setLabeledText] = useState<string[]>([]);
 
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
+
   //최초 로딩 시에 정보 가져오기
   useEffect(() => {
     getLabelingInfo("OCR");
+
+    const canvasEle: any = canvasRef.current;
+    canvasEle.width = 384;
+    canvasEle.height = 400;
   }, []);
 
   //api 불러온 후 url 할당, 정보 가공
@@ -30,9 +37,43 @@ const LabelingDetailPageBody = ({}) => {
       const labeledTextList: string[] = labelingResult.map(
         (labelingInfo: BoundingBoxInfo) => labelingInfo.textLabel
       );
-      console.log(labeledTextList);
       setLabeledText(() => labeledTextList);
       setImageUrl(boundingBoxInfo.imageUrl);
+
+      //canvas에 불러온다
+
+      if (canvasRef.current !== null) {
+        canvasRef.current.focus();
+      }
+
+      if (canvasRef.current) {
+        canvasCtxRef.current = canvasRef.current.getContext("2d");
+        const ctx = canvasCtxRef.current;
+        const image = new Image();
+        image.src = boundingBoxInfo.imageUrl;
+
+        image.onload = function () {
+          const canvasEle: any = canvasRef.current;
+
+          const scale = Math.min(
+            canvasEle.width / image.width,
+            canvasEle.height / image.height
+          );
+          // get the top left position of the image
+          const x = canvasEle.width / 2 - (image.width / 2) * scale;
+          const y = canvasEle.height / 2 - (image.height / 2) * scale;
+          ctx?.drawImage(
+            image,
+            x,
+            y,
+            image.width * scale,
+            image.height * scale
+          );
+
+          const r2Info = { x: 100, y: 100, w: 80, h: 150 };
+          drawRect(r2Info);
+        };
+      }
     }
   }, [labelingResult]);
 
@@ -56,6 +97,24 @@ const LabelingDetailPageBody = ({}) => {
     } catch (error) {
       console.log(error);
     } finally {
+    }
+  };
+
+  // draw rectangle
+  const drawRect = (info: any, style: any = {}) => {
+    const { x, y, w, h } = info;
+    const { borderColor = "black", borderWidth = 1 } = style;
+
+    if (canvasRef.current) {
+      canvasCtxRef.current = canvasRef.current.getContext("2d");
+      const ctx: any = canvasCtxRef.current;
+
+      console.log("bdd22");
+      ctx.beginPath();
+      ctx.strokeStyle = borderColor;
+      ctx.lineWidth = borderWidth;
+      ctx.rect(x, y, w, h);
+      ctx.stroke();
     }
   };
 
@@ -142,12 +201,10 @@ const LabelingDetailPageBody = ({}) => {
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
             <div className="lg:row-end-1 lg:col-span-4">
-              <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
-                <img
-                  src={imageUrl}
-                  alt="Sample of 30 icons with friendly and fun details in outline, filled, and brand color styles."
-                  className="w-full object-contain h-96  "
-                />
+              <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden flex items-center  ">
+                <div className="object-contain h-96 m-auto">
+                  <canvas ref={canvasRef} />
+                </div>
               </div>
             </div>
 
