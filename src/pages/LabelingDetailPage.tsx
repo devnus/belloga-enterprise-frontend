@@ -26,8 +26,8 @@ const LabelingDetailPageBody = ({}) => {
     getLabelingInfo("OCR");
 
     const canvasEle: any = canvasRef.current;
-    canvasEle.width = 384;
-    canvasEle.height = 400;
+    canvasEle.width = 248;
+    canvasEle.height = 350.8;
   }, []);
 
   //api 불러온 후 url 할당, 정보 가공
@@ -37,6 +37,7 @@ const LabelingDetailPageBody = ({}) => {
       const labeledTextList: string[] = labelingResult.map(
         (labelingInfo: BoundingBoxInfo) => labelingInfo.textLabel
       );
+
       setLabeledText(() => labeledTextList);
       setImageUrl(boundingBoxInfo.imageUrl);
 
@@ -59,6 +60,8 @@ const LabelingDetailPageBody = ({}) => {
             canvasEle.width / image.width,
             canvasEle.height / image.height
           );
+
+          console.log(image.width, image.height);
           // get the top left position of the image
           const x = canvasEle.width / 2 - (image.width / 2) * scale;
           const y = canvasEle.height / 2 - (image.height / 2) * scale;
@@ -70,12 +73,34 @@ const LabelingDetailPageBody = ({}) => {
             image.height * scale
           );
 
-          const r2Info = { x: 100, y: 100, w: 80, h: 150 };
-          drawRect(r2Info);
+          const nameList = labelingResult.map((boundingBoxInfo, index) =>
+            drawBoundingBox(boundingBoxInfo)
+          );
+
+          console.log(labelingResult);
         };
       }
     }
   }, [labelingResult]);
+
+  const drawBoundingBox = (boundingBoxInfo: BoundingBoxInfo) => {
+    const xArray = boundingBoxInfo.x;
+    const yArray = boundingBoxInfo.y;
+
+    //boundingboxId, 왼쪽 위, 윈쪽아래, 오른쪽위, 오른쪽아래
+    const topPosition = yArray[1];
+    const bottomPosition = yArray[0];
+    const leftPosition = xArray[0];
+    const rightPosition = xArray[2];
+
+    const r2Info = {
+      x: leftPosition,
+      y: topPosition,
+      w: rightPosition - leftPosition,
+      h: topPosition - bottomPosition,
+    };
+    drawRect(r2Info);
+  };
 
   const showLabeledText = (labelingText: string[]) => {};
 
@@ -91,6 +116,7 @@ const LabelingDetailPageBody = ({}) => {
           }
         )
         .then((res) => {
+          console.log(res.data.response);
           setLabelingResult(() => res.data.response.content);
           setLabelingResultJSON(() => res.data.response);
         });
@@ -103,13 +129,13 @@ const LabelingDetailPageBody = ({}) => {
   // draw rectangle
   const drawRect = (info: any, style: any = {}) => {
     const { x, y, w, h } = info;
+    console.log(info);
     const { borderColor = "black", borderWidth = 1 } = style;
 
     if (canvasRef.current) {
       canvasCtxRef.current = canvasRef.current.getContext("2d");
       const ctx: any = canvasCtxRef.current;
 
-      console.log("bdd22");
       ctx.beginPath();
       ctx.strokeStyle = borderColor;
       ctx.lineWidth = borderWidth;
@@ -198,11 +224,76 @@ const LabelingDetailPageBody = ({}) => {
           </nav>
         </header>
 
+        <nav className="bg-white flex" aria-label="Breadcrumb">
+          <ol
+            role="list"
+            className="max-w-screen-xl w-full mx-auto px-4 py-4 flex space-x-4 sm:px-6 lg:px-8"
+          >
+            <li>
+              <div>
+                <a href="#" className="text-gray-400 hover:text-gray-500">
+                  <svg
+                    className="flex-shrink-0 h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                  </svg>
+                  <span className="sr-only">Home</span>
+                </a>
+              </div>
+            </li>
+
+            <li>
+              <div className="flex items-center">
+                <svg
+                  className="flex-shrink-0 h-5 w-5 text-gray-300"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                </svg>
+                <a
+                  href="#"
+                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                >
+                  Projects
+                </a>
+              </div>
+            </li>
+
+            <li>
+              <div className="flex items-center">
+                <svg
+                  className="flex-shrink-0 h-5 w-5 text-gray-300"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                </svg>
+                <a
+                  href="#"
+                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+                  aria-current="page"
+                >
+                  Project Nero
+                </a>
+              </div>
+            </li>
+          </ol>
+        </nav>
+
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
             <div className="lg:row-end-1 lg:col-span-4">
-              <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden flex items-center  ">
-                <div className="object-contain h-96 m-auto">
+              <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden flex items-center ">
+                <div className="object-contain m-auto ">
                   <canvas ref={canvasRef} />
                 </div>
               </div>
