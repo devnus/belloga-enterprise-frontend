@@ -24,10 +24,6 @@ const LabelingDetailPageBody = ({}) => {
   //최초 로딩 시에 정보 가져오기
   useEffect(() => {
     getLabelingInfo("OCR");
-
-    const canvasEle: any = canvasRef.current;
-    canvasEle.width = 248;
-    canvasEle.height = 350.8;
   }, []);
 
   //api 불러온 후 url 할당, 정보 가공
@@ -58,6 +54,9 @@ const LabelingDetailPageBody = ({}) => {
 
         image.onload = function () {
           const canvasEle: any = canvasRef.current;
+
+          canvasEle.width = image.width;
+          canvasEle.height = image.height;
 
           const scale = Math.min(
             canvasEle.width / image.width,
@@ -91,16 +90,16 @@ const LabelingDetailPageBody = ({}) => {
     const yArray = boundingBoxInfo.y;
 
     //boundingboxId, 왼쪽 위, 윈쪽아래, 오른쪽위, 오른쪽아래
-    const topPosition = yArray[1];
-    const bottomPosition = yArray[0];
-    const leftPosition = xArray[0];
-    const rightPosition = xArray[2];
+    const topPosition = Math.min(yArray[0], yArray[1]);
+    const bottomPosition = Math.max(yArray[2], yArray[3]);
+    const leftPosition = Math.min(xArray[0], xArray[3]);
+    const rightPosition = Math.max(xArray[2], xArray[1]);
 
     const r2Info = {
       x: leftPosition,
       y: topPosition,
       w: rightPosition - leftPosition,
-      h: topPosition - bottomPosition,
+      h: bottomPosition - topPosition,
     };
     drawRect(r2Info);
   };
@@ -114,7 +113,7 @@ const LabelingDetailPageBody = ({}) => {
           `http://a138b0b67de234557afc8eaf29aa97b6-1258302528.ap-northeast-2.elb.amazonaws.com/api/labeled-result/v1/verification/results/OCR`,
           {
             headers: {
-              "enterprise-id": "gildong",
+              "enterprise-id": "dusik",
             },
           }
         )
@@ -133,7 +132,7 @@ const LabelingDetailPageBody = ({}) => {
   const drawRect = (info: any, style: any = {}) => {
     const { x, y, w, h } = info;
     console.log(info);
-    const { borderColor = "black", borderWidth = 1 } = style;
+    const { borderColor = "red", borderWidth = 2 } = style;
 
     if (canvasRef.current) {
       canvasCtxRef.current = canvasRef.current.getContext("2d");
@@ -285,7 +284,7 @@ const LabelingDetailPageBody = ({}) => {
                   className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
                   aria-current="page"
                 >
-                  Project Nero
+                  손글씨 OCR 라벨링
                 </a>
               </div>
             </li>
