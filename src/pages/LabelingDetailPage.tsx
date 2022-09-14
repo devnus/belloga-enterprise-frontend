@@ -367,23 +367,21 @@ const LabelingDetailPageBody = ({}) => {
                             >
                               <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
                                 {labeledText &&
-                                  labeledText.map(
-                                    (labeledText: string, index) => (
-                                      <li
-                                        key={index}
-                                        className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
-                                      >
-                                        <div className="w-0 flex-1 flex items-center">
-                                          <span className="ml-2 flex-1 w-0 truncate">
-                                            {labeledText[0]}
-                                          </span>
-                                        </div>
-                                        <div className="ml-4 flex-shrink-0 font-medium text-indigo-600 hover:text-indigo-500">
-                                          {labeledText[1]}%
-                                        </div>
-                                      </li>
-                                    )
-                                  )}
+                                  labeledText.map((labeledText: any, index) => (
+                                    <li
+                                      key={index}
+                                      className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
+                                    >
+                                      <div className="w-0 flex-1 flex items-center">
+                                        <span className="ml-2 flex-1 w-0 truncate">
+                                          {labeledText[0]}
+                                        </span>
+                                      </div>
+                                      <div className="ml-4 flex-shrink-0 font-medium text-indigo-600 hover:text-indigo-500">
+                                        {(labeledText[1] * 100).toFixed(1)}%
+                                      </div>
+                                    </li>
+                                  ))}
                               </ul>
                             </div>
 
