@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import imgLogo from "../assets/images/belloga_character.png";
 
-const LoginPageBody = ({}) => {
-  const [userId, setUserId] = useState<string>("");
+const SignInPageBody = ({}) => {
+  const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [repeatPassword, setRepeatPassword] = useState<string>("");
 
   return (
     <>
@@ -13,13 +15,8 @@ const LoginPageBody = ({}) => {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             로그인
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            <a
-              href="#"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
-            >
-              벨로가에 로그인하세요
-            </a>
+          <p className="mt-2 text-center text-sm text-gray-600 font-medium text-indigo-600 hover:text-indigo-500">
+            벨로가에 로그인하세요
           </p>
         </div>
 
@@ -44,7 +41,6 @@ const LoginPageBody = ({}) => {
                   />
                 </div>
               </div>
-
               <div>
                 <label
                   htmlFor="password"
@@ -63,7 +59,6 @@ const LoginPageBody = ({}) => {
                   />
                 </div>
               </div>
-
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   <input
@@ -89,7 +84,7 @@ const LoginPageBody = ({}) => {
                   </a>
                 </div>
               </div>
-
+              아직 계정이 없으신가요? <Link to="/signUp ">회원가입</Link>
               <div>
                 <button
                   type="submit"
@@ -106,12 +101,12 @@ const LoginPageBody = ({}) => {
   );
 };
 
-const LoginPage = ({}) => {
+const SignInPage = ({}) => {
   return (
     <>
-      <LoginPageBody />
+      <SignInPageBody />
     </>
   );
 };
 
-export default LoginPage;
+export default SignInPage;
