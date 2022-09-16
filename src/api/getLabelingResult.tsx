@@ -5,3 +5,4 @@ export const getLabelingResult = (type: string) => {
     `https://api.belloga.com/api/labeled-result/v1/verification/results/${type}`
   );
 };
+``
