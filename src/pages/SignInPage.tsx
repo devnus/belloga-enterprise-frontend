@@ -84,7 +84,12 @@ const SignInPageBody = ({}) => {
                   </a>
                 </div>
               </div>
-              아직 계정이 없으신가요? <Link to="/signUp ">회원가입</Link>
+              <div>
+                아직 계정이 없으신가요?
+                <Link className="text-indigo-500" to="/signUp">
+                  회원가입
+                </Link>
+              </div>
               <div>
                 <button
                   type="submit"
