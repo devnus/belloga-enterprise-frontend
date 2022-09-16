@@ -11,9 +11,8 @@ interface IFileTypes {
   object: File;
 }
 
-const DragDrop = () => {
+const DragDrop = ({ files, setFiles }: any) => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [files, setFiles] = useState<IFileTypes[]>([]);
 
   const dragRef = useRef<HTMLLabelElement | null>(null);
   const fileId = useRef<number>(0);

@@ -9,6 +9,7 @@ function MainPage() {
       <Link to="/signUp"> 회원가입 </Link>
       <Link to="/labeling/detail">라벨링 디테일</Link>
       <Link to="/labeling/request">라벨링 신청하기</Link>
+      <Link to="/labeling/list">라벨링 리스트</Link>
     </>
   );
 }

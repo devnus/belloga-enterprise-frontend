@@ -6,6 +6,7 @@ import LoginPage from "./pages/SignInPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
 import CreateLabelingRequestPage from "./pages/CreateLabelingRequestPage";
+import LabelingListPage from "./pages/LabelingListPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/signUp" element={<SignUpPage />} />
       <Route path="/labeling/detail" element={<LabelingDetailPage />} />
       <Route path="/labeling/request" element={<CreateLabelingRequestPage />} />
+      <Route path="/labeling/list" element={<LabelingListPage />} />
     </Routes>
   );
 }

@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DragDrop from "../components/DragDrop";
 
+interface IFileTypes {
+  id: number;
+  object: File;
+}
+
 function CreateLabelingRequestPage() {
+  const [files, setFiles] = useState<IFileTypes[]>([]);
+
   return (
     <>
       {/*
@@ -73,7 +80,7 @@ function CreateLabelingRequestPage() {
                   >
                     파일 업로드
                   </label>
-                  <DragDrop />
+                  <DragDrop files={files} setFiles={setFiles} />
                 </div>
               </div>
             </div>
