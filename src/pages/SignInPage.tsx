@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import imgLogo from "../assets/images/belloga_character.png";
@@ -5,7 +6,46 @@ import imgLogo from "../assets/images/belloga_character.png";
 const SignInPageBody = ({}) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [repeatPassword, setRepeatPassword] = useState<string>("");
+
+  const onSubmit = () => {
+    try {
+      signIn();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "email") {
+      setUserEmail(value);
+    } else if (name === "password") {
+      setPassword(value);
+    }
+  };
+
+  async function signIn() {
+    try {
+      const { data } = await axios.post(
+        "/api/account/v1/auth/signin/custom/account",
+        {
+          password: password,
+          email: userEmail,
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
 
   return (
     <>
@@ -37,6 +77,8 @@ const SignInPageBody = ({}) => {
                     type="email"
                     autoComplete="email"
                     required
+                    value={userEmail}
+                    onChange={onChange}
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -55,6 +97,8 @@ const SignInPageBody = ({}) => {
                     type="password"
                     autoComplete="current-password"
                     required
+                    value={password}
+                    onChange={onChange}
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -90,15 +134,15 @@ const SignInPageBody = ({}) => {
                   회원가입
                 </Link>
               </div>
-              <div>
-                <button
-                  type="submit"
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Sign in
-                </button>
-              </div>
+              <div></div>
             </form>
+
+            <button
+              onClick={onSubmit}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Sign in
+            </button>
           </div>
         </div>
       </div>
