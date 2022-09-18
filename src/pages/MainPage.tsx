@@ -151,7 +151,7 @@ function MainPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 pb-10">
+          <div className="grid grid-cols-1 gap-6 m-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 pb-10 max-w-7xl">
             {incentives.map((incentive) => (
               <div
                 key={incentive.name}
