@@ -35,12 +35,12 @@ const incentives = [
 function MainPage() {
   return (
     <>
-      <header className="relative bg-white">
+      <header className="absolute z-10 w-full">
         <nav
           aria-label="Top"
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
-          <div className="h-16 flex items-center">
+          <div className="relative h-16 flex items-center">
             <div className="ml-4 flex lg:ml-0">
               {<img className="h-8 w-auto" src={imgLogo} alt="belloga logo" />}
             </div>
@@ -48,14 +48,14 @@ function MainPage() {
             <div className="ml-auto flex items-center">
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                 <Link
-                  className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                  className="text-sm font-medium text-white hover:text-gray-800"
                   to="/signIn"
                 >
                   {" "}
                   로그인
                 </Link>
                 <Link
-                  className="text-sm font-medium text-gray-700 hover:text-gray-800 "
+                  className="text-sm font-medium text-white hover:text-gray-800 "
                   to="/signUp"
                 >
                   {" "}
@@ -63,7 +63,7 @@ function MainPage() {
                 </Link>
 
                 <Link
-                  className="text-sm font-medium text-gray-700 hover:text-gray-800 "
+                  className="text-sm font-medium text-white hover:text-gray-800 "
                   to="/labeling/list"
                 >
                   마이페이지
@@ -73,8 +73,8 @@ function MainPage() {
           </div>
         </nav>
       </header>
-      <body>
-        <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16">
+      <body className="z-0">
+        <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
           <div className="absolute inset-0 overflow-hidden">
             <img
               src="https://media.istockphoto.com/videos/abstract-particle-background-loop-video-id1173777188?s=640x640"
