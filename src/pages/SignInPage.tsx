@@ -61,7 +61,7 @@ const SignInPageBody = ({}) => {
 
   return (
     <>
-      <NavBar />
+      <NavBar isAuthPage={false} />
       <body className="z-0">
         <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
           <div className="absolute inset-0 overflow-hidden">

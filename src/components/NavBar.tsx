@@ -4,11 +4,12 @@ import { useRecoilState } from "recoil";
 import imgLogo from "../assets/images/belloga_character.png";
 import { LoginState } from "../states/LoginState";
 
-const NavBar = () => {
+const NavBar = ({ isAuthPage = true }) => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
   useEffect(() => {
     if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
+    console.log(window.location.href);
   }, []);
 
   const logoutHandler = () => {
@@ -30,34 +31,35 @@ const NavBar = () => {
             </Link>
           </div>
 
-          <div className="ml-auto flex items-center">
-            <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-              {isLoggedIn ? (
-                <>
-                  {" "}
+          {isAuthPage && (
+            <div className="ml-auto flex items-center">
+              <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                {isLoggedIn ? (
+                  <>
+                    <Link
+                      className="text-sm font-medium text-white hover:text-gray-300 "
+                      to="/labeling/list"
+                    >
+                      마이페이지
+                    </Link>
+                    <div
+                      className="cursor-pointer text-sm font-medium text-white hover:text-gray-800 "
+                      onClick={logoutHandler}
+                    >
+                      로그아웃
+                    </div>
+                  </>
+                ) : (
                   <Link
-                    className="text-sm font-medium text-white hover:text-gray-300 "
-                    to="/labeling/list"
+                    className="text-sm font-medium text-white hover:text-gray-800"
+                    to="/signIn"
                   >
-                    마이페이지
+                    로그인
                   </Link>
-                  <div
-                    className="cursor-pointer text-sm font-medium text-white hover:text-gray-800 "
-                    onClick={logoutHandler}
-                  >
-                    로그아웃
-                  </div>
-                </>
-              ) : (
-                <Link
-                  className="text-sm font-medium text-white hover:text-gray-800"
-                  to="/signIn"
-                >
-                  로그인
-                </Link>
-              )}
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </nav>
     </header>
