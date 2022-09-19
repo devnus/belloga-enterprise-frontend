@@ -4,12 +4,16 @@ import { useRecoilState } from "recoil";
 import imgLogo from "../assets/images/belloga_character.png";
 import { LoginState } from "../states/LoginState";
 
-const NavBar = ({ isAuthPage = true }) => {
+/**
+isAuthPage; 로그인의 경우 false로 지정하면 nav 바에 보이지 않음
+isMyPage; 마이페이지에서 false로 지정하면 보이지 않음
+로그인 상태로 자동 핸들링되고 있음
+ */
+const NavBar = ({ isAuthPage = true, isMyPage = true }) => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
   useEffect(() => {
     if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
-    console.log(window.location.href);
   }, []);
 
   const logoutHandler = () => {
@@ -36,12 +40,14 @@ const NavBar = ({ isAuthPage = true }) => {
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                 {isLoggedIn ? (
                   <>
-                    <Link
-                      className="text-sm font-medium text-white hover:text-gray-300 "
-                      to="/labeling/list"
-                    >
-                      마이페이지
-                    </Link>
+                    {isMyPage && (
+                      <Link
+                        className="text-sm font-medium text-white hover:text-gray-300 "
+                        to="/labeling/list"
+                      >
+                        마이페이지
+                      </Link>
+                    )}
                     <div
                       className="cursor-pointer text-sm font-medium text-white hover:text-gray-800 "
                       onClick={logoutHandler}

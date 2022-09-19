@@ -59,7 +59,7 @@ function LabelingListPage() {
 
   return (
     <>
-      <NavBar />
+      <NavBar isMyPage={false} />
       <body className="z-0">
         <div className="grid">
           <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 w-full">

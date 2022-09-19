@@ -2,6 +2,8 @@ import React from "react";
 import imgLogo from "../assets/images/belloga_character.png";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../states/LoginState";
 
 const incentives = [
   {
@@ -34,6 +36,7 @@ const incentives = [
 ];
 
 function MainPage() {
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   return (
     <>
       <NavBar />
@@ -59,7 +62,7 @@ function MainPage() {
             </p>
             <Link
               className="mt-8 block w-full rounded-md border border-transparent bg-white py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
-              to="/labeling/request"
+              to={isLoggedIn ? "/labeling/request" : "/signIn"}
             >
               라벨링 하러가기
             </Link>
