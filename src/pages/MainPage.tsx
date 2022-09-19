@@ -1,6 +1,7 @@
 import React from "react";
 import imgLogo from "../assets/images/belloga_character.png";
 import { Link } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
 const incentives = [
   {
@@ -35,44 +36,7 @@ const incentives = [
 function MainPage() {
   return (
     <>
-      <header className="absolute z-10 w-full">
-        <nav
-          aria-label="Top"
-          className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-        >
-          <div className="relative h-16 flex items-center">
-            <div className="ml-4 flex lg:ml-0">
-              {<img className="h-8 w-auto" src={imgLogo} alt="belloga logo" />}
-            </div>
-
-            <div className="ml-auto flex items-center">
-              <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                <Link
-                  className="text-sm font-medium text-white hover:text-gray-800"
-                  to="/signIn"
-                >
-                  {" "}
-                  로그인
-                </Link>
-                <Link
-                  className="text-sm font-medium text-white hover:text-gray-800 "
-                  to="/signUp"
-                >
-                  {" "}
-                  회원가입{" "}
-                </Link>
-
-                <Link
-                  className="text-sm font-medium text-white hover:text-gray-800 "
-                  to="/labeling/list"
-                >
-                  마이페이지
-                </Link>
-              </div>
-            </div>
-          </div>
-        </nav>
-      </header>
+      <NavBar />
       <body className="z-0">
         <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
           <div className="absolute inset-0 overflow-hidden">
