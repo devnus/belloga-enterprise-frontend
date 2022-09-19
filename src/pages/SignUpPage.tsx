@@ -54,6 +54,7 @@ const SignUpPageBody = ({}) => {
           email: email,
         }
       );
+      window.location.href = "/signIn";
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -161,7 +162,7 @@ const SignUpPageBody = ({}) => {
         </div>
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div className="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
               <form className="space-y-6" action="#">
                 <div>
                   <label
@@ -266,6 +267,11 @@ const SignUpPageBody = ({}) => {
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
+                  {password.length <= 7 && (
+                    <div className="text-red-500">
+                      비밀번호는 8자 이상이어야 합니다
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label
@@ -292,20 +298,38 @@ const SignUpPageBody = ({}) => {
                     </div>
                   )}
                 </div>
-                <div>
-                  이미 계정이 있으신가요?
-                  <Link className="text-indigo-500" to="/signIn">
-                    로그인
-                  </Link>
-                </div>
-                <div></div>
               </form>
-              <button
-                onClick={onSubmit}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Sign Up
-              </button>
+
+              {isSamePW &&
+              password.length > 7 &&
+              email &&
+              userName &&
+              userTel &&
+              enterpriseName ? (
+                <button
+                  onClick={onSubmit}
+                  type="submit"
+                  className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                  Sign Up
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="mt-10 mb-5 bg-gray-400 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
+                  disabled
+                >
+                  Sign Up
+                </button>
+              )}
+
+              <div className="flex justify-between pb-5">
+                <div>이미 계정이 있으신가요?</div>
+
+                <Link className="text-blue-500 " to="/signIn">
+                  로그인
+                </Link>
+              </div>
             </div>
           </div>
         </div>

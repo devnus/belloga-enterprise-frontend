@@ -1,11 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import imgLogo from "../assets/images/belloga_character.png";
+import { LoginState } from "../states/LoginState";
 
 const SignInPageBody = ({}) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
   const onSubmit = () => {
     try {
@@ -35,7 +38,9 @@ const SignInPageBody = ({}) => {
           email: userEmail,
         }
       );
-      console.log(data);
+      localStorage.setItem("belloga-page", data.response.accessToken);
+      if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
+      window.location.href = "/labeling/list";
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -123,7 +128,7 @@ const SignInPageBody = ({}) => {
 
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+            <div className="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
               <form className="space-y-6" action="#" method="POST">
                 <div>
                   <label
@@ -165,46 +170,22 @@ const SignInPageBody = ({}) => {
                     />
                   </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    />
-                    <label
-                      htmlFor="remember-me"
-                      className="ml-2 block text-sm text-gray-900"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-
-                  <div className="text-sm">
-                    <a
-                      href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
-                </div>
-                <div>
-                  아직 계정이 없으신가요?
-                  <Link className="text-indigo-500" to="/signUp">
-                    회원가입
-                  </Link>
-                </div>
-                <div></div>
               </form>
 
               <button
                 onClick={onSubmit}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Sign in
               </button>
+
+              <div className="flex justify-between pb-5">
+                <div>아직 계정이 없으신가요?</div>
+
+                <Link className="text-blue-500 " to="/signUp">
+                  회원가입
+                </Link>
+              </div>
             </div>
           </div>
         </div>
