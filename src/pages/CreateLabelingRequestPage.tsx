@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import DragDrop from "../components/DragDrop";
 import NavBar from "../components/NavBar";
@@ -11,6 +11,15 @@ interface IFileTypes {
 
 function CreateLabelingRequestPage() {
   const [files, setFiles] = useState<IFileTypes[]>([]);
+  const radioRefs = [
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+  ];
+  const [projectTitle, setProjectTitle] = useState<string>("");
+  const [projectDescription, setProjectDescription] = useState<string>("");
+
+  const formData = new FormData();
 
   const onSubmit = () => {
     try {
@@ -20,10 +29,45 @@ function CreateLabelingRequestPage() {
     }
   };
 
+  const onChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name === "projectTitle") {
+      setProjectTitle(value);
+    } else if (name === "projectDescription") {
+      setProjectDescription(value);
+    }
+  };
+
+  /**
+   * 입력받은 값을 기반으로 하여 formData에 key-value 형태로 전송할 값을 구성하는 함수
+   */
+
+  const makingFormData = () => {
+    //아래에 있는 선택지 중에 선택한 값을 가져와 dataType 객체에 집어넣음
+    const dataType = radioRefs
+      .map(({ current }) => current)
+      .find((current) => current?.checked)?.value;
+
+    const projectInfo = { name: projectTitle, dataType: dataType };
+
+    formData.append(
+      "project",
+      new Blob([JSON.stringify(projectInfo)], {
+        type: "application/json",
+      })
+    );
+
+    formData.append("upload", files[0].object);
+  };
+
   async function createLabeling() {
+    makingFormData();
     try {
       const { data } = await axios.post("/api/project/v1/project");
-
       console.log(data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -84,7 +128,7 @@ function CreateLabelingRequestPage() {
                 <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                   <div className="sm:col-span-4">
                     <label
-                      htmlFor="username"
+                      htmlFor="projectTitle"
                       className="block text-sm font-medium text-gray-700"
                     >
                       라벨링 제목
@@ -92,28 +136,31 @@ function CreateLabelingRequestPage() {
                     <div className="mt-1 flex rounded-md shadow-sm">
                       <input
                         type="text"
-                        name="username"
-                        id="username"
+                        name="projectTitle"
+                        id="projectTitle"
                         autoComplete="username"
-                        className="block w-full min-w-0 flex-1 py-2 border rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        value={projectTitle}
+                        onChange={onChange}
+                        className="block w-full min-w-0 flex-1 py-2 px-2 border rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                   </div>
 
                   <div className="sm:col-span-6">
                     <label
-                      htmlFor="about"
+                      htmlFor="projectDescription"
                       className="block text-sm font-medium text-gray-700"
                     >
                       라벨링 설명
                     </label>
                     <div className="mt-1">
                       <textarea
-                        id="about"
-                        name="about"
+                        id="projectDescription"
+                        name="projectDescription"
                         rows={3}
-                        className="block w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        defaultValue={""}
+                        className="p-2 block w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        value={projectDescription}
+                        onChange={onChange}
                       />
                     </div>
                     <p className="mt-2 text-sm text-gray-500">
@@ -150,7 +197,10 @@ function CreateLabelingRequestPage() {
                           id="push-everything"
                           name="push-notifications"
                           type="radio"
+                          value="Text Annotation"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          ref={radioRefs[0]}
+                          defaultChecked
                         />
                         <label
                           htmlFor="push-everything"
@@ -164,7 +214,9 @@ function CreateLabelingRequestPage() {
                           id="push-email"
                           name="push-notifications"
                           type="radio"
+                          value="OCR"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          ref={radioRefs[1]}
                         />
                         <label
                           htmlFor="push-email"
@@ -178,7 +230,9 @@ function CreateLabelingRequestPage() {
                           id="push-nothing"
                           name="push-notifications"
                           type="radio"
+                          value="Voice Classify"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          ref={radioRefs[2]}
                         />
                         <label
                           htmlFor="push-nothing"
@@ -195,12 +249,22 @@ function CreateLabelingRequestPage() {
 
             <div className="pt-5">
               <div className="flex justify-end">
-                <button
-                  onClick={onSubmit}
-                  className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                  Sign in
-                </button>
+                {projectTitle && projectDescription && files[0] ? (
+                  <button
+                    onClick={onSubmit}
+                    className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    라벨링 신청
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="mt-10 mb-5 bg-gray-400 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
+                    disabled
+                  >
+                    빈칸을 모두 입력해주세요
+                  </button>
+                )}
               </div>
             </div>
           </form>
