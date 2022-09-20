@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import imgLogo from "../assets/images/belloga_character.png";
 import NavBar from "../components/NavBar";
 
 const tabs = [

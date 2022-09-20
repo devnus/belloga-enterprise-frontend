@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DragDrop from "../components/DragDrop";
@@ -10,6 +11,30 @@ interface IFileTypes {
 
 function CreateLabelingRequestPage() {
   const [files, setFiles] = useState<IFileTypes[]>([]);
+
+  const onSubmit = () => {
+    try {
+      createLabeling();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  async function createLabeling() {
+    try {
+      const { data } = await axios.post("/api/project/v1/project");
+
+      console.log(data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
 
   return (
     <>
@@ -171,16 +196,10 @@ function CreateLabelingRequestPage() {
             <div className="pt-5">
               <div className="flex justify-end">
                 <button
-                  type="button"
-                  className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  onClick={onSubmit}
+                  className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Save
+                  Sign in
                 </button>
               </div>
             </div>
