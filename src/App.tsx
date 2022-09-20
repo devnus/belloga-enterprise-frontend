@@ -14,7 +14,7 @@ function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="/signIn" element={<LoginPage />} />
       <Route path="/signUp" element={<SignUpPage />} />
-      <Route path="/labeling/detail" element={<LabelingDetailPage />} />
+      <Route path="/labeling/detail/:id" element={<LabelingDetailPage />} />
       <Route path="/labeling/request" element={<CreateLabelingRequestPage />} />
       <Route path="/labeling/list" element={<LabelingListPage />} />
     </Routes>
