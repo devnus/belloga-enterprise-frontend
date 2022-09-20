@@ -48,7 +48,6 @@ const files = [
   },
   // More files...
 ];
-
 function LabelingListPage() {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
