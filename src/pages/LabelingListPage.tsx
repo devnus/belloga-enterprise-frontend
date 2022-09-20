@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 
@@ -51,6 +52,25 @@ const files = [
 function LabelingListPage() {
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  async function getData() {
+    try {
+      const { data } = await axios.get("/api/project/v1/project/my");
+      console.log(data.response.content);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
   }
 
   const [openTab, setOpenTab] = useState(0);
@@ -119,9 +139,8 @@ function LabelingListPage() {
             <div className="mb-10 ">
               <nav className="flex space-x-8 justify-center" aria-label="Tabs">
                 {tabs.map((tab, index) => (
-                  <a
+                  <div
                     key={tab.name}
-                    href="#"
                     className={classNames(
                       openTab === index
                         ? "border-indigo-500 text-indigo-600"
@@ -147,12 +166,11 @@ function LabelingListPage() {
                         {tab.count}
                       </span>
                     ) : null}
-                  </a>
+                  </div>
                 ))}
               </nav>
             </div>
             <ul
-              role="list"
               className={
                 openTab === 0
                   ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8"

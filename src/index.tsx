@@ -5,13 +5,7 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { worker } from "./mocks/browser";
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from "recoil";
+import { RecoilRoot } from "recoil";
 
 if (process.env.NODE_ENV === "development") {
   worker.start();

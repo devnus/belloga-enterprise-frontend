@@ -1,10 +1,9 @@
-// handlers.js
 import { rest } from "msw";
 
-export const getUserDataHandler = rest.get(
-  "/api/project/v1/project/my",
-  (req, res, ctx) => {
+export const getUserDataHandler = [
+  rest.get("/api/project/v1/project/my", (req, res, ctx) => {
     return res(
+      ctx.status(200),
       ctx.json({
         id: "e08c90e8-d8d7-427d-b18f-96ce62dc0f8b",
         dateTime: "2022-09-20T02:40:13.974+00:00",
@@ -59,5 +58,5 @@ export const getUserDataHandler = rest.get(
         error: null,
       })
     );
-  }
-);
+  }),
+];
