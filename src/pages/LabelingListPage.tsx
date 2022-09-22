@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import BottomNavigationBar from "../components/BottomNavigationBar";
 import LabelingInfoCard from "../components/LabelingInfoCard";
 import NavBar from "../components/NavBar";
 
@@ -158,6 +159,8 @@ function LabelingListPage() {
             </ul>
           </div>
         </div>
+
+        <BottomNavigationBar />
       </body>
     </>
   );
