@@ -1,8 +1,21 @@
 import React from "react";
 
-const BottomNavigationBar = () => {
+type BottomNavProps = {
+  length: number;
+  currentIndex: number;
+  onChange: any;
+};
+
+const BottomNavigationBar = ({
+  length = 1,
+  currentIndex = 1,
+  onChange,
+}: BottomNavProps) => {
   return (
-    <nav aria-label="Page navigation example">
+    <nav
+      aria-label="Page navigation example"
+      className="w-full flex justify-center"
+    >
       <ul className="inline-flex items-center -space-x-px">
         <li>
           <div className="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">

@@ -26,6 +26,7 @@ function classNames(...classes: string[]) {
 
 function LabelingListPage() {
   const [projectList, setProjectList] = useState<LabelingProjectInfo[]>([]);
+  const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [openTab, setOpenTab] = useState(0);
 
   useEffect(() => {
@@ -160,7 +161,11 @@ function LabelingListPage() {
           </div>
         </div>
 
-        <BottomNavigationBar />
+        <BottomNavigationBar
+          length={10}
+          currentIndex={currentIndex}
+          onChange={setCurrentIndex}
+        />
       </body>
     </>
   );
