@@ -28,12 +28,16 @@ function LabelingListPage() {
   const [openTab, setOpenTab] = useState(0);
 
   useEffect(() => {
-    getData();
+    getLabelingData();
   }, []);
 
-  async function getData() {
+  async function getLabelingData() {
     try {
-      const { data } = await axios.get("/api/project/v1/project/my");
+      const { data } = await axios.get("/api/project/v1/project/my", {
+        headers: {
+          Authorization: `${localStorage.getItem("belloga-page")}`,
+        },
+      });
       setProjectList(() => data.response.content);
     } catch (error) {
       if (axios.isAxiosError(error)) {
