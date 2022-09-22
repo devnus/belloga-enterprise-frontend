@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BottomNavigationBar from "../components/BottomNavigationBar";
+import EmptyCard from "../components/EmptyCard";
 import LabelingInfoCard from "../components/LabelingInfoCard";
 import NavBar from "../components/NavBar";
 
@@ -150,10 +151,20 @@ function LabelingListPage() {
             <ul
               className={
                 openTab === 0
-                  ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8"
+                  ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8 max-w-7xl m-auto"
                   : "hidden"
               }
             >
+              {projectList.length === 0 && (
+                <div className="w-full col-span-3">
+                  <EmptyCard
+                    emptyMessage="완료된 라벨링이 없습니다"
+                    linkMessage="라벨링 의뢰하기"
+                    movingLink="/labeling/request"
+                  />
+                </div>
+              )}
+
               {projectList.map((project) => (
                 <LabelingInfoCard project={project} key={project.projectId} />
               ))}
