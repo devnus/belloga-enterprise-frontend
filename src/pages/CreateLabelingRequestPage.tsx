@@ -67,7 +67,11 @@ function CreateLabelingRequestPage() {
   async function createLabeling() {
     makingFormData();
     try {
-      const { data } = await axios.post("/api/project/v1/project");
+      const { data } = await axios.post("/api/project/v1/project", formData, {
+        headers: {
+          Authorization: `${localStorage.getItem("belloga-page")}`,
+        },
+      });
       console.log(data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -252,6 +256,7 @@ function CreateLabelingRequestPage() {
                 {projectTitle && projectDescription && files[0] ? (
                   <button
                     onClick={onSubmit}
+                    type="button"
                     className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     라벨링 신청

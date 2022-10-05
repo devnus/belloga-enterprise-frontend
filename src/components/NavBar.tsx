@@ -14,7 +14,7 @@ const NavBar = ({ isAuthPage = true, isMyPage = true }) => {
 
   useEffect(() => {
     if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
-  }, []);
+  });
 
   const logoutHandler = () => {
     localStorage.removeItem("belloga-page");
