@@ -3,33 +3,35 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../states/LoginState";
-import mainTopImg from "../assets/images/main_top_img.png";
+import LabelingProcess from "../components/LabelingProcess";
 
-const incentives = [
+const processes = [
   {
-    name: "Free Shipping",
+    name: "데이터 의뢰",
+    engName: "Data Request",
     description:
-      "It's not actually free we just price it into the products. Someone's paying for it, and it's not us.",
+      "필요하신 데이터를 라벨링을 통해 손쉽게 데이터 의뢰를 해보세요",
     imageSrc:
       "https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg",
   },
   {
-    name: "24/7 Customer Support",
-    description:
-      "Our AI chat widget is powered by a naive series of if/else statements. Guaranteed to irritate.",
+    name: "관리자 승인",
+    engName: "Data Approval",
+    description: "요청하신 데이터를 관리자가 확인하고 승인합니다.",
     imageSrc: "https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg",
   },
   {
-    name: "Fast Shopping Cart",
-    description:
-      "Look how fast that cart is going. What does this mean for the actual experience? I don't know.",
+    name: "라벨링 진행",
+    engName: "Labeling Progress",
+    description: "요청하신 데이터를 벨로가 알람을 통해 라벨링을 진행합니다.",
     imageSrc:
       "https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg",
   },
   {
-    name: "Gift Cards",
+    name: "결과물 전달",
+    engName: "Deliver the Deliverabies",
     description:
-      "Buy them for your friends, especially if they don't like our store. Free money for us, it's great.",
+      "라벨링이 완료 된 데이터를 고객님께 정리 및 수집하여 전달드립니다.",
     imageSrc:
       "https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg",
   },
@@ -66,7 +68,47 @@ function MainPage() {
           </div>
         </div>
 
-        <div className="relative bg-gray-100">
+        <div className="relative w-full">
+          <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl ">
+            <div className="bg-white justify-between flex flex-row py-8 px-10 rounded-lg shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mr-5 ">
+              <div className="relative flex pl-5 flex-col ">
+                <h2 className="font-semibold text-2xl mt-5">
+                  기존 데이터 라벨러 고용
+                </h2>
+                <h2 className="text-2xl ">번거로우셨나요?</h2>
+
+                <p className="capitalize text-base mb-1 mt-3 text-gray-500">
+                  라벨러 고용없이 데이터를 받아보세요!
+                </p>
+              </div>
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/category-page-01-featured-collection.jpg"
+                alt=""
+                className="object-cover object-center h-40 w-auto"
+              />
+            </div>
+
+            <div className="bg-white justify-between flex flex-row py-8 px-10 rounded-lg shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mr-5 ">
+              <div className="relative flex pl-5 flex-col ">
+                <h2 className="font-semibold text-2xl mt-5">
+                  지속적인 데이터 수급이
+                </h2>
+                <h2 className="text-2xl ">필요하신가요?</h2>
+
+                <p className="capitalize text-base mb-1 mt-3 text-gray-500">
+                  벨로가에서 꾸준히 데이터를 수집해보세요!
+                </p>
+              </div>
+              <img
+                src="https://tailwindui.com/img/ecommerce-images/category-page-01-featured-collection.jpg"
+                alt=""
+                className="object-cover object-center h-40 w-auto"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="relative bg-lightGray">
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center py-10">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl ">
               제공하는 서비스
@@ -115,32 +157,7 @@ function MainPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 m-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 pb-10 max-w-7xl">
-            {incentives.map((incentive) => (
-              <div
-                key={incentive.name}
-                className="text-center sm:flex sm:text-left lg:block lg:text-center bg-white rounded-md shadow flex flex-1 flex-col p-8"
-              >
-                <div className="sm:flex-shrink-0">
-                  <div className="flow-root">
-                    <img
-                      className="mx-auto h-24 w-28"
-                      src={incentive.imageSrc}
-                      alt=""
-                    />
-                  </div>
-                </div>
-                <div className="mt-3 sm:mt-0 sm:ml-3 lg:mt-3 lg:ml-0">
-                  <h3 className="text-sm font-medium text-gray-900">
-                    {incentive.name}
-                  </h3>
-                  <p className="mt-2 text-sm text-gray-500">
-                    {incentive.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+          <LabelingProcess />
         </div>
       </body>
       <footer className="bg-white">

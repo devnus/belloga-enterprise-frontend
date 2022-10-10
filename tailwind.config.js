@@ -8,6 +8,7 @@ module.exports = {
         mainGreen: "#3bff94",
         gradTop: "#33b9ff",
         gradBottom: "#a4f0ff",
+        lightGray: "#f8fafc",
       },
     },
   },
