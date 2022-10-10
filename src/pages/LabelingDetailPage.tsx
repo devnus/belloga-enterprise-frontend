@@ -157,6 +157,45 @@ const LabelingDetailPageBody = ({}) => {
           aria-modal="true"
         ></div>
 
+        <div className="w-full">
+          <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
+            <div className="py-8 px-2 w-full mx-auto mx-20">
+              <div className="relative justify-between flex flex-row ">
+                <div className=" flex flex-row ">
+                  <p className="capitalize text-xl mb-1 text-gray-500">
+                    라벨링 시작일
+                  </p>
+                  <h2 className="font-semibold text-xl ml-5">2022.05.06</h2>
+                </div>
+                <div className="flex flex-row ">
+                  <p className="capitalize text-xl mb-1 text-gray-500">
+                    담당자
+                  </p>
+                  <h2 className="font-semibold text-xl ml-5">홍길동</h2>
+                </div>
+                <div className="flex flex-row ">
+                  <p className="capitalize text-xl mb-1 text-gray-500">
+                    이메일 주소
+                  </p>
+                  <h2 className="font-semibold text-xl ml-5">
+                    test@belloga.com
+                  </h2>
+                </div>
+              </div>
+              <div className=" flex flex-row items-start my-5">
+                <p className="basis-1/6 text-xl mb-1 text-gray-500 ">
+                  라벨링 설명
+                </p>
+                <h2 className="font-semibold text-xl ml-5">
+                  과자 이름 봉지 이미지 분석을 위한 라벨링 요청입니다. 설명은
+                  이렇게 첨부되는 파일을 확인하여 이미지 분석을 해주세요.
+                  컨텐츠의 내용이 이렇게 입력됩니다. 참고해주세요.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
             <div className="lg:row-end-1 lg:col-span-4">
