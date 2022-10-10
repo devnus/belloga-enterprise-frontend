@@ -15,20 +15,21 @@ type LabelingProjectInfo = {
   zipUrl: string;
 };
 
-const tabs = [
-  { name: "라벨링 중", href: "#", count: "4", current: false },
-  { name: "라벨링 완료", href: "#", count: "2", current: false },
-  { name: "승인 대기", href: "#", count: "1", current: true },
-];
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
+
+const tabs = [
+  { name: "라벨링 중", href: "#", count: "", current: false },
+  { name: "라벨링 완료", href: "#", count: "", current: false },
+  { name: "승인 대기", href: "#", count: "", current: true },
+];
 
 function LabelingListPage() {
   const [projectList, setProjectList] = useState<LabelingProjectInfo[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [openTab, setOpenTab] = useState(0);
+  const [tabNames, setTabNames] = useState(tabs);
 
   useEffect(() => {
     getLabelingData();
@@ -41,6 +42,19 @@ function LabelingListPage() {
           Authorization: `${localStorage.getItem("belloga-page")}`,
         },
       });
+      const myLabelingProjects = data.response.content;
+
+      //Tab Bar에 라벨링 개수를 나타내줌
+      const pendingProjCount = myLabelingProjects.filter(
+        (proj: any) => proj.isAgreed === false
+      ).length;
+      const completedProjCount = myLabelingProjects.filter(
+        (proj: any) => proj.isAgreed === true
+      ).length;
+      setTabNames(() => (tabs[0].count = pendingProjCount));
+      setTabNames(() => (tabs[1].count = completedProjCount));
+
+      //api로 받아온 데이터를 저장
       setProjectList(() => data.response.content);
     } catch (error) {
       if (axios.isAxiosError(error)) {
