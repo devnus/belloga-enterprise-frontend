@@ -13,13 +13,13 @@ const EmptyCard = ({
         <span className="sr-only">Your Company</span>
         <img className="h-12 w-auto" src={emptyImg} alt="" />
       </div>
-      <div className="pt-8 pb-16">
+      <div className="pt-8 pb-8">
         <div className="text-center">
           <p className="mt-2 text-base text-3xl text-gray-500">
             {emptyMessage}
           </p>
-          {movingLink && (
-            <div className="mt-6">
+          {movingLink !== "" && (
+            <div className="mt-6 mb-6">
               <Link to={movingLink}>
                 <div className="text-base font-medium text-indigo-600 hover:text-indigo-500">
                   {linkMessage}

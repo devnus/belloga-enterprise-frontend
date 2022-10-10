@@ -93,20 +93,23 @@ function LabelingListPage() {
               </p>
             </div>
           </div>
-          <Link
-            className="text-sm font-medium hover:text-gray-800"
-            to="/labeling/request"
-          >
-            <div className="bg-white py-8 px-10 rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 w-100 mx-auto mx-20">
-              <h2 className="font-semibold text-2xl mb-6">
-                라벨링 의뢰하러 가기
-              </h2>
 
-              <p className="capitalize text-xl mt-1">
-                벨로가를 통해 쉽고 빠르게 라벨링 의뢰를 해보세요
-              </p>
-            </div>
-          </Link>
+          <div className="relative w-full">
+            <Link
+              className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl "
+              to="/labeling/request"
+            >
+              <div className="bg-white py-8 px-10 rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mx-auto mx-20">
+                <h2 className="font-semibold text-2xl mb-3 mt-5 pl-5">
+                  라벨링 의뢰하러 가기
+                </h2>
+
+                <p className="capitalize text-xl mb-1 pl-5 text-gray-500">
+                  벨로가를 통해 쉽고 빠른 라벨링 의뢰를 해보세요
+                </p>
+              </div>
+            </Link>
+          </div>
         </div>
 
         <div>
@@ -172,7 +175,7 @@ function LabelingListPage() {
               {projectList.length === 0 && (
                 <div className="w-full col-span-3">
                   <EmptyCard
-                    emptyMessage="완료된 라벨링이 없습니다"
+                    emptyMessage="진행 중인 라벨링이 없습니다"
                     linkMessage="라벨링 의뢰하기"
                     movingLink="/labeling/request"
                   />
@@ -183,14 +186,46 @@ function LabelingListPage() {
                 <LabelingInfoCard project={project} key={project.projectId} />
               ))}
             </ul>
+
+            <ul
+              className={
+                openTab === 1
+                  ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8 max-w-7xl m-auto"
+                  : "hidden"
+              }
+            >
+              <div className="w-full col-span-3">
+                <EmptyCard
+                  emptyMessage="완료된 라벨링이 없습니다"
+                  linkMessage="라벨링 의뢰하기"
+                  movingLink="/labeling/request"
+                />
+              </div>
+            </ul>
+
+            <ul
+              className={
+                openTab === 2
+                  ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8 max-w-7xl m-auto"
+                  : "hidden"
+              }
+            >
+              <div className="w-full col-span-3">
+                <EmptyCard
+                  emptyMessage="승인 대기중인 라벨링이 없습니다"
+                  linkMessage="라벨링 의뢰하기"
+                  movingLink="/labeling/request"
+                />
+              </div>
+            </ul>
           </div>
         </div>
 
-        <BottomNavigationBar
+        {/* <BottomNavigationBar
           length={10}
           currentIndex={currentIndex}
           onChange={setCurrentIndex}
-        />
+        /> */}
       </body>
     </>
   );
