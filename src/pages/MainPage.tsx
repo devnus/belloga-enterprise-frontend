@@ -42,12 +42,12 @@ function MainPage() {
       <NavBar />
       <body className="z-0">
         <div className="relative py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
-          <div className="absolute inset-0 overflow-hidden">
-            <img
+          <div className="absolute inset-0 overflow-hidden bg-gradient-to-r from-gradBottom via-gradTop to-gradTop">
+            {/* <img
               src={mainTopImg}
               alt=""
               className="h-full w-full object-cover object-center"
-            />
+            /> */}
           </div>
           <div aria-hidden="true" className="absolute inset-0" />
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">

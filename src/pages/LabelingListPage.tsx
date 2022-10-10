@@ -5,6 +5,7 @@ import BottomNavigationBar from "../components/BottomNavigationBar";
 import EmptyCard from "../components/EmptyCard";
 import LabelingInfoCard from "../components/LabelingInfoCard";
 import NavBar from "../components/NavBar";
+import patternBanner from "../assets/images/banner_mypage_pattern.png";
 
 type LabelingProjectInfo = {
   dataType: string;
@@ -73,17 +74,8 @@ function LabelingListPage() {
       <body className="z-0">
         <div className="grid">
           <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 w-full">
-            <div className="absolute inset-0 overflow-hidden">
-              <img
-                src="https://media.istockphoto.com/videos/abstract-particle-background-loop-video-id1173777188?s=640x640"
-                alt=""
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gray-900 bg-opacity-50"
-            />
+            <div className="absolute inset-0 overflow-hidden bg-gradient-to-r from-gradBottom via-gradTop to-gradTop "></div>
+
             <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 홍길동님, 안녕하세요
@@ -99,14 +91,24 @@ function LabelingListPage() {
               className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl "
               to="/labeling/request"
             >
-              <div className="bg-white py-8 px-10 rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mx-auto mx-20">
-                <h2 className="font-semibold text-2xl mb-3 mt-5 pl-5">
-                  라벨링 의뢰하러 가기
-                </h2>
+              <div className="py-8 px-10 rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mx-auto mx-20">
+                <div className="absolute inset-0 overflow-hidden rounded-md">
+                  <img
+                    src={patternBanner}
+                    alt=""
+                    className="h-full w-full object-cover object-center"
+                  />
+                </div>
 
-                <p className="capitalize text-xl mb-1 pl-5 text-gray-500">
-                  벨로가를 통해 쉽고 빠른 라벨링 의뢰를 해보세요
-                </p>
+                <div className="relative mx-auto flex pl-5 flex-col ">
+                  <h2 className="font-semibold text-2xl mb-3 mt-5">
+                    라벨링 의뢰하러 가기
+                  </h2>
+
+                  <p className="capitalize text-xl mb-1 text-gray-500">
+                    벨로가를 통해 쉽고 빠른 라벨링 의뢰를 해보세요
+                  </p>
+                </div>
               </div>
             </Link>
           </div>
