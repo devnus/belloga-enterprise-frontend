@@ -137,8 +137,8 @@ function LabelingListPage() {
                     key={tab.name}
                     className={classNames(
                       openTab === index
-                        ? "border-indigo-500 text-indigo-600"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200",
+                        ? "border-mainBlue text-mainBlue font-bold text-xl"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200 text-xl",
                       "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm"
                     )}
                     aria-current={tab.current ? "page" : undefined}
@@ -154,7 +154,7 @@ function LabelingListPage() {
                           openTab === index
                             ? "bg-indigo-100 text-indigo-600"
                             : "bg-gray-100 text-gray-900",
-                          "hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block"
+                          "hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block text-lg"
                         )}
                       >
                         {tab.count}

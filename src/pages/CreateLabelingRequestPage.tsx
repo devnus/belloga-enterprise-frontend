@@ -105,7 +105,7 @@ function CreateLabelingRequestPage() {
           <p className="mt-3 text-xl text-white">라벨링을 신청해보세요</p>
         </MainTop>
 
-        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <form className="space-y-8 divide-y divide-gray-200">
             <div className="space-y-8 divide-y divide-gray-200">
               <div>
