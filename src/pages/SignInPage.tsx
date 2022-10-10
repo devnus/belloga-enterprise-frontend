@@ -8,6 +8,7 @@ import { LoginState } from "../states/LoginState";
 const SignInPageBody = ({}) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
   useEffect(() => {
@@ -48,6 +49,7 @@ const SignInPageBody = ({}) => {
       if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
       window.location.href = "/labeling/list";
     } catch (error) {
+      setLoginError(() => true);
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
         return error.message;
@@ -136,6 +138,12 @@ const SignInPageBody = ({}) => {
               >
                 Sign in
               </button>
+
+              {loginError && (
+                <div className="my-5 text-red-500">
+                  아이디나 비밀번호가 일치하지 않습니다.
+                </div>
+              )}
 
               <div className="flex justify-between pb-5">
                 <div>아직 계정이 없으신가요?</div>
