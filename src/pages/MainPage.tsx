@@ -4,38 +4,9 @@ import NavBar from "../components/NavBar";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../states/LoginState";
 import LabelingProcess from "../components/LabelingProcess";
-
-const processes = [
-  {
-    name: "데이터 의뢰",
-    engName: "Data Request",
-    description:
-      "필요하신 데이터를 라벨링을 통해 손쉽게 데이터 의뢰를 해보세요",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-delivery-light.svg",
-  },
-  {
-    name: "관리자 승인",
-    engName: "Data Approval",
-    description: "요청하신 데이터를 관리자가 확인하고 승인합니다.",
-    imageSrc: "https://tailwindui.com/img/ecommerce/icons/icon-chat-light.svg",
-  },
-  {
-    name: "라벨링 진행",
-    engName: "Labeling Progress",
-    description: "요청하신 데이터를 벨로가 알람을 통해 라벨링을 진행합니다.",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-fast-checkout-light.svg",
-  },
-  {
-    name: "결과물 전달",
-    engName: "Deliver the Deliverabies",
-    description:
-      "라벨링이 완료 된 데이터를 고객님께 정리 및 수집하여 전달드립니다.",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg",
-  },
-];
+import data from "../assets/icons/data_icon.png";
+import search from "../assets/icons/search_icon.png";
+import ocrImg from "../assets/images/ocr_img.png";
 
 function MainPage() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
@@ -70,7 +41,7 @@ function MainPage() {
 
         <div className="relative w-full">
           <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl ">
-            <div className="bg-white justify-between flex flex-row py-8 px-10 rounded-lg shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mr-5 ">
+            <div className="bg-white justify-between items-center flex flex-row py-8 px-10 rounded-lg shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mr-5 ">
               <div className="relative flex pl-5 flex-col ">
                 <h2 className="font-semibold text-2xl mt-5">
                   기존 데이터 라벨러 고용
@@ -82,13 +53,13 @@ function MainPage() {
                 </p>
               </div>
               <img
-                src="https://tailwindui.com/img/ecommerce-images/category-page-01-featured-collection.jpg"
+                src={data}
                 alt=""
-                className="object-cover object-center h-40 w-auto"
+                className="object-cover object-center h-24 w-auto"
               />
             </div>
 
-            <div className="bg-white justify-between flex flex-row py-8 px-10 rounded-lg shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mr-5 ">
+            <div className="bg-white justify-between flex items-center flex-row py-8 px-10 rounded-lg shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mr-5 ">
               <div className="relative flex pl-5 flex-col ">
                 <h2 className="font-semibold text-2xl mt-5">
                   지속적인 데이터 수급이
@@ -100,9 +71,9 @@ function MainPage() {
                 </p>
               </div>
               <img
-                src="https://tailwindui.com/img/ecommerce-images/category-page-01-featured-collection.jpg"
+                src={search}
                 alt=""
-                className="object-cover object-center h-40 w-auto"
+                className="object-cover object-center h-24 w-auto"
               />
             </div>
           </div>
@@ -121,7 +92,7 @@ function MainPage() {
             <div className="relative overflow-hidden rounded-lg lg:h-96">
               <div className="absolute inset-0">
                 <img
-                  src="https://tailwindui.com/img/ecommerce-images/category-page-01-featured-collection.jpg"
+                  src={ocrImg}
                   alt=""
                   className="h-full w-full object-cover object-center"
                 />
@@ -136,9 +107,7 @@ function MainPage() {
               />
               <div className="absolute inset-x-0 bottom-0 rounded-bl-lg py-10 rounded-br-lg bg-black bg-opacity-75 p-6 backdrop-blur backdrop-filter sm:flex sm:items-center sm:justify-between lg:inset-y-0 lg:inset-x-auto lg:w-96 lg:flex-col lg:items-start lg:rounded-tl-lg lg:rounded-br-none">
                 <div>
-                  <h2 className="text-xl font-bold text-white">
-                    Text Annotation
-                  </h2>
+                  <h2 className="text-xl font-bold text-white">OCR</h2>
                   <p className="mt-1 text-sm text-gray-300">
                     문장 성분을 분석합니다
                   </p>
