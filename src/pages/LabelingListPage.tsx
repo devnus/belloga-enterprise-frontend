@@ -6,6 +6,7 @@ import EmptyCard from "../components/EmptyCard";
 import LabelingInfoCard from "../components/LabelingInfoCard";
 import NavBar from "../components/NavBar";
 import patternBanner from "../assets/images/banner_mypage_pattern.png";
+import MainTop from "../components/MainTop";
 
 type LabelingProjectInfo = {
   dataType: string;
@@ -73,18 +74,14 @@ function LabelingListPage() {
       <NavBar isMyPage={false} />
       <body className="z-0">
         <div className="grid">
-          <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 w-full">
-            <div className="absolute inset-0 overflow-hidden bg-gradient-to-r from-gradBottom via-gradTop to-gradTop "></div>
-
-            <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                홍길동님, 안녕하세요
-              </h2>
-              <p className="mt-3 text-xl text-white">
-                총 6 건의 라벨링이 진행 중입니다.
-              </p>
-            </div>
-          </div>
+          <MainTop>
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              홍길동님, 안녕하세요
+            </h2>
+            <p className="mt-3 text-xl text-white">
+              총 6 건의 라벨링이 진행 중입니다.
+            </p>
+          </MainTop>
 
           <div className="relative w-full">
             <Link
