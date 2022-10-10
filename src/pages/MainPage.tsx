@@ -1,9 +1,9 @@
 import React from "react";
-import imgLogo from "../assets/images/belloga_character.png";
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../states/LoginState";
+import mainTopImg from "../assets/images/main_top_img.png";
 
 const incentives = [
   {
@@ -41,18 +41,15 @@ function MainPage() {
     <>
       <NavBar />
       <body className="z-0">
-        <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
+        <div className="relative py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
           <div className="absolute inset-0 overflow-hidden">
             <img
-              src="https://media.istockphoto.com/videos/abstract-particle-background-loop-video-id1173777188?s=640x640"
+              src={mainTopImg}
               alt=""
               className="h-full w-full object-cover object-center"
             />
           </div>
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gray-900 bg-opacity-50"
-          />
+          <div aria-hidden="true" className="absolute inset-0" />
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               벨로가, 알람으로 하는 라벨링
@@ -61,7 +58,7 @@ function MainPage() {
               벨로가는 크라우드소싱 방식으로 작동하는 데이터 라벨링 툴입니다.
             </p>
             <Link
-              className="mt-8 block w-full rounded-md border border-transparent bg-white py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
+              className="mt-8 block w-full rounded-md border border-transparent bg-white text-mainBlue py-3 px-8 text-base text-xl rounded-3xl font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
               to={isLoggedIn ? "/labeling/request" : "/signIn"}
             >
               라벨링 하러가기
@@ -149,6 +146,7 @@ function MainPage() {
       <footer className="bg-white">
         <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
           <div className="mt-8 md:order-1 md:mt-0">
+            <p className="text-base text-gray-400">Belloga</p>
             <p className="text-center text-base text-gray-400">
               &copy; 2022 devnus, Inc. All rights reserved.
             </p>
