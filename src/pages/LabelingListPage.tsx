@@ -39,11 +39,14 @@ function LabelingListPage() {
 
   async function getLabelingData() {
     try {
-      const { data } = await axios.get("/api/project/v1/project/my", {
-        headers: {
-          Authorization: `${localStorage.getItem("belloga-page")}`,
-        },
-      });
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/project/v1/project/my`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("belloga-page")}`,
+          },
+        }
+      );
       const myLabelingProjects = data.response.content;
 
       //Tab Bar에 라벨링 개수를 나타내줌

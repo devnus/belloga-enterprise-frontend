@@ -68,11 +68,15 @@ function CreateLabelingRequestPage() {
   async function createLabeling() {
     makingFormData();
     try {
-      const { data } = await axios.post("/api/project/v1/project", formData, {
-        headers: {
-          Authorization: `${localStorage.getItem("belloga-page")}`,
-        },
-      });
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/project/v1/project`,
+        formData,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("belloga-page")}`,
+          },
+        }
+      );
       console.log(data);
     } catch (error) {
       if (axios.isAxiosError(error)) {

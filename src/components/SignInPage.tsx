@@ -39,7 +39,7 @@ const SignInPageBody = ({}) => {
   async function signIn() {
     try {
       const { data } = await axios.post(
-        "/api/account/v1/auth/signin/custom/account",
+        `${process.env.REACT_APP_API_URL}/api/account/v1/auth/signin/custom/account`,
         {
           password: password,
           email: userEmail,

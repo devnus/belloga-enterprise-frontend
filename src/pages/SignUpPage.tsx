@@ -47,7 +47,7 @@ const SignUpPageBody = ({}) => {
   async function createUser() {
     try {
       const { data } = await axios.post<CreateUserResponse>(
-        "/api/account/v1/auth/signup/custom/account/enterprise",
+        `${process.env.REACT_APP_API_URL}/api/account/v1/auth/signup/custom/account/enterprise`,
         {
           password: password,
           phoneNumber: userTel,
