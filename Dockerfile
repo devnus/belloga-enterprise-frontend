@@ -23,4 +23,4 @@ RUN npm run build
 
 
 # 실행 명령어
-ENTRYPOINT ["server", "-s", "build"]
+ENTRYPOINT ["serve", "-s", "build"]
