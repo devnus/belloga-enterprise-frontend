@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import imgLogo from "../assets/images/belloga_character.png";
+import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
 import { LoginState } from "../states/LoginState";
 
 const SignInPageBody = ({}) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const SignInPageBody = ({}) => {
       if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
       window.location.href = "/labeling/list";
     } catch (error) {
+      setLoginError(() => true);
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
         return error.message;
@@ -63,27 +65,14 @@ const SignInPageBody = ({}) => {
     <>
       <NavBar isAuthPage={false} />
       <body className="z-0">
-        <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
-          <div className="absolute inset-0 overflow-hidden">
-            <img
-              src="https://media.istockphoto.com/videos/abstract-particle-background-loop-video-id1173777188?s=640x640"
-              alt=""
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gray-900 bg-opacity-50"
-          />
-          <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              로그인
-            </h2>
-            <p className="mt-3 text-xl text-white">
-              로그인을 통해 라벨링 신청과 라벨링 조회를 만나보세요
-            </p>
-          </div>
-        </div>
+        <MainTop>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            로그인
+          </h2>
+          <p className="mt-3 text-xl text-white">
+            로그인을 통해 라벨링 신청과 라벨링 조회를 만나보세요
+          </p>
+        </MainTop>
 
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -133,10 +122,16 @@ const SignInPageBody = ({}) => {
 
               <button
                 onClick={onSubmit}
-                className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Sign in
               </button>
+
+              {loginError && (
+                <div className="my-5 text-red-500">
+                  아이디나 비밀번호가 일치하지 않습니다.
+                </div>
+              )}
 
               <div className="flex justify-between pb-5">
                 <div>아직 계정이 없으신가요?</div>

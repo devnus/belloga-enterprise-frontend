@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import DragDrop from "../components/DragDrop";
+import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
 
 interface IFileTypes {
@@ -97,26 +98,14 @@ function CreateLabelingRequestPage() {
       <NavBar />
 
       <body className="z-0">
-        <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
-          <div className="absolute inset-0 overflow-hidden">
-            <img
-              src="https://media.istockphoto.com/videos/abstract-particle-background-loop-video-id1173777188?s=640x640"
-              alt=""
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gray-900 bg-opacity-50"
-          />
-          <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              라벨링 신청
-            </h2>
-            <p className="mt-3 text-xl text-white">라벨링을 신청해보세요</p>
-          </div>
-        </div>
-        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <MainTop>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            라벨링 신청
+          </h2>
+          <p className="mt-3 text-xl text-white">라벨링을 신청해보세요</p>
+        </MainTop>
+
+        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           <form className="space-y-8 divide-y divide-gray-200">
             <div className="space-y-8 divide-y divide-gray-200">
               <div>

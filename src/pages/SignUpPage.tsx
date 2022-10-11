@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import imgLogo from "../assets/images/belloga_character.png";
+import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
 
 type CreateUserResponse = {
@@ -91,30 +92,18 @@ const SignUpPageBody = ({}) => {
     <>
       <NavBar isAuthPage={false} />
       <body className="z-0">
-        <div className="relative bg-gray-800 py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
-          <div className="absolute inset-0 overflow-hidden">
-            <img
-              src="https://media.istockphoto.com/videos/abstract-particle-background-loop-video-id1173777188?s=640x640"
-              alt=""
-              className="h-full w-full object-cover object-center"
-            />
-          </div>
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gray-900 bg-opacity-50"
-          />
-          <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              회원가입
-            </h2>
-            <p className="mt-3 text-xl text-white">
-              회원가입을 통해 기존 데이터 라벨링 고용 없이,
-            </p>
-            <p className="mt-3 text-xl text-white">
-              지속적인 데이터 수급을 할 수 있는 벨로가를 만나보세요
-            </p>
-          </div>
-        </div>
+        <MainTop>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            회원가입
+          </h2>
+          <p className="mt-3 text-xl text-white">
+            회원가입을 통해 기존 데이터 라벨링 고용 없이,
+          </p>
+          <p className="mt-3 text-xl text-white">
+            지속적인 데이터 수급을 할 수 있는 벨로가를 만나보세요
+          </p>
+        </MainTop>
+
         <div className="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="bg-white py-8 px-4 sm:rounded-lg sm:px-10">
@@ -264,14 +253,14 @@ const SignUpPageBody = ({}) => {
                 <button
                   onClick={onSubmit}
                   type="submit"
-                  className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Sign Up
                 </button>
               ) : (
                 <button
                   type="button"
-                  className="mt-10 mb-5 bg-gray-400 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
+                  className="mt-10 mb-5 bg-gray-400 w-full flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
                   disabled
                 >
                   Sign Up

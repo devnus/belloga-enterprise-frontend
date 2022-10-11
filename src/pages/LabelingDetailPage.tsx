@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import ReactJson from "react-json-view";
+import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
 
 type BoundingBoxInfo = {
@@ -156,72 +157,44 @@ const LabelingDetailPageBody = ({}) => {
           aria-modal="true"
         ></div>
 
-        <NavBar />
-
-        <nav className="bg-white flex" aria-label="Breadcrumb">
-          <ol
-            role="list"
-            className="max-w-screen-xl w-full mx-auto px-4 py-4 flex space-x-4 sm:px-6 lg:px-8"
-          >
-            <li>
-              <div>
-                <a href="#" className="text-gray-400 hover:text-gray-500">
-                  <svg
-                    className="flex-shrink-0 h-5 w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                  </svg>
-                  <span className="sr-only">Home</span>
-                </a>
+        <div className="w-full">
+          <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
+            <div className="py-8 px-2 w-full mx-auto mx-20">
+              <div className="relative justify-between flex flex-row ">
+                <div className=" flex flex-row ">
+                  <p className="capitalize text-xl mb-1 text-gray-500">
+                    라벨링 시작일
+                  </p>
+                  <h2 className="font-semibold text-xl ml-5">2022.05.06</h2>
+                </div>
+                <div className="flex flex-row ">
+                  <p className="capitalize text-xl mb-1 text-gray-500">
+                    담당자
+                  </p>
+                  <h2 className="font-semibold text-xl ml-5">홍길동</h2>
+                </div>
+                <div className="flex flex-row ">
+                  <p className="capitalize text-xl mb-1 text-gray-500">
+                    이메일 주소
+                  </p>
+                  <h2 className="font-semibold text-xl ml-5">
+                    test@belloga.com
+                  </h2>
+                </div>
               </div>
-            </li>
-
-            <li>
-              <div className="flex items-center">
-                <svg
-                  className="flex-shrink-0 h-5 w-5 text-gray-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                >
-                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                </svg>
-                <a
-                  href="#"
-                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-                >
-                  Projects
-                </a>
+              <div className=" flex flex-row items-start my-5">
+                <p className="basis-1/6 text-xl mb-1 text-gray-500 ">
+                  라벨링 설명
+                </p>
+                <h2 className="font-semibold text-xl ml-5">
+                  과자 이름 봉지 이미지 분석을 위한 라벨링 요청입니다. 설명은
+                  이렇게 첨부되는 파일을 확인하여 이미지 분석을 해주세요.
+                  컨텐츠의 내용이 이렇게 입력됩니다. 참고해주세요.
+                </h2>
               </div>
-            </li>
-
-            <li>
-              <div className="flex items-center">
-                <svg
-                  className="flex-shrink-0 h-5 w-5 text-gray-300"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                >
-                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                </svg>
-                <a
-                  href="#"
-                  className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-                  aria-current="page"
-                >
-                  손글씨 OCR 라벨링
-                </a>
-              </div>
-            </li>
-          </ol>
-        </nav>
+            </div>
+          </div>
+        </div>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
@@ -247,7 +220,7 @@ const LabelingDetailPageBody = ({}) => {
                         className={`
                         ${
                           openTab === 1
-                            ? "text-indigo-700 font-bold"
+                            ? "text-mainBlue font-bold"
                             : "text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100"
                         }  px-3 py-1.5 border border-transparent text-sm font-medium rounded-md`}
                         aria-controls="tabs-1-panel-1"
@@ -266,7 +239,7 @@ const LabelingDetailPageBody = ({}) => {
                         className={`
                         ${
                           openTab === 2
-                            ? "text-indigo-700 font-bold"
+                            ? "text-mainBlue font-bold"
                             : "text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100"
                         }  px-3 py-1.5 border border-transparent text-sm font-medium rounded-md`}
                         aria-controls="tabs-1-panel-2"
@@ -309,7 +282,7 @@ const LabelingDetailPageBody = ({}) => {
                                           {labeledText[0]}
                                         </span>
                                       </div>
-                                      <div className="ml-4 flex-shrink-0 font-medium text-indigo-600 hover:text-indigo-500">
+                                      <div className="ml-4 flex-shrink-0 font-medium text-mainBlue hover:text-indigo-500">
                                         {(labeledText[1] * 100).toFixed(1)}%
                                       </div>
                                     </li>
@@ -335,7 +308,7 @@ const LabelingDetailPageBody = ({}) => {
                   <div className="mt-2 flex justify-end">
                     <button
                       type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-mainBlue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                       Copy
                     </button>
@@ -370,6 +343,77 @@ const LabelingDetailPageBody = ({}) => {
 const LabelingDetailPage = ({}) => {
   return (
     <>
+      <NavBar />
+      <MainTop>
+        <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          진행 중인 라벨링
+        </h2>
+        <nav className="text-white flex" aria-label="Breadcrumb">
+          <ol
+            role="list"
+            className="max-w-screen-xl w-full mx-auto px-4 py-4 flex space-x-4 sm:px-6 lg:px-8"
+          >
+            <li>
+              <div>
+                <a href="#" className="text-gray-400 hover:text-gray-500">
+                  <svg
+                    className="flex-shrink-0 h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="white"
+                    aria-hidden="true"
+                  >
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                  </svg>
+                  <span className="sr-only">Home</span>
+                </a>
+              </div>
+            </li>
+
+            <li>
+              <div className="flex items-center">
+                <svg
+                  className="flex-shrink-0 h-5 w-5 text-gray-300"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                </svg>
+                <a
+                  href="#"
+                  className="ml-4 text-sm font-medium text-white hover:text-gray-700"
+                >
+                  Projects
+                </a>
+              </div>
+            </li>
+
+            <li>
+              <div className="flex items-center">
+                <svg
+                  className="flex-shrink-0 h-5 w-5 text-gray-300"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                </svg>
+                <a
+                  href="#"
+                  className="ml-4 text-sm font-medium text-white hover:text-gray-700"
+                  aria-current="page"
+                >
+                  손글씨 OCR 라벨링
+                </a>
+              </div>
+            </li>
+          </ol>
+        </nav>
+      </MainTop>
+
       <LabelingDetailPageBody />
     </>
   );
