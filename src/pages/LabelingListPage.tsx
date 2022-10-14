@@ -72,6 +72,28 @@ function LabelingListPage() {
     }
   }
 
+  async function getUserInfo(accountId: string) {
+    try {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/user/v1/enterprise/${accountId}`,
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("belloga-page")}`,
+          },
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
+
   return (
     <>
       <NavBar isMyPage={false} />
