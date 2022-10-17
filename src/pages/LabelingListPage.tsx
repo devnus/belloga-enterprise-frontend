@@ -100,7 +100,6 @@ function LabelingListPage() {
 
   return (
     <>
-      <NavBar isMyPage={false} />
       <body className="z-0">
         <div className="grid">
           <MainTop>

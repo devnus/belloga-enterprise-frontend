@@ -21,7 +21,10 @@ function LabelingServiceDescription() {
   return (
     <>
       {contents.map((content, index) => (
-        <div className="relative mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8 bg-white my-12 rounded-xl">
+        <div
+          key={index}
+          className="relative mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8 bg-white my-12 rounded-xl"
+        >
           <div className="mt-8 lg:grid lg:grid-cols-3 lg:gap-8">
             <div className="relative lg:col-start-2 lg:row-start-1 col-span-2">
               <div className="relative mx-auto max-w-prose text-base lg:max-w-none">

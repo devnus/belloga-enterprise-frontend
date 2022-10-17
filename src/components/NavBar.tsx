@@ -13,12 +13,10 @@ import { LoginState } from "../states/LoginState";
 const NavBar = ({ isAuthPage = true, isMyPage = true }) => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
-  useEffect(() => {
-    if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
-  });
-
   const logoutHandler = () => {
-    localStorage.removeItem("belloga-page");
+    localStorage.removeItem("belloga-page"); //accessToken 제거
+    localStorage.removeItem("belloga-refresh"); //refreshToken 제거
+
     setIsLoggedIn(false);
     window.location.href = "/";
   };
