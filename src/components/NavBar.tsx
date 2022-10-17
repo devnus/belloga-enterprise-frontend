@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import imgLogo from "../assets/images/belloga_white.png";
 import { LoginState } from "../states/LoginState";
@@ -10,15 +10,19 @@ import { LoginState } from "../states/LoginState";
 
 로그인 상태로 자동 핸들링되고 있음
  */
-const NavBar = ({ isAuthPage = true, isMyPage = true }) => {
+const NavBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+  const location = useLocation();
+
+  const isAuthPage: boolean = location.pathname !== ("/signUp" || "/signIn");
+  const isMyPage: boolean = location.pathname !== "/labeling/list";
 
   const logoutHandler = () => {
     localStorage.removeItem("belloga-page"); //accessToken 제거
     localStorage.removeItem("belloga-refresh"); //refreshToken 제거
 
     setIsLoggedIn(false);
-    window.location.href = "/";
   };
 
   return (

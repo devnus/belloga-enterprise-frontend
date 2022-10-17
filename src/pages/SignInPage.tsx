@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { signIn } from "../apis/auth";
 import MainTop from "../components/MainTop";
-import NavBar from "../components/NavBar";
 import { LoginState } from "../states/LoginState";
 
 const SignInPageBody = () => {
@@ -11,12 +10,6 @@ const SignInPageBody = () => {
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      window.location.href = "/";
-    }
-  }, []);
 
   const onSubmit = () => {
     const signInValues = {

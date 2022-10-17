@@ -17,7 +17,7 @@ export async function signIn({
       }
     );
 
-    //accessToken을 저장
+    //Token을 저장
     localStorage.setItem("belloga-page", data.response.accessToken);
     localStorage.setItem("belloga-refresh", data.response.refreshToken);
 
@@ -25,7 +25,7 @@ export async function signIn({
       setIsLoggedIn(true);
     }
 
-    window.location.href = "/labeling/list";
+    window.location.href = "/";
   } catch (error) {
     setLoginError(() => true);
     if (axios.isAxiosError(error)) {

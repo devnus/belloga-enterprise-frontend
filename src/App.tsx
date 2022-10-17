@@ -14,25 +14,9 @@ function App() {
     if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
   });
 
-  const location = useLocation();
-
-  const [isAuthPage, setIsAuthPage] = useState<boolean>(true);
-  const [isMyPage, setIsMyPage] = useState<boolean>(true);
-
-  useEffect(() => {
-    if (location.pathname === ("/signUp" || "/signIn")) {
-      setIsAuthPage(() => false);
-    } else if (location.pathname === "/labeling/list") {
-      setIsMyPage(() => false);
-    } else {
-      setIsAuthPage(() => true);
-      setIsMyPage(() => true);
-    }
-  }, [location]);
-
   return (
     <>
-      <NavBar isAuthPage={isAuthPage} isMyPage={isMyPage} />
+      <NavBar />
       <AppRouter isLoggedIn={isLoggedIn} />
       <Footer />
     </>
