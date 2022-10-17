@@ -23,7 +23,7 @@ function MainPage() {
             <div className="w-2/5 my-5 ">
               <img src={logo} alt="" className="object-cover object-center" />
             </div>
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-3xl">
               벨로가, 알람으로 하는 라벨링
             </h2>
             <p className="mt-3 text-xl text-white">
