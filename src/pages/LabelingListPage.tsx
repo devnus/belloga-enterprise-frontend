@@ -7,6 +7,8 @@ import LabelingInfoCard from "../components/LabelingInfoCard";
 import NavBar from "../components/NavBar";
 import patternBanner from "../assets/images/banner_mypage_pattern.png";
 import MainTop from "../components/MainTop";
+import { useRecoilState } from "recoil";
+import { UserInfoState } from "../states/UserInfoState";
 
 type LabelingProjectInfo = {
   dataType: string;
@@ -32,9 +34,11 @@ function LabelingListPage() {
   const [currentIndex, setCurrentIndex] = useState<number>(1);
   const [openTab, setOpenTab] = useState(0);
   const [tabNames, setTabNames] = useState(tabs);
+  const [userInfo, setUserInfo] = useRecoilState(UserInfoState);
 
   useEffect(() => {
     getLabelingData();
+    getUserInfo();
   }, []);
 
   async function getLabelingData() {
@@ -72,17 +76,17 @@ function LabelingListPage() {
     }
   }
 
-  async function getUserInfo(accountId: string) {
+  async function getUserInfo() {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/user/v1/enterprise/${accountId}`,
+        `${process.env.REACT_APP_API_URL}/api/user/v1/enterprise`,
         {
           headers: {
             Authorization: `${localStorage.getItem("belloga-page")}`,
           },
         }
       );
-      console.log(data);
+      setUserInfo(() => data.response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -101,7 +105,7 @@ function LabelingListPage() {
         <div className="grid">
           <MainTop>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              홍길동님, 안녕하세요
+              {userInfo.name}님, 안녕하세요
             </h2>
             <p className="mt-3 text-xl text-white">
               총 6 건의 라벨링이 진행 중입니다.

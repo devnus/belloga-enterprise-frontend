@@ -91,14 +91,6 @@ function CreateLabelingRequestPage() {
 
   return (
     <>
-      {/*
-            This example requires updating your template:
-    
-            ```
-            <html class="h-full bg-gray-50">
-            <body class="h-full">
-            ```
-          */}
       <NavBar />
 
       <body className="z-0">

@@ -5,12 +5,14 @@ import { useRecoilState } from "recoil";
 import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
 import { LoginState } from "../states/LoginState";
+import { UserInfoState } from "../states/UserInfoState";
 
 const SignInPageBody = ({}) => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const [userInfo, setUserInfo] = useRecoilState(UserInfoState);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -47,7 +49,10 @@ const SignInPageBody = ({}) => {
         }
       );
       localStorage.setItem("belloga-page", data.response.accessToken);
-      if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
+      if (localStorage.getItem("belloga-page")) {
+        setIsLoggedIn(true);
+      }
+
       window.location.href = "/labeling/list";
     } catch (error) {
       setLoginError(() => true);
