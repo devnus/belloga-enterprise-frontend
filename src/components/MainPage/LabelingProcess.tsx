@@ -35,7 +35,7 @@ const processes = [
 
 const LabelingProcess = ({}) => {
   return (
-    <div className="grid grid-cols-1 gap-16 m-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 pb-10 max-w-7xl">
+    <div className="grid grid-cols-1 gap-20 px-10 m-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 pb-10 max-w-7xl">
       {processes.map((process, index) => (
         <div
           key={process.name}
