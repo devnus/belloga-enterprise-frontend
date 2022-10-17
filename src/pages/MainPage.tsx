@@ -7,6 +7,7 @@ import LabelingProcess from "../components/LabelingProcess";
 import data from "../assets/icons/data_icon.png";
 import search from "../assets/icons/search_icon.png";
 import ocrImg from "../assets/images/ocr_img.png";
+import logo from "../assets/images/belloga_white.png";
 
 function MainPage() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
@@ -16,14 +17,13 @@ function MainPage() {
       <body className="z-0">
         <div className="relative py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
           <div className="absolute inset-0 overflow-hidden bg-gradient-to-r from-gradBottom via-gradTop to-gradTop">
-            {/* <img
-              src={mainTopImg}
-              alt=""
-              className="h-full w-full object-cover object-center"
-            /> */}
+            {/* <img src={logo} alt="" className=" object-cover object-center" /> */}
           </div>
           <div aria-hidden="true" className="absolute inset-0" />
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+            <div className="w-1/2 my-5 ">
+              <img src={logo} alt="" className="object-cover object-center" />
+            </div>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               벨로가, 알람으로 하는 라벨링
             </h2>
