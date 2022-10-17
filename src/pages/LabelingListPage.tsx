@@ -107,9 +107,15 @@ function LabelingListPage() {
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               {userInfo.name}님, 안녕하세요
             </h2>
-            <p className="mt-3 text-xl text-white">
-              총 6 건의 라벨링이 진행 중입니다.
-            </p>
+            {parseInt(tabs[0].count) === 0 ? (
+              <p className="mt-3 text-xl text-white">
+                현재 진행 중인 라벨링이 없습니다.
+              </p>
+            ) : (
+              <p className="mt-3 text-xl text-white">
+                총 {tabs[0].count} 건의 라벨링이 진행 중입니다.
+              </p>
+            )}
           </MainTop>
 
           <div className="relative w-full">

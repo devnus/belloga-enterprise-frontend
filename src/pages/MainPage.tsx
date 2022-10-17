@@ -13,7 +13,6 @@ function MainPage() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   return (
     <>
-      <NavBar />
       <body className="z-0">
         <div className="relative py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
           <div className="absolute inset-0 overflow-hidden bg-gradient-to-r from-gradBottom via-gradTop to-gradTop">
@@ -21,7 +20,7 @@ function MainPage() {
           </div>
           <div aria-hidden="true" className="absolute inset-0" />
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-            <div className="w-1/2 my-5 ">
+            <div className="w-2/5 my-5 ">
               <img src={logo} alt="" className="object-cover object-center" />
             </div>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">

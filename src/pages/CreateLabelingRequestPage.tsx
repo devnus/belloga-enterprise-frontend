@@ -53,7 +53,11 @@ function CreateLabelingRequestPage() {
       .map(({ current }) => current)
       .find((current) => current?.checked)?.value;
 
-    const projectInfo = { name: projectTitle, dataType: dataType };
+    const projectInfo = {
+      name: projectTitle,
+      dataType: dataType,
+      description: projectDescription,
+    };
 
     formData.append(
       "project",
@@ -77,7 +81,6 @@ function CreateLabelingRequestPage() {
           },
         }
       );
-      console.log(data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
