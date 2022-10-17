@@ -1,8 +1,8 @@
 import React from "react";
-import process1 from "../assets/icons/process_01.png";
-import process2 from "../assets/icons/process_02.png";
-import process3 from "../assets/icons/process_03.png";
-import process4 from "../assets/icons/process_04.png";
+import process1 from "assets/icons/process_01.png";
+import process2 from "assets/icons/process_02.png";
+import process3 from "assets/icons/process_03.png";
+import process4 from "assets/icons/process_04.png";
 
 const processes = [
   {
