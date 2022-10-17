@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import DragDrop from "../components/DragDrop";
 import MainTop from "../components/MainTop";
-import NavBar from "../components/NavBar";
 
 interface IFileTypes {
   id: number;
@@ -102,7 +100,7 @@ function CreateLabelingRequestPage() {
           <p className="mt-3 text-xl text-white">라벨링을 신청해보세요</p>
         </MainTop>
 
-        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <form className="space-y-8 divide-y divide-gray-200">
             <div className="space-y-8 divide-y divide-gray-200">
               <div>
@@ -116,10 +114,10 @@ function CreateLabelingRequestPage() {
                 </div>
 
                 <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                  <div className="sm:col-span-4">
+                  <div className="sm:col-span-6">
                     <label
                       htmlFor="projectTitle"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-base font-medium text-gray-700"
                     >
                       라벨링 제목
                     </label>
@@ -129,6 +127,7 @@ function CreateLabelingRequestPage() {
                         name="projectTitle"
                         id="projectTitle"
                         autoComplete="username"
+                        placeholder="예시) 자율주행 자동차 인식 모델을 위한 표지판 OCR"
                         value={projectTitle}
                         onChange={onChange}
                         className="block w-full min-w-0 flex-1 py-2 px-2 border rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -139,7 +138,7 @@ function CreateLabelingRequestPage() {
                   <div className="sm:col-span-6">
                     <label
                       htmlFor="projectDescription"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-base font-medium text-gray-700"
                     >
                       라벨링 설명
                     </label>
@@ -148,6 +147,7 @@ function CreateLabelingRequestPage() {
                         id="projectDescription"
                         name="projectDescription"
                         rows={3}
+                        placeholder="예시) 제시한 사진 속 표지판의 글자를 라벨링 요청합니다."
                         className="p-2 block w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         value={projectDescription}
                         onChange={onChange}
@@ -161,7 +161,7 @@ function CreateLabelingRequestPage() {
                   <div className="sm:col-span-6">
                     <label
                       htmlFor="cover-photo"
-                      className="block text-sm font-medium text-gray-700"
+                      className="block text-base font-medium text-gray-700"
                     >
                       파일 업로드
                     </label>
@@ -238,19 +238,19 @@ function CreateLabelingRequestPage() {
             </div>
 
             <div className="pt-5">
-              <div className="flex justify-end">
+              <div className="flex justify-center">
                 {projectTitle && projectDescription && files[0] ? (
                   <button
                     onClick={onSubmit}
                     type="button"
-                    className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="w-80 mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 flex justify-center py-4 px-8 border border-transparent rounded-2xl shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     라벨링 신청
                   </button>
                 ) : (
                   <button
                     type="button"
-                    className="mt-10 mb-5 bg-gray-400 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
+                    className="w-80 mt-10 mb-5 bg-gray-400 flex justify-center py-4 px-4 border border-transparent rounded-2xl shadow-sm text-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
                     disabled
                   >
                     빈칸을 모두 입력해주세요
