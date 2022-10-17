@@ -1,18 +1,16 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { signIn } from "../apis/auth";
 import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
 import { LoginState } from "../states/LoginState";
-import { UserInfoState } from "../states/UserInfoState";
 
-const SignInPageBody = ({}) => {
+const SignInPageBody = () => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
-  const [userInfo, setUserInfo] = useRecoilState(UserInfoState);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -21,8 +19,15 @@ const SignInPageBody = ({}) => {
   }, []);
 
   const onSubmit = () => {
+    const signInValues = {
+      password: password,
+      userEmail: userEmail,
+      setIsLoggedIn: setIsLoggedIn,
+      setLoginError: setLoginError,
+    };
+
     try {
-      signIn();
+      signIn({ ...signInValues });
     } catch (error) {
       console.log(error);
     }
@@ -38,33 +43,6 @@ const SignInPageBody = ({}) => {
       setPassword(value);
     }
   };
-
-  async function signIn() {
-    try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/account/v1/auth/signin/custom/account`,
-        {
-          password: password,
-          email: userEmail,
-        }
-      );
-      localStorage.setItem("belloga-page", data.response.accessToken);
-      if (localStorage.getItem("belloga-page")) {
-        setIsLoggedIn(true);
-      }
-
-      window.location.href = "/labeling/list";
-    } catch (error) {
-      setLoginError(() => true);
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
 
   return (
     <>

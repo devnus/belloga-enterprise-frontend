@@ -1,16 +1,8 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import imgLogo from "../assets/images/belloga_character.png";
+import { createUser } from "../apis/auth";
 import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
-
-type CreateUserResponse = {
-  name: string;
-  job: string;
-  id: string;
-  createdAt: string;
-};
 
 const SignUpPageBody = ({}) => {
   const [email, setEmail] = useState<string>("");
@@ -22,8 +14,15 @@ const SignUpPageBody = ({}) => {
   const [isSamePW, setIsSamePW] = useState<boolean>(false);
 
   const onSubmit = () => {
+    const userInfo = {
+      password: password,
+      phoneNumber: userTel,
+      organization: enterpriseName,
+      name: userName,
+      email: email,
+    };
     try {
-      createUser();
+      createUser({ ...userInfo });
     } catch (error) {
       console.log(error);
     }
@@ -43,30 +42,6 @@ const SignUpPageBody = ({}) => {
       setUserName(value);
     }
   };
-
-  async function createUser() {
-    try {
-      const { data } = await axios.post<CreateUserResponse>(
-        `${process.env.REACT_APP_API_URL}/api/account/v1/auth/signup/custom/account/enterprise`,
-        {
-          password: password,
-          phoneNumber: userTel,
-          organization: enterpriseName,
-          name: userName,
-          email: email,
-        }
-      );
-      window.location.href = "/signIn";
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
 
   const checkPasswordTrue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
