@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../states/LoginState";
 import LabelingProcess from "../components/MainPage/LabelingProcess";
-import data from "assets/icons/data_icon.png";
+import data from "../assets/icons/data_icon.png";
 import search from "assets/icons/search_icon.png";
 import logo from "assets/images/belloga_white.png";
 import LabelingServiceDescription from "../components/MainPage/LabeingServiceDescription";

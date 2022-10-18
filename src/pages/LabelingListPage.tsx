@@ -6,6 +6,7 @@ import MainTop from "../components/MainTop";
 import { useRecoilState } from "recoil";
 import { UserInfoState } from "../states/UserInfoState";
 import LabelingListTabContents from "../components/LabelingListTabContents";
+// import api from "../apis/tokenInterceptor";
 
 type LabelingProjectInfo = {
   dataType: string;
@@ -92,12 +93,7 @@ function LabelingListPage() {
   async function getUserInfo() {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/user/v1/enterprise`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("belloga-page")}`,
-          },
-        }
+        `${process.env.REACT_APP_API_URL}/api/user/v1/enterprise`
       );
       setUserInfo(() => data.response);
     } catch (error) {

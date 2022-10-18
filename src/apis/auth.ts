@@ -1,5 +1,4 @@
 import axios from "axios";
-import { u } from "msw/lib/glossary-dc3fd077";
 
 export async function signIn({
   password,
@@ -17,12 +16,13 @@ export async function signIn({
       }
     );
 
-    const { accessToken } = data.response.accessToken;
+    const accessToken = data.response.accessToken;
 
     //Token을 저장
     localStorage.setItem("belloga-refresh", data.response.refreshToken);
 
     axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
     setIsLoggedIn(true);
 
     window.location.href = "/";
