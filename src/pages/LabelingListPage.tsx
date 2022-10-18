@@ -59,12 +59,7 @@ function LabelingListPage() {
   async function getLabelingData() {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/project/v1/project/my`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("belloga-page")}`,
-          },
-        }
+        `${process.env.REACT_APP_API_URL}/api/project/v1/project/my`
       );
       const myLabelingProjects = data.response.content;
 

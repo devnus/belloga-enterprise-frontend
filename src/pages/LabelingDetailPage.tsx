@@ -206,7 +206,7 @@ const LabelingDetailPageBody = ({}) => {
               </div>
             </div>
 
-            <div className="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3 h-96">
+            <div className="w-full mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3 h-96">
               <div className="flex flex-col-reverse  ">
                 <form action="#">
                   <div>
@@ -314,17 +314,6 @@ const LabelingDetailPageBody = ({}) => {
                     </button>
                   </div>
                 </form>
-              </div>
-
-              <div className="border-t border-gray-200 mt-10 pt-10">
-                <h3 className="text-sm font-medium text-gray-900">License</h3>
-                <p className="mt-4 text-sm text-gray-500">
-                  For personal and professional use. You cannot resell or
-                  redistribute these icons in their original or modified state.{" "}
-                  <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                    Read full license
-                  </a>
-                </p>
               </div>
             </div>
           </div>

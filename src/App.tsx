@@ -10,10 +10,6 @@ import { LoginState } from "./states/LoginState";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
-  useEffect(() => {
-    if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
-  });
-
   return (
     <>
       <NavBar />

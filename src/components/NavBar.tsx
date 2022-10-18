@@ -23,6 +23,7 @@ const NavBar = () => {
     localStorage.removeItem("belloga-refresh"); //refreshToken 제거
 
     setIsLoggedIn(false);
+    alert("로그아웃 되었습니다");
   };
 
   return (

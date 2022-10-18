@@ -17,13 +17,13 @@ export async function signIn({
       }
     );
 
+    const { accessToken } = data.response.accessToken;
+
     //Token을 저장
-    localStorage.setItem("belloga-page", data.response.accessToken);
     localStorage.setItem("belloga-refresh", data.response.refreshToken);
 
-    if (localStorage.getItem("belloga-page")) {
-      setIsLoggedIn(true);
-    }
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    setIsLoggedIn(true);
 
     window.location.href = "/";
   } catch (error) {
