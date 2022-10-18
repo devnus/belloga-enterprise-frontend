@@ -1,5 +1,5 @@
 import axios from "axios";
-import { tokenSlice } from "slices/Auth";
+import { SET_TOKEN, tokenSlice } from "slices/Auth";
 
 export async function signIn({
   password,
@@ -7,6 +7,7 @@ export async function signIn({
   setIsLoggedIn,
   setLoginError,
   dispatch,
+  navigate,
 }: any) {
   //obj 형태로 전달받음
   try {
@@ -22,14 +23,11 @@ export async function signIn({
 
     //Token을 저장
     localStorage.setItem("belloga-refresh", data.response.refreshToken);
-
-    dispatch(tokenSlice.actions.SET_TOKEN(accessToken));
-
-    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    dispatch(tokenSlice.actions.SET_TOKEN({ accessToken: accessToken }));
 
     setIsLoggedIn(true);
 
-    window.location.href = "/";
+    navigate("/");
   } catch (error) {
     setLoginError(() => true);
     if (axios.isAxiosError(error)) {

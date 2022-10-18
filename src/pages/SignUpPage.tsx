@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { createUser } from "../apis/auth";
 import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
@@ -12,6 +12,7 @@ const SignUpPageBody = ({}) => {
   const [userTel, setUserTel] = useState<string>("");
   const [enterpriseName, setEnterpriseName] = useState<string>("");
   const [isSamePW, setIsSamePW] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     const userInfo = {

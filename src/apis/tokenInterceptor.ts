@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestHeaders } from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { tokenSlice } from "slices/Auth";
 import { RootState } from "store/reducer";
 
 const UNAUTHORIZED_MESSAGE =
@@ -17,73 +18,77 @@ const customAxios = axios.create({
 
 const Interceptor = ({ children }: any) => {
   const { accessToken } = useSelector((state: RootState) => state.authToken);
-  console.log("뿡");
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("token", accessToken);
-    const reqInterceptor = customAxios.interceptors.request.use(
-      (config) => {
-        const headers = config.headers as HeaderType;
+  console.log("인텃베터 설정", accessToken);
 
-        if (accessToken !== "") {
-          headers["Content-Type"] = "application/json";
-          headers.Authorization = `Bearer ${accessToken}`;
-        }
+  customAxios.interceptors.request.use(
+    (config) => {
+      const headers = config.headers as HeaderType;
+      console.log("액세스토큰", accessToken);
 
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
+      if (accessToken !== "") {
+        headers["Content-Type"] = "application/json";
+        headers.Authorization = `Bearer ${accessToken}`;
       }
-    );
 
-    const resInterceptor = customAxios.interceptors.response.use(
-      (res) => {
-        if (!(res.status === 200 || res.status === 201 || res.status === 204))
-          throw new Error();
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
 
-        if (res.data.errors) throw new Error(res.data.errors);
+  customAxios.interceptors.response.use(
+    (res) => {
+      if (!(res.status === 200 || res.status === 201 || res.status === 204))
+        throw new Error();
 
-        return res.data.data;
-      },
-      async (error) => {
-        const err = error as AxiosError;
+      if (res.data.errors) throw new Error(res.data.errors);
 
-        if (err.response?.status === 401) {
-          console.log(err.response.data.message);
-          const data = err.response.data.message;
+      return res.data.data;
+    },
+    async (error) => {
+      const err = error as AxiosError;
 
-          if (data === UNAUTHORIZED_MESSAGE) {
-            const refreshToken = localStorage.getItem("belloga-refresh");
+      if (err.response?.status === 403 || err.response?.status === 401) {
+        const data = err.response.data.Message;
 
-            const response = await axios.post(
-              `${process.env.REACT_APP_API_URL}/api/account/v1/auth/reissue`,
-              {
-                refreshToken: refreshToken,
-              }
-            );
+        if (data === UNAUTHORIZED_MESSAGE) {
+          const refreshToken = localStorage.getItem("belloga-refresh");
 
-            const accessToken = response.data.response.accessToken;
-            const newRefreshToken = response.data.response.refreshToken;
+          const response = await axios.post(
+            `${process.env.REACT_APP_API_URL}/api/account/v1/auth/reissue`,
+            {
+              refreshToken: refreshToken,
+            }
+          );
 
-            localStorage.setItem("belloga-refresh", newRefreshToken);
+          const newAccessToken = response.data.response.accessToken;
+          const newRefreshToken = response.data.response.refreshToken;
 
-            // document.cookie = `token=${token}; path=/; max-age=토큰수명`;
+          dispatch(
+            tokenSlice.actions.SET_TOKEN({ accessToken: newAccessToken })
+          );
+          localStorage.setItem("belloga-refresh", newRefreshToken);
 
-            err.config.headers = {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            };
-            // 중단된 요청 (에러난 요청)을 새로운 토큰으로 재전송
-            const originalResponse = await axios.request(err.config);
-            return originalResponse.data.data;
-          }
+          // 중단된 요청 (에러난 요청)을 새로운 토큰으로 재전송
+          const originalRequest = err.config;
+
+          originalRequest.headers = {
+            "Content-Type": "application/json",
+            Authorization: `${newAccessToken}`,
+          };
+          const originalResponse = await axios.request(originalRequest);
+
+          return originalResponse.data.data;
         }
-
-        return Promise.reject(error);
       }
-    );
-  }, []);
+
+      return Promise.reject(error);
+    }
+  );
+
   return children;
 };
 

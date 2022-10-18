@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { signIn } from "../apis/auth";
 import MainTop from "../components/MainTop";
@@ -12,6 +12,7 @@ const SignInPageBody = () => {
   const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     const signInValues = {
@@ -20,6 +21,7 @@ const SignInPageBody = () => {
       setIsLoggedIn: setIsLoggedIn,
       setLoginError: setLoginError,
       dispatch: dispatch,
+      navigate: navigate,
     };
 
     try {

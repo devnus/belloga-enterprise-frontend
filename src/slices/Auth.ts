@@ -9,7 +9,7 @@ export const tokenSlice = createSlice({
   reducers: {
     SET_TOKEN: (state, action) => {
       state.authenticated = true;
-      state.accessToken = action.payload;
+      state.accessToken = action.payload.accessToken;
     },
     DELETE_TOKEN: (state) => {
       state.authenticated = false;
