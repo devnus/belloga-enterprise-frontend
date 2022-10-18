@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { signIn } from "../apis/auth";
@@ -10,6 +11,7 @@ const SignInPageBody = () => {
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const dispatch = useDispatch();
 
   const onSubmit = () => {
     const signInValues = {
@@ -17,6 +19,7 @@ const SignInPageBody = () => {
       userEmail: userEmail,
       setIsLoggedIn: setIsLoggedIn,
       setLoginError: setLoginError,
+      dispatch: dispatch,
     };
 
     try {

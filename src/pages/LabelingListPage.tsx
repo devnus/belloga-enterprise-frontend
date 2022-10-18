@@ -6,7 +6,7 @@ import MainTop from "../components/MainTop";
 import { useRecoilState } from "recoil";
 import { UserInfoState } from "../states/UserInfoState";
 import LabelingListTabContents from "../components/LabelingListTabContents";
-// import api from "../apis/tokenInterceptor";
+import api from "../apis/tokenInterceptor";
 
 type LabelingProjectInfo = {
   dataType: string;
@@ -59,9 +59,7 @@ function LabelingListPage() {
 
   async function getLabelingData() {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/project/v1/project/my`
-      );
+      const { data } = await api.get(`/api/project/v1/project/my`);
       const myLabelingProjects = data.response.content;
 
       //Tab Bar에 라벨링 개수를 나타내줌
@@ -92,9 +90,8 @@ function LabelingListPage() {
 
   async function getUserInfo() {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/user/v1/enterprise`
-      );
+      const { data } = await api.get(`/api/user/v1/enterprise`);
+
       setUserInfo(() => data.response);
     } catch (error) {
       if (axios.isAxiosError(error)) {

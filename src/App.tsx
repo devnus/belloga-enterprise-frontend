@@ -1,3 +1,4 @@
+import { Interceptor } from "apis/tokenInterceptor";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -12,9 +13,11 @@ function App() {
 
   return (
     <>
-      <NavBar />
-      <AppRouter isLoggedIn={isLoggedIn} />
-      <Footer />
+      <Interceptor>
+        <NavBar />
+        <AppRouter isLoggedIn={isLoggedIn} />
+        <Footer />
+      </Interceptor>
     </>
   );
 }
