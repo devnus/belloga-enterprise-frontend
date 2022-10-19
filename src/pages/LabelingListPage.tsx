@@ -69,12 +69,12 @@ function LabelingListPage() {
       const completedProjCount = myLabelingProjects.filter(
         (proj: any) => proj.isAgreed === true
       );
-      setTabNames(() => (tabs[0].count = pendingProjCount.length));
-      setTabNames(() => (tabs[1].count = completedProjCount.length));
+      setTabNames(() => (tabs[2].count = pendingProjCount.length));
+      setTabNames(() => (tabs[0].count = completedProjCount.length));
 
       //api로 받아온 데이터를 저장
       //라벨링 중, 라벨링 완료, 라벨링 대기
-      setProjectList(() => [pendingProjCount, completedProjCount]);
+      setProjectList(() => [completedProjCount, [], pendingProjCount]);
 
       //goal : project를 json array로 담아 어레이 세개로 저장한다.
     } catch (error) {

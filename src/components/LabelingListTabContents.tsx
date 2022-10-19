@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
 import LabelingInfoCard from "./LabelingInfoCard";
+import Skeleton from "./Skeleton";
 
 const LabelingListTabContents = ({
   isTabOpened,
@@ -25,6 +26,8 @@ const LabelingListTabContents = ({
           />
         </div>
       )}
+
+      <Skeleton />
 
       {projectList.map((project: any) => (
         <LabelingInfoCard project={project} key={project.projectId} />
