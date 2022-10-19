@@ -5,8 +5,10 @@ import patternBanner from "../assets/images/banner_mypage_pattern.png";
 import MainTop from "../components/MainTop";
 import { useRecoilState } from "recoil";
 import { UserInfoState } from "../states/UserInfoState";
-import LabelingListTabContents from "../components/LabelingListTabContents";
+import LabelingListTabContents from "../components/LabelingListPage/LabelingListTabContents";
 import api from "../apis/tokenInterceptor";
+import Skeleton from "components/LabelingListPage/Skeleton";
+import SkeletonGrid from "components/LabelingListPage/SkeletonGrid";
 
 type LabelingProjectInfo = {
   dataType: string;
@@ -48,9 +50,11 @@ const tabs = [
 function LabelingListPage() {
   const [projectList, setProjectList] = useState<LabelingProjectInfo[]>([]);
   // const [currentIndex, setCurrentIndex] = useState<number>(1); 페이지네이션 추가용
+
   const [openTab, setOpenTab] = useState(0);
   const [tabNames, setTabNames] = useState(tabs);
   const [userInfo, setUserInfo] = useRecoilState(UserInfoState);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getLabelingData();
@@ -179,7 +183,7 @@ function LabelingListPage() {
                       openTab === index
                         ? "border-mainBlue text-mainBlue font-bold text-xl"
                         : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200 text-xl",
-                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm"
+                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm align-middle"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                     onClick={(e) => {
@@ -194,7 +198,7 @@ function LabelingListPage() {
                           openTab === index
                             ? "bg-indigo-100 text-indigo-600"
                             : "bg-gray-100 text-gray-900",
-                          "hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block text-lg"
+                          "ml-3 py-0.5 px-2.5 rounded-full font-medium text-lg "
                         )}
                       >
                         {tab.count}
@@ -204,14 +208,21 @@ function LabelingListPage() {
                 ))}
               </nav>
             </div>
-            {projectList.map((project, index) => {
-              const props = {
-                isTabOpened: openTab === index,
-                projectList: project,
-                tabDescription: `${tabs[index].description}이 없습니다`,
-              };
-              return <LabelingListTabContents {...props} />;
-            })}
+
+            {projectList.length === 0 ? (
+              <SkeletonGrid />
+            ) : (
+              <>
+                {projectList.map((project, index) => {
+                  const props = {
+                    isTabOpened: openTab === index,
+                    projectList: project,
+                    tabDescription: `${tabs[index].description}이 없습니다`,
+                  };
+                  return <LabelingListTabContents {...props} />;
+                })}
+              </>
+            )}
           </div>
         </div>
 

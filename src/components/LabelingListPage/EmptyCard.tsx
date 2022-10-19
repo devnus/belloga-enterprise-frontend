@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import emptyImg from "../assets/images/empty_icon.png";
+import emptyImg from "assets/images/empty_icon.png";
 
 const EmptyCard = ({
   emptyMessage = "",
