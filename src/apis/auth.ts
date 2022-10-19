@@ -6,8 +6,10 @@ export async function signIn({
   setIsLoggedIn,
   setLoginError,
   navigate,
+  setLoading,
 }: any) {
   //obj 형태로 전달받음
+  setLoading(() => true);
   try {
     const { data } = await axios.post(
       `${process.env.REACT_APP_API_URL}/api/account/v1/auth/signin/custom/account`,
@@ -24,10 +26,13 @@ export async function signIn({
     };
 
     setIsLoggedIn(tokenInfo);
+    setLoading(() => false);
 
     navigate("/");
   } catch (error) {
     setLoginError(() => true);
+    setLoading(() => false);
+
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
       return error.message;

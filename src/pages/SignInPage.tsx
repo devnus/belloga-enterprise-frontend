@@ -1,5 +1,5 @@
+import Loading from "components/Loading";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { signIn } from "../apis/auth";
@@ -11,24 +11,21 @@ const SignInPageBody = () => {
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = () => {
+    console.log("눌럿뜸");
     const signInValues = {
       password: password,
       userEmail: userEmail,
       setIsLoggedIn: setIsLoggedIn,
       setLoginError: setLoginError,
-      dispatch: dispatch,
       navigate: navigate,
+      setLoading: setLoading,
     };
 
-    try {
-      signIn({ ...signInValues });
-    } catch (error) {
-      console.log(error);
-    }
+    signIn({ ...signInValues });
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +101,7 @@ const SignInPageBody = () => {
                 onClick={onSubmit}
                 className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Sign in
+                {loading ? <Loading /> : "Sign in"}
               </button>
 
               {loginError && (

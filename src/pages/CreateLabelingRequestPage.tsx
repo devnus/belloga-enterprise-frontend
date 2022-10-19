@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import DragDrop from "../components/DragDrop";
 import MainTop from "../components/MainTop";
+import api from "../apis/tokenInterceptor";
 
 interface IFileTypes {
   id: number;
@@ -70,15 +71,7 @@ function CreateLabelingRequestPage() {
   async function createLabeling() {
     makingFormData();
     try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/project/v1/project`,
-        formData,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("belloga-page")}`,
-          },
-        }
-      );
+      const { data } = await api.post(`/api/project/v1/project`, formData);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
