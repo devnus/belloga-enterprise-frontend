@@ -7,7 +7,6 @@ import { useRecoilState } from "recoil";
 import { UserInfoState } from "../states/UserInfoState";
 import LabelingListTabContents from "../components/LabelingListPage/LabelingListTabContents";
 import api from "../apis/tokenInterceptor";
-import Skeleton from "components/LabelingListPage/Skeleton";
 import SkeletonGrid from "components/LabelingListPage/SkeletonGrid";
 
 type LabelingProjectInfo = {
