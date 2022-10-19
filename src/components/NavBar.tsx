@@ -22,7 +22,12 @@ const NavBar = () => {
     localStorage.removeItem("belloga-page"); //accessToken 제거
     localStorage.removeItem("belloga-refresh"); //refreshToken 제거
 
-    setIsLoggedIn(false);
+    const tokenInfo = {
+      accessToken: "",
+      refreshToken: "",
+      authenticated: false,
+    };
+    setIsLoggedIn(tokenInfo);
     alert("로그아웃 되었습니다");
   };
 
@@ -42,7 +47,7 @@ const NavBar = () => {
           {isAuthPage && (
             <div className="ml-auto flex items-center">
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                {isLoggedIn ? (
+                {isLoggedIn.authenticated ? (
                   <>
                     {isMyPage && (
                       <Link

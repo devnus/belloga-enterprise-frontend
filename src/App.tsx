@@ -1,6 +1,5 @@
-import { Interceptor } from "apis/tokenInterceptor";
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useAxiosInterceptor } from "hooks/useAxiosInterceptors";
+import React from "react";
 import { useRecoilState } from "recoil";
 import "./App.css";
 import AppRouter from "./AppRouter";
@@ -9,15 +8,14 @@ import NavBar from "./components/NavBar";
 import { LoginState } from "./states/LoginState";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const [AuthState, setAuthState] = useRecoilState(LoginState);
+  useAxiosInterceptor(AuthState, setAuthState); // AxiosInterceptor 선언
 
   return (
     <>
-      <Interceptor>
-        <NavBar />
-        <AppRouter isLoggedIn={isLoggedIn} />
-        <Footer />
-      </Interceptor>
+      <NavBar />
+      <AppRouter isLoggedIn={AuthState.authenticated} />
+      <Footer />
     </>
   );
 }
