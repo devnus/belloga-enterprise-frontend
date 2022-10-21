@@ -8,6 +8,7 @@ import SignUpPage from "./pages/SignUpPage";
 import CreateLabelingRequestPage from "./pages/CreateLabelingRequestPage";
 import LabelingListPage from "./pages/LabelingListPage";
 import MobilePrivacyPolicy from "./pages/MobilePrivacyPolicy";
+import NotApprovedProjectDetailPage from "pages/NotApprovedProjectDetailPage";
 
 function AppRouter({ isLoggedIn = false }) {
   return (
@@ -20,6 +21,10 @@ function AppRouter({ isLoggedIn = false }) {
         <>
           {/* 로그인이 된 경우 */}
           <Route path="/labeling/detail/:id" element={<LabelingDetailPage />} />
+          <Route
+            path="/labeling/waiting/detail/:id"
+            element={<NotApprovedProjectDetailPage />}
+          />
           <Route
             path="/labeling/request"
             element={<CreateLabelingRequestPage />}
