@@ -62,7 +62,7 @@ function LabelingListPage() {
 
   async function getLabelingData() {
     try {
-      const { data } = await api.get(`/api/project/v1/project/my`);
+      const { data } = await api.get(`/api/project/v1/user/project`);
       const myLabelingProjects = data.response.content;
 
       //Tab Bar에 라벨링 개수를 나타내줌

@@ -150,7 +150,9 @@ const LabelingDetailPageBody = ({}) => {
 
   async function getProjectInfo(projectId: string) {
     try {
-      const { data } = await api.get(`/api/project/v1/project/my/${projectId}`);
+      const { data } = await api.get(
+        `/api/project/v1/user/project/${projectId}`
+      );
 
       setProjectInfo(() => data.response);
     } catch (error) {

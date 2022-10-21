@@ -8,6 +8,7 @@ interface HeaderType extends AxiosRequestHeaders {
 }
 
 export const useAxiosInterceptor = (tokenState: any, setTokenState: any) => {
+  console.log("토큰 인스턴스 생성, ", tokenState);
   // requestHandler는 위와 같은 로직이기에 생략.
   const accessToken = tokenState.accessToken;
   const reqInterceptor = customAxios.interceptors.request.use(

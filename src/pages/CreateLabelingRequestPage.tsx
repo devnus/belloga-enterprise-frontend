@@ -10,7 +10,6 @@ interface IFileTypes {
 }
 
 function CreateLabelingRequestPage() {
-  const [files, setFiles] = useState<IFileTypes[]>([]);
   const radioRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
@@ -18,8 +17,6 @@ function CreateLabelingRequestPage() {
   ];
   const [projectTitle, setProjectTitle] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
-
-  const formData = new FormData();
 
   const onSubmit = () => {
     try {
@@ -42,11 +39,7 @@ function CreateLabelingRequestPage() {
     }
   };
 
-  /**
-   * 입력받은 값을 기반으로 하여 formData에 key-value 형태로 전송할 값을 구성하는 함수
-   */
-
-  const makingFormData = () => {
+  async function createLabeling() {
     //아래에 있는 선택지 중에 선택한 값을 가져와 dataType 객체에 집어넣음
     const dataType = radioRefs
       .map(({ current }) => current)
@@ -58,20 +51,8 @@ function CreateLabelingRequestPage() {
       description: projectDescription,
     };
 
-    formData.append(
-      "project",
-      new Blob([JSON.stringify(projectInfo)], {
-        type: "application/json",
-      })
-    );
-
-    formData.append("upload", files[0].object);
-  };
-
-  async function createLabeling() {
-    makingFormData();
     try {
-      const { data } = await api.post(`/api/project/v1/project`, formData);
+      const { data } = await api.post(`/api/project/v1/project`, projectInfo);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -150,16 +131,6 @@ function CreateLabelingRequestPage() {
                       의뢰하고자 하는 라벨링에 대한 설명을 적어주세요
                     </p>
                   </div>
-
-                  <div className="sm:col-span-6">
-                    <label
-                      htmlFor="cover-photo"
-                      className="block text-base font-medium text-gray-700"
-                    >
-                      파일 업로드
-                    </label>
-                    <DragDrop files={files} setFiles={setFiles} />
-                  </div>
                 </div>
               </div>
 
@@ -232,7 +203,7 @@ function CreateLabelingRequestPage() {
 
             <div className="pt-5">
               <div className="flex justify-center">
-                {projectTitle && projectDescription && files[0] ? (
+                {projectTitle && projectDescription ? (
                   <button
                     onClick={onSubmit}
                     type="button"
