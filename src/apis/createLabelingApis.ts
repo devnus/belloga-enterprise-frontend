@@ -13,6 +13,7 @@ export interface IFileTypes {
  * @param projectDescription 프로젝스 상세 설명을 가져온다.
  * @returns
  */
+
 export async function createLabeling(
   dataType: string | undefined,
   projectTitle: string,
@@ -27,6 +28,33 @@ export async function createLabeling(
 
   try {
     const { data } = await api.post(`/api/project/v1/project`, projectInfo);
+
+    const urlResponse = await api.get(
+      `/api/project/v1/project/${data.response.projectId}/url`
+    );
+
+    const uploadUrl = urlResponse.data.response.url.split("://");
+    uploadUrl[0] = "http";
+
+    await api.put(`${uploadUrl.join("://")}`, files[0]);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.log("error message: ", error.message);
+      return error.message;
+    } else {
+      console.log("unexpected error: ", error);
+      return "An unexpected error occurred";
+    }
+  }
+}
+
+export async function getUploadUrlInfo(
+  projectId: string,
+  setUploadUrl: React.Dispatch<React.SetStateAction<string>>
+) {
+  try {
+    const { data } = await api.get(`/api/project/v1/project/${projectId}/url`);
+    setUploadUrl(() => data.response.url);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);

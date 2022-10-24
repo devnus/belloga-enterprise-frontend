@@ -4,6 +4,8 @@ import NavBar from "../components/NavBar";
 import api from "../apis/tokenInterceptor";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { getUploadUrlInfo, IFileTypes } from "apis/createLabelingApis";
+import DragDrop from "components/DragDrop";
 
 type ProjectInfo = {
   createdDate: string;
@@ -17,53 +19,14 @@ type ProjectInfo = {
   zipUrl: string;
 };
 
-const NotApprovedProjectDetailPageBody = ({}) => {
-  const [projectInfo, setProjectInfo] = useState<ProjectInfo | undefined>();
-  const location = useLocation();
+const NotApprovedProjectDetailPageBody = ({ projectId, projectInfo }: any) => {
   const [uploadUrl, setUploadUrl] = useState<string>("");
-
+  const [files, setFiles] = useState<IFileTypes[]>([]);
   //최초 로딩 시에 정보 가져오기
   useEffect(() => {
     // getLabelingInfo("OCR");
-    const projectId = location.pathname.split("/")[4];
-    getProjectInfo(projectId);
+    getUploadUrlInfo(projectId, setUploadUrl);
   }, []);
-
-  async function getProjectInfo(projectId: string) {
-    try {
-      const { data } = await api.get(
-        `/api/project/v1/user/project/${projectId}`
-      );
-
-      setProjectInfo(() => data.response);
-      getUploadUrlInfo(projectId);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
-
-  async function getUploadUrlInfo(projectId: string) {
-    try {
-      const { data } = await api.get(
-        `/api/project/v1/project/${projectId}/url`
-      );
-      setUploadUrl(() => data.response.url);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
 
   return (
     <>
@@ -112,12 +75,50 @@ const NotApprovedProjectDetailPageBody = ({}) => {
             </div>
           </div>
         </div>
+
+        <div className="sm:col-span-6">
+          <label
+            htmlFor="cover-photo"
+            className="block text-base font-medium text-gray-700"
+          >
+            파일 업로드
+          </label>
+          <DragDrop files={files} setFiles={setFiles} />
+        </div>
       </div>
     </>
   );
 };
 
 const NotApprovedProjectDetailPage = ({}) => {
+  const [projectInfo, setProjectInfo] = useState<ProjectInfo | undefined>();
+  const location = useLocation();
+  const projectId = location.pathname.split("/")[4];
+
+  async function getProjectInfo(projectId: string) {
+    try {
+      const { data } = await api.get(
+        `/api/project/v1/user/project/${projectId}`
+      );
+
+      setProjectInfo(() => data.response);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
+
+  //최초 로딩 시에 정보 가져오기
+  useEffect(() => {
+    // getLabelingInfo("OCR");
+    getProjectInfo(projectId);
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -191,7 +192,10 @@ const NotApprovedProjectDetailPage = ({}) => {
         </nav>
       </MainTop>
 
-      <NotApprovedProjectDetailPageBody />
+      <NotApprovedProjectDetailPageBody
+        projectInfo={projectInfo}
+        projectId={projectId}
+      />
     </>
   );
 };
