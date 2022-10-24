@@ -1,13 +1,7 @@
-import axios from "axios";
 import React, { useRef, useState } from "react";
 import DragDrop from "../components/DragDrop";
 import MainTop from "../components/MainTop";
-import api from "../apis/tokenInterceptor";
-
-interface IFileTypes {
-  id: number;
-  object: File;
-}
+import { createLabeling, IFileTypes } from "apis/createLabelingApis";
 
 function CreateLabelingRequestPage() {
   const radioRefs = [
@@ -17,10 +11,16 @@ function CreateLabelingRequestPage() {
   ];
   const [projectTitle, setProjectTitle] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
+  const [files, setFiles] = useState<IFileTypes[]>([]);
 
   const onSubmit = () => {
+    //아래에 있는 선택지 중에 선택한 값을 가져와 dataType 객체에 집어넣음
+    const dataType = radioRefs
+      .map(({ current }) => current)
+      .find((current) => current?.checked)?.value;
+
     try {
-      createLabeling();
+      createLabeling(dataType, projectTitle, projectDescription, files);
     } catch (error) {
       console.log(error);
     }
@@ -38,31 +38,6 @@ function CreateLabelingRequestPage() {
       setProjectDescription(value);
     }
   };
-
-  async function createLabeling() {
-    //아래에 있는 선택지 중에 선택한 값을 가져와 dataType 객체에 집어넣음
-    const dataType = radioRefs
-      .map(({ current }) => current)
-      .find((current) => current?.checked)?.value;
-
-    const projectInfo = {
-      name: projectTitle,
-      dataType: dataType,
-      description: projectDescription,
-    };
-
-    try {
-      const { data } = await api.post(`/api/project/v1/project`, projectInfo);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
 
   return (
     <>
@@ -130,6 +105,16 @@ function CreateLabelingRequestPage() {
                     <p className="mt-2 text-sm text-gray-500">
                       의뢰하고자 하는 라벨링에 대한 설명을 적어주세요
                     </p>
+                  </div>
+
+                  <div className="sm:col-span-6">
+                    <label
+                      htmlFor="cover-photo"
+                      className="block text-base font-medium text-gray-700"
+                    >
+                      파일 업로드
+                    </label>
+                    <DragDrop files={files} setFiles={setFiles} />
                   </div>
                 </div>
               </div>
@@ -203,7 +188,7 @@ function CreateLabelingRequestPage() {
 
             <div className="pt-5">
               <div className="flex justify-center">
-                {projectTitle && projectDescription ? (
+                {projectTitle && projectDescription && files[0] ? (
                   <button
                     onClick={onSubmit}
                     type="button"

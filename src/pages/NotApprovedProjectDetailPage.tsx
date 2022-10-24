@@ -1,19 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import ReactJson from "react-json-view";
+import React, { useEffect, useState } from "react";
 import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
 import api from "../apis/tokenInterceptor";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-
-type BoundingBoxInfo = {
-  imageUrl: string;
-  reliability: number;
-  textLabel: string;
-  totalLabelerNum: number;
-  x: number[];
-  y: number[];
-};
 
 type ProjectInfo = {
   createdDate: string;
