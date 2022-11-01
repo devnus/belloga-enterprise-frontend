@@ -26,7 +26,16 @@ function CreateLabelingRequestPage() {
       .find((current) => current?.checked)?.value;
 
     try {
-      createLabeling(dataType, projectTitle, projectDescription, files);
+      const returnMyPage = () => {
+        navigate("/labeling/list");
+      };
+      createLabeling(
+        dataType,
+        projectTitle,
+        projectDescription,
+        files,
+        returnMyPage
+      );
     } catch (error) {
       console.log(error);
     }

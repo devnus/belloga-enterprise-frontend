@@ -18,7 +18,8 @@ export async function createLabeling(
   dataType: string | undefined,
   projectTitle: string,
   projectDescription: string,
-  files: IFileTypes[]
+  files: IFileTypes[],
+  moveToMain: () => void
 ) {
   const projectInfo = {
     name: projectTitle,
@@ -37,6 +38,7 @@ export async function createLabeling(
     uploadUrl[0] = "http";
 
     await axios.put(`${uploadUrl.join("://")}`, files[0].object);
+    moveToMain();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);
