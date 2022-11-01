@@ -36,7 +36,7 @@ export async function createLabeling(
     const uploadUrl = urlResponse.data.response.url.split("://");
     uploadUrl[0] = "http";
 
-    await api.put(`${uploadUrl.join("://")}`, files[0]);
+    await axios.put(`${uploadUrl.join("://")}`, files[0].object);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.log("error message: ", error.message);

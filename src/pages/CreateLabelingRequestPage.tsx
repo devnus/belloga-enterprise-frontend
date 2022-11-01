@@ -3,6 +3,11 @@ import DragDrop from "../components/DragDrop";
 import MainTop from "../components/MainTop";
 import { createLabeling, IFileTypes } from "apis/createLabelingApis";
 
+import textIcon from "../assets/icons/ico_text.png";
+import OCRIcon from "../assets/icons/ico_ocr.png";
+import audioIcon from "../assets/icons/ico_audio.png";
+import { useNavigate } from "react-router-dom";
+
 function CreateLabelingRequestPage() {
   const radioRefs = [
     useRef<HTMLInputElement>(null),
@@ -12,6 +17,7 @@ function CreateLabelingRequestPage() {
   const [projectTitle, setProjectTitle] = useState<string>("");
   const [projectDescription, setProjectDescription] = useState<string>("");
   const [files, setFiles] = useState<IFileTypes[]>([]);
+  const navigate = useNavigate();
 
   const onSubmit = () => {
     //아래에 있는 선택지 중에 선택한 값을 가져와 dataType 객체에 집어넣음
@@ -50,19 +56,19 @@ function CreateLabelingRequestPage() {
         </MainTop>
 
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <form className="space-y-8 divide-y divide-gray-200">
-            <div className="space-y-8 divide-y divide-gray-200">
+          <form className="space-y-8">
+            <div className="space-y-8">
               <div>
-                <div>
-                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                <div className="border-b-2 border-black py-4">
+                  <h3 className="text-2xl font-bold leading-6 text-gray-900">
                     라벨링 신청
                   </h3>
-                  <p className="mt-1 text-sm text-gray-500">
+                  <p className="mt-2 text-sm text-gray-500">
                     의뢰하고자 하는 라벨링 정보를 작성해 주세요.
                   </p>
                 </div>
 
-                <div className="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                <div className="mt-10 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                   <div className="sm:col-span-6">
                     <label
                       htmlFor="projectTitle"
@@ -79,35 +85,35 @@ function CreateLabelingRequestPage() {
                         placeholder="예시) 자율주행 자동차 인식 모델을 위한 표지판 OCR"
                         value={projectTitle}
                         onChange={onChange}
-                        className="block w-full min-w-0 flex-1 py-2 px-2 border rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="block w-full min-w-0 flex-1 py-4 px-4 border rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
                     </div>
                   </div>
 
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-6 pt-5">
                     <label
                       htmlFor="projectDescription"
                       className="block text-base font-medium text-gray-700"
                     >
                       라벨링 설명
                     </label>
+                    <p className="mt-2 text-sm text-gray-500">
+                      의뢰하고자 하는 라벨링에 대한 설명을 적어주세요
+                    </p>
                     <div className="mt-1">
                       <textarea
                         id="projectDescription"
                         name="projectDescription"
                         rows={3}
                         placeholder="예시) 제시한 사진 속 표지판의 글자를 라벨링 요청합니다."
-                        className="p-2 block w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        className="p-4 block w-full rounded-md border-gray-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         value={projectDescription}
                         onChange={onChange}
                       />
                     </div>
-                    <p className="mt-2 text-sm text-gray-500">
-                      의뢰하고자 하는 라벨링에 대한 설명을 적어주세요
-                    </p>
                   </div>
 
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-6 pt-5">
                     <label
                       htmlFor="cover-photo"
                       className="block text-base font-medium text-gray-700"
@@ -121,7 +127,7 @@ function CreateLabelingRequestPage() {
 
               <div className="pt-8">
                 <div>
-                  <h3 className="text-lg font-medium leading-6 text-gray-900">
+                  <h3 className="text-base font-medium leading-6 text-gray-900">
                     라벨링 종류
                   </h3>
                   <p className="mt-1 text-sm text-gray-500">
@@ -137,15 +143,21 @@ function CreateLabelingRequestPage() {
                           name="push-notifications"
                           type="radio"
                           value="Text Annotation"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
                           ref={radioRefs[0]}
                           defaultChecked
                         />
+
                         <label
                           htmlFor="push-everything"
-                          className="ml-3 block text-sm font-medium text-gray-700"
+                          className="ml-3 block text-sm font-medium text-gray-700 flex"
                         >
-                          Text Annotation
+                          <img
+                            className="mr-2 h-6 w-auto"
+                            src={textIcon}
+                            alt="text Icon"
+                          />
+                          <div>Text Annotation</div>
                         </label>
                       </div>
                       <div className="flex items-center">
@@ -154,13 +166,19 @@ function CreateLabelingRequestPage() {
                           name="push-notifications"
                           type="radio"
                           value="OCR"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
                           ref={radioRefs[1]}
                         />
+
                         <label
                           htmlFor="push-email"
-                          className="ml-3 block text-sm font-medium text-gray-700"
+                          className="ml-3 block text-sm font-medium text-gray-700 flex"
                         >
+                          <img
+                            className="mr-2 h-6 w-auto"
+                            src={OCRIcon}
+                            alt="belloga logo"
+                          />
                           OCR
                         </label>
                       </div>
@@ -170,14 +188,20 @@ function CreateLabelingRequestPage() {
                           name="push-notifications"
                           type="radio"
                           value="Voice Classify"
-                          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
                           ref={radioRefs[2]}
                         />
+
                         <label
                           htmlFor="push-nothing"
-                          className="ml-3 block text-sm font-medium text-gray-700"
+                          className="ml-3 block text-sm font-medium text-gray-700 flex"
                         >
-                          Voice Classify
+                          <img
+                            className="mr-2 h-6 w-auto"
+                            src={audioIcon}
+                            alt="belloga logo"
+                          />
+                          <div> Voice Classify</div>
                         </label>
                       </div>
                     </div>
@@ -192,14 +216,14 @@ function CreateLabelingRequestPage() {
                   <button
                     onClick={onSubmit}
                     type="button"
-                    className="w-80 mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 flex justify-center py-4 px-8 border border-transparent rounded-2xl shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="w-80 mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 flex justify-center py-4 px-8 rounded-2xl shadow-sm text-xl font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     라벨링 신청
                   </button>
                 ) : (
                   <button
                     type="button"
-                    className="w-80 mt-10 mb-5 bg-gray-400 flex justify-center py-4 px-4 border border-transparent rounded-2xl shadow-sm text-lg font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
+                    className="w-80 mt-10 mb-5 bg-gray-400 flex justify-center py-4 px-4 rounded-2xl shadow-sm text-xl font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded cursor-not-allowed focus:outline-none disabled:opacity-75"
                     disabled
                   >
                     빈칸을 모두 입력해주세요
