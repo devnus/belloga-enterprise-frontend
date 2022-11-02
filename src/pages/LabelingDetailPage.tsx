@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import api from "../apis/tokenInterceptor";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 
 type BoundingBoxInfo = {
   imageUrl: string;
@@ -35,16 +36,10 @@ const LabelingDetailPageBody = ({}) => {
   const [imageUrl, setImageUrl] = useState("");
   const [labeledText, setLabeledText] = useState<string[]>([]);
   const location = useLocation();
+  const projectId = location.pathname.split("/")[3];
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
-
-  //최초 로딩 시에 정보 가져오기
-  useEffect(() => {
-    // getLabelingInfo("OCR");
-    const projectId = location.pathname.split("/")[3];
-    getProjectInfo(projectId);
-  }, []);
 
   //api 불러온 후 url 할당, 정보 가공
   useEffect(() => {
@@ -148,24 +143,6 @@ const LabelingDetailPageBody = ({}) => {
     }
   };
 
-  async function getProjectInfo(projectId: string) {
-    try {
-      const { data } = await api.get(
-        `/api/project/v1/user/project/${projectId}`
-      );
-
-      setProjectInfo(() => data.response);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
-
   // draw rectangle
   const drawRect = (info: any, style: any = {}) => {
     const { x, y, w, h } = info;
@@ -194,42 +171,7 @@ const LabelingDetailPageBody = ({}) => {
         ></div>
 
         <div className="w-full">
-          <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
-            <div className="py-8 px-2 w-full mx-auto mx-20">
-              <div className="relative justify-between flex flex-row ">
-                <div className=" flex flex-row ">
-                  <p className="capitalize text-xl mb-1 text-gray-500">
-                    라벨링 시작일
-                  </p>
-                  <h2 className="font-semibold text-xl ml-5">
-                    {projectInfo?.createdDate.split("T")[0]}
-                  </h2>
-                </div>
-                <div className="flex flex-row ">
-                  <p className="capitalize text-xl mb-1 text-gray-500">
-                    담당자
-                  </p>
-                  <h2 className="font-semibold text-xl ml-5">홍길동</h2>
-                </div>
-                <div className="flex flex-row ">
-                  <p className="capitalize text-xl mb-1 text-gray-500">
-                    이메일 주소
-                  </p>
-                  <h2 className="font-semibold text-xl ml-5">
-                    test@belloga.com
-                  </h2>
-                </div>
-              </div>
-              <div className=" flex flex-row items-start my-5">
-                <p className="basis-1/6 text-xl mb-1 text-gray-500 ">
-                  라벨링 설명
-                </p>
-                <h2 className="font-semibold text-xl ml-5">
-                  {projectInfo?.description}
-                </h2>
-              </div>
-            </div>
-          </div>
+          <ProjectDescription projectId={projectId} />
         </div>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">

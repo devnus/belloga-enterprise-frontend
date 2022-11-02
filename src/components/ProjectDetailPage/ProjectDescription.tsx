@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "react-query";
 import api from "apis/tokenInterceptor";
-import axios from "axios";
+import LineSkeleton from "components/LineSkeleton";
 
 type ProjectInfo = {
   createdDate: string;
@@ -14,32 +15,26 @@ type ProjectInfo = {
   zipUrl: string;
 };
 
-export const ProjectDescription = ({ projectId = "" }) => {
-  const [projectInfo, setProjectInfo] = useState<ProjectInfo | undefined>();
+type dataType = {
+  dateTime: string;
+  id: string;
+  response: ProjectInfo;
+  success: boolean;
+};
 
-  //최초 로딩 시에 정보 가져오기
-  useEffect(() => {
-    // getLabelingInfo("OCR");
-    getProjectInfo(projectId);
-  }, [projectId]);
+export const ProjectDescription = ({ projectId = "" }) => {
+  const { data, isLoading, error } = useQuery<dataType>(
+    ["projectInfo", projectId],
+    () => getProjectInfo(projectId)
+  );
 
   async function getProjectInfo(projectId: string) {
-    try {
-      const { data } = await api.get(
-        `/api/project/v1/user/project/${projectId}`
-      );
+    const { data } = await api.get(`/api/project/v1/user/project/${projectId}`);
 
-      setProjectInfo(() => data.response);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
+    return data;
   }
+
+  console.log(data);
 
   return (
     <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
@@ -49,9 +44,13 @@ export const ProjectDescription = ({ projectId = "" }) => {
             <p className="capitalize text-xl mb-1 text-gray-500">
               라벨링 시작일
             </p>
-            <h2 className="font-semibold text-xl ml-5">
-              {projectInfo?.createdDate.split("T")[0]}
-            </h2>
+            {isLoading ? (
+              <LineSkeleton />
+            ) : (
+              <h2 className="font-semibold text-xl ml-5">
+                {data?.response.createdDate.split("T")[0]}
+              </h2>
+            )}
           </div>
           <div className="flex flex-row ">
             <p className="capitalize text-xl mb-1 text-gray-500">담당자</p>
@@ -64,9 +63,13 @@ export const ProjectDescription = ({ projectId = "" }) => {
         </div>
         <div className=" flex flex-row items-start my-5">
           <p className="basis-1/6 text-xl mb-1 text-gray-500 ">라벨링 설명</p>
-          <h2 className="font-semibold text-xl ml-5">
-            {projectInfo?.description}
-          </h2>
+          {isLoading ? (
+            <LineSkeleton />
+          ) : (
+            <h2 className="font-semibold text-xl ml-5">
+              {data?.response.description}
+            </h2>
+          )}
         </div>
       </div>
     </div>
