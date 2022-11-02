@@ -38,31 +38,27 @@ export const ProjectDescription = ({ projectId = "" }) => {
 
   return (
     <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
-      <div className="py-8 px-2 w-full  mx-20">
-        <div className="relative justify-between flex flex-row ">
-          <div className=" flex flex-row ">
-            <p className="capitalize text-xl mb-1 text-gray-500">
-              라벨링 시작일
-            </p>
-            {isLoading ? (
-              <LineSkeleton />
-            ) : (
-              <h2 className="font-semibold text-xl ml-5">
-                {data?.response.createdDate.split("T")[0]}
-              </h2>
-            )}
-          </div>
-          <div className="flex flex-row ">
-            <p className="capitalize text-xl mb-1 text-gray-500">담당자</p>
-            <h2 className="font-semibold text-xl ml-5">홍길동</h2>
-          </div>
-          <div className="flex flex-row ">
-            <p className="capitalize text-xl mb-1 text-gray-500">이메일 주소</p>
-            <h2 className="font-semibold text-xl ml-5">test@belloga.com</h2>
-          </div>
+      <div className="py-8 px-10 w-full grid grid-cols-9 gap-4">
+        <DetailTitle text={"라벨링 시작일"} />
+        <div className="col-span-2">
+          {isLoading ? (
+            <LineSkeleton />
+          ) : (
+            <h2 className="font-semibold text-xl ml-5">
+              {data?.response.createdDate.split("T")[0]}
+            </h2>
+          )}
         </div>
-        <div className=" flex flex-row items-start my-5">
-          <p className="basis-1/6 text-xl mb-1 text-gray-500 ">라벨링 설명</p>
+
+        <DetailTitle text={"담당자"} />
+        <h2 className="font-semibold text-xl ml-5 col-span-2">홍길동</h2>
+        <DetailTitle text={"이메일 주소"} />
+        <h2 className="font-semibold text-xl ml-5 col-span-2">
+          test@belloga.com
+        </h2>
+
+        <DetailTitle text={"라벨링 설명"} />
+        <div className="col-span-8">
           {isLoading ? (
             <LineSkeleton />
           ) : (
@@ -73,5 +69,13 @@ export const ProjectDescription = ({ projectId = "" }) => {
         </div>
       </div>
     </div>
+  );
+};
+
+const DetailTitle = ({ text = "" }) => {
+  return (
+    <p className="basis-1/6 text-xl mb-1 text-gray-500 text-right col-span-1">
+      {text}
+    </p>
   );
 };
