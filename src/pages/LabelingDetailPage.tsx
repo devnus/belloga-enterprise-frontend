@@ -1,8 +1,10 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import ReactJson from "react-json-view";
 import MainTop from "../components/MainTop";
 import NavBar from "../components/NavBar";
+import api from "../apis/tokenInterceptor";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 type BoundingBoxInfo = {
   imageUrl: string;
@@ -13,19 +15,35 @@ type BoundingBoxInfo = {
   y: number[];
 };
 
+type ProjectInfo = {
+  createdDate: string;
+  dataType: string;
+  description: string;
+  isAgreed: boolean;
+  name: string;
+  progressRate: number;
+  projectId: number;
+  zipUUID: string;
+  zipUrl: string;
+};
+
 const LabelingDetailPageBody = ({}) => {
   const [openTab, setOpenTab] = useState(1);
   const [labelingResult, setLabelingResult] = useState([]);
   const [labelingResultJSON, setLabelingResultJSON] = useState({});
+  const [projectInfo, setProjectInfo] = useState<ProjectInfo | undefined>();
   const [imageUrl, setImageUrl] = useState("");
   const [labeledText, setLabeledText] = useState<string[]>([]);
+  const location = useLocation();
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
 
   //최초 로딩 시에 정보 가져오기
   useEffect(() => {
-    getLabelingInfo("OCR");
+    // getLabelingInfo("OCR");
+    const projectId = location.pathname.split("/")[3];
+    getProjectInfo(projectId);
   }, []);
 
   //api 불러온 후 url 할당, 정보 가공
@@ -110,7 +128,7 @@ const LabelingDetailPageBody = ({}) => {
 
   const getLabelingInfo = async (type: string) => {
     try {
-      await axios
+      await api
         .get(
           `http://a138b0b67de234557afc8eaf29aa97b6-1258302528.ap-northeast-2.elb.amazonaws.com/api/labeled-result/v1/verification/results/OCR`,
           {
@@ -129,6 +147,24 @@ const LabelingDetailPageBody = ({}) => {
     } finally {
     }
   };
+
+  async function getProjectInfo(projectId: string) {
+    try {
+      const { data } = await api.get(
+        `/api/project/v1/user/project/${projectId}`
+      );
+
+      setProjectInfo(() => data.response);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
 
   // draw rectangle
   const drawRect = (info: any, style: any = {}) => {
@@ -165,7 +201,9 @@ const LabelingDetailPageBody = ({}) => {
                   <p className="capitalize text-xl mb-1 text-gray-500">
                     라벨링 시작일
                   </p>
-                  <h2 className="font-semibold text-xl ml-5">2022.05.06</h2>
+                  <h2 className="font-semibold text-xl ml-5">
+                    {projectInfo?.createdDate.split("T")[0]}
+                  </h2>
                 </div>
                 <div className="flex flex-row ">
                   <p className="capitalize text-xl mb-1 text-gray-500">
@@ -187,9 +225,7 @@ const LabelingDetailPageBody = ({}) => {
                   라벨링 설명
                 </p>
                 <h2 className="font-semibold text-xl ml-5">
-                  과자 이름 봉지 이미지 분석을 위한 라벨링 요청입니다. 설명은
-                  이렇게 첨부되는 파일을 확인하여 이미지 분석을 해주세요.
-                  컨텐츠의 내용이 이렇게 입력됩니다. 참고해주세요.
+                  {projectInfo?.description}
                 </h2>
               </div>
             </div>
@@ -206,7 +242,7 @@ const LabelingDetailPageBody = ({}) => {
               </div>
             </div>
 
-            <div className="max-w-2xl mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3 h-96">
+            <div className="w-full mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3 h-96">
               <div className="flex flex-col-reverse  ">
                 <form action="#">
                   <div>
@@ -314,17 +350,6 @@ const LabelingDetailPageBody = ({}) => {
                     </button>
                   </div>
                 </form>
-              </div>
-
-              <div className="border-t border-gray-200 mt-10 pt-10">
-                <h3 className="text-sm font-medium text-gray-900">License</h3>
-                <p className="mt-4 text-sm text-gray-500">
-                  For personal and professional use. You cannot resell or
-                  redistribute these icons in their original or modified state.{" "}
-                  <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                    Read full license
-                  </a>
-                </p>
               </div>
             </div>
           </div>

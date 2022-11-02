@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import BottomNavigationBar from "../components/BottomNavigationBar";
-import EmptyCard from "../components/EmptyCard";
-import LabelingInfoCard from "../components/LabelingInfoCard";
-import NavBar from "../components/NavBar";
 import patternBanner from "../assets/images/banner_mypage_pattern.png";
 import MainTop from "../components/MainTop";
+import { useRecoilState } from "recoil";
+import { UserInfoState } from "../states/UserInfoState";
+import LabelingListTabContents from "../components/LabelingListPage/LabelingListTabContents";
+import api from "../apis/tokenInterceptor";
+import SkeletonGrid from "components/LabelingListPage/SkeletonGrid";
 
 type LabelingProjectInfo = {
   dataType: string;
@@ -22,45 +23,79 @@ function classNames(...classes: string[]) {
 }
 
 const tabs = [
-  { name: "라벨링 중", href: "#", count: "", current: false },
-  { name: "라벨링 완료", href: "#", count: "", current: false },
-  { name: "승인 대기", href: "#", count: "", current: true },
+  {
+    name: "라벨링 중",
+    href: "#",
+    count: "",
+    current: false,
+    description: "진행 중인 라벨링",
+  },
+  {
+    name: "라벨링 완료",
+    href: "#",
+    count: "",
+    current: false,
+    description: "완료된 라벨링",
+  },
+  {
+    name: "승인 대기",
+    href: "#",
+    count: "",
+    current: true,
+    description: "승인 대기중인 라벨링",
+  },
 ];
 
 function LabelingListPage() {
   const [projectList, setProjectList] = useState<LabelingProjectInfo[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(1);
+  // const [currentIndex, setCurrentIndex] = useState<number>(1); 페이지네이션 추가용
+
   const [openTab, setOpenTab] = useState(0);
   const [tabNames, setTabNames] = useState(tabs);
+  const [userInfo, setUserInfo] = useRecoilState(UserInfoState);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getLabelingData();
+    getUserInfo();
   }, []);
 
   async function getLabelingData() {
     try {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/project/v1/project/my`,
-        {
-          headers: {
-            Authorization: `${localStorage.getItem("belloga-page")}`,
-          },
-        }
-      );
+      const { data } = await api.get(`/api/project/v1/user/project`);
       const myLabelingProjects = data.response.content;
 
       //Tab Bar에 라벨링 개수를 나타내줌
       const pendingProjCount = myLabelingProjects.filter(
         (proj: any) => proj.isAgreed === false
-      ).length;
+      );
       const completedProjCount = myLabelingProjects.filter(
         (proj: any) => proj.isAgreed === true
-      ).length;
-      setTabNames(() => (tabs[0].count = pendingProjCount));
-      setTabNames(() => (tabs[1].count = completedProjCount));
+      );
+      setTabNames(() => (tabs[2].count = pendingProjCount.length));
+      setTabNames(() => (tabs[0].count = completedProjCount.length));
 
       //api로 받아온 데이터를 저장
-      setProjectList(() => data.response.content);
+      //라벨링 중, 라벨링 완료, 라벨링 대기
+      setProjectList(() => [completedProjCount, [], pendingProjCount]);
+
+      //goal : project를 json array로 담아 어레이 세개로 저장한다.
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error message: ", error.message);
+        return error.message;
+      } else {
+        console.log("unexpected error: ", error);
+        return "An unexpected error occurred";
+      }
+    }
+  }
+
+  async function getUserInfo() {
+    try {
+      const { data } = await api.get(`/api/user/v1/enterprise`);
+
+      setUserInfo(() => data.response);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log("error message: ", error.message);
@@ -74,16 +109,21 @@ function LabelingListPage() {
 
   return (
     <>
-      <NavBar isMyPage={false} />
       <body className="z-0">
         <div className="grid">
           <MainTop>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              홍길동님, 안녕하세요
+              {userInfo.name}님, 안녕하세요
             </h2>
-            <p className="mt-3 text-xl text-white">
-              총 6 건의 라벨링이 진행 중입니다.
-            </p>
+            {parseInt(tabs[0].count) === 0 ? (
+              <p className="mt-3 text-xl text-white">
+                현재 진행 중인 라벨링이 없습니다.
+              </p>
+            ) : (
+              <p className="mt-3 text-xl text-white">
+                총 {tabs[0].count} 건의 라벨링이 진행 중입니다.
+              </p>
+            )}
           </MainTop>
 
           <div className="relative w-full">
@@ -142,7 +182,7 @@ function LabelingListPage() {
                       openTab === index
                         ? "border-mainBlue text-mainBlue font-bold text-xl"
                         : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200 text-xl",
-                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm"
+                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm align-middle"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                     onClick={(e) => {
@@ -157,7 +197,7 @@ function LabelingListPage() {
                           openTab === index
                             ? "bg-indigo-100 text-indigo-600"
                             : "bg-gray-100 text-gray-900",
-                          "hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block text-lg"
+                          "ml-3 py-0.5 px-2.5 rounded-full font-medium text-lg "
                         )}
                       >
                         {tab.count}
@@ -167,59 +207,21 @@ function LabelingListPage() {
                 ))}
               </nav>
             </div>
-            <ul
-              className={
-                openTab === 0
-                  ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8 max-w-7xl m-auto"
-                  : "hidden"
-              }
-            >
-              {projectList.length === 0 && (
-                <div className="w-full col-span-3">
-                  <EmptyCard
-                    emptyMessage="진행 중인 라벨링이 없습니다"
-                    linkMessage="라벨링 의뢰하기"
-                    movingLink="/labeling/request"
-                  />
-                </div>
-              )}
 
-              {projectList.map((project) => (
-                <LabelingInfoCard project={project} key={project.projectId} />
-              ))}
-            </ul>
-
-            <ul
-              className={
-                openTab === 1
-                  ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8 max-w-7xl m-auto"
-                  : "hidden"
-              }
-            >
-              <div className="w-full col-span-3">
-                <EmptyCard
-                  emptyMessage="완료된 라벨링이 없습니다"
-                  linkMessage="라벨링 의뢰하기"
-                  movingLink="/labeling/request"
-                />
-              </div>
-            </ul>
-
-            <ul
-              className={
-                openTab === 2
-                  ? "grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8 max-w-7xl m-auto"
-                  : "hidden"
-              }
-            >
-              <div className="w-full col-span-3">
-                <EmptyCard
-                  emptyMessage="승인 대기중인 라벨링이 없습니다"
-                  linkMessage="라벨링 의뢰하기"
-                  movingLink="/labeling/request"
-                />
-              </div>
-            </ul>
+            {projectList.length === 0 ? (
+              <SkeletonGrid />
+            ) : (
+              <>
+                {projectList.map((project, index) => {
+                  const props = {
+                    isTabOpened: openTab === index,
+                    projectList: project,
+                    tabDescription: `${tabs[index].description}이 없습니다`,
+                  };
+                  return <LabelingListTabContents {...props} />;
+                })}
+              </>
+            )}
           </div>
         </div>
 

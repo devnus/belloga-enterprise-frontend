@@ -1,8 +1,8 @@
 import React from "react";
-import process1 from "../assets/icons/process_01.png";
-import process2 from "../assets/icons/process_02.png";
-import process3 from "../assets/icons/process_03.png";
-import process4 from "../assets/icons/process_04.png";
+import process1 from "assets/icons/process_01.png";
+import process2 from "assets/icons/process_02.png";
+import process3 from "assets/icons/process_03.png";
+import process4 from "assets/icons/process_04.png";
 
 const processes = [
   {
@@ -35,7 +35,7 @@ const processes = [
 
 const LabelingProcess = ({}) => {
   return (
-    <div className="grid grid-cols-1 gap-16 m-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 pb-10 max-w-7xl">
+    <div className="grid grid-cols-1 gap-20 px-10 m-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 pb-10 max-w-7xl">
       {processes.map((process, index) => (
         <div
           key={process.name}

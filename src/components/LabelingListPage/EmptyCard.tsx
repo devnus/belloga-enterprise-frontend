@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import emptyImg from "../assets/images/empty_icon.png";
+import emptyImg from "assets/images/empty_icon.png";
 
 const EmptyCard = ({
   emptyMessage = "",
@@ -21,7 +21,7 @@ const EmptyCard = ({
           {movingLink !== "" && (
             <div className="mt-6 mb-6">
               <Link to={movingLink}>
-                <div className="text-base font-medium text-indigo-600 hover:text-indigo-500">
+                <div className="text-base font-medium text-mainBlue hover:text-blue-500">
                   {linkMessage}
                   <span aria-hidden="true"> &rarr;</span>
                 </div>

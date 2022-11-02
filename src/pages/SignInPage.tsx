@@ -1,29 +1,31 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Loading from "components/Loading";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { signIn } from "../apis/auth";
 import MainTop from "../components/MainTop";
-import NavBar from "../components/NavBar";
 import { LoginState } from "../states/LoginState";
 
-const SignInPageBody = ({}) => {
+const SignInPageBody = () => {
   const [userEmail, setUserEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loginError, setLoginError] = useState<boolean>(false);
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      window.location.href = "/";
-    }
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = () => {
-    try {
-      signIn();
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("눌럿뜸");
+    const signInValues = {
+      password: password,
+      userEmail: userEmail,
+      setIsLoggedIn: setIsLoggedIn,
+      setLoginError: setLoginError,
+      navigate: navigate,
+      setLoading: setLoading,
+    };
+
+    signIn({ ...signInValues });
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,33 +39,8 @@ const SignInPageBody = ({}) => {
     }
   };
 
-  async function signIn() {
-    try {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/account/v1/auth/signin/custom/account`,
-        {
-          password: password,
-          email: userEmail,
-        }
-      );
-      localStorage.setItem("belloga-page", data.response.accessToken);
-      if (localStorage.getItem("belloga-page")) setIsLoggedIn(true);
-      window.location.href = "/labeling/list";
-    } catch (error) {
-      setLoginError(() => true);
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
-
   return (
     <>
-      <NavBar isAuthPage={false} />
       <body className="z-0">
         <MainTop>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -124,7 +101,7 @@ const SignInPageBody = ({}) => {
                 onClick={onSubmit}
                 className=" mt-10 mb-5 bg-gradient-to-r from-blue-400 to-sky-300 w-full flex justify-center py-2 px-4 border border-transparent rounded-3xl shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Sign in
+                {loading ? <Loading /> : "Sign in"}
               </button>
 
               {loginError && (

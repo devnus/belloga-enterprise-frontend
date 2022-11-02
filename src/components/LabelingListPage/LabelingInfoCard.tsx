@@ -6,7 +6,11 @@ const LabelingInfoCard = ({ project }: any) => {
   return (
     <Link
       className="text-sm font-medium hover:text-gray-800"
-      to={`/labeling/detail/${project.projectId}`}
+      to={
+        project.isAgreed
+          ? `/labeling/detail/${project.projectId}`
+          : `/labeling/waiting/detail/${project.projectId}`
+      }
     >
       <li key={project.projectId} className="relative">
         <div className="group aspect-video block w-full flex justify-center overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">

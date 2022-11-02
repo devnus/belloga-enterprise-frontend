@@ -3,28 +3,27 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../states/LoginState";
-import LabelingProcess from "../components/LabelingProcess";
+import LabelingProcess from "../components/MainPage/LabelingProcess";
 import data from "../assets/icons/data_icon.png";
-import search from "../assets/icons/search_icon.png";
-import ocrImg from "../assets/images/ocr_img.png";
+import search from "assets/icons/search_icon.png";
+import logo from "assets/images/belloga_white.png";
+import LabelingServiceDescription from "../components/MainPage/LabeingServiceDescription";
 
 function MainPage() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   return (
     <>
-      <NavBar />
       <body className="z-0">
         <div className="relative py-32 px-6 sm:py-40 sm:px-12 lg:px-16 ">
           <div className="absolute inset-0 overflow-hidden bg-gradient-to-r from-gradBottom via-gradTop to-gradTop">
-            {/* <img
-              src={mainTopImg}
-              alt=""
-              className="h-full w-full object-cover object-center"
-            /> */}
+            {/* <img src={logo} alt="" className=" object-cover object-center" /> */}
           </div>
           <div aria-hidden="true" className="absolute inset-0" />
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <div className="w-2/5 my-5 ">
+              <img src={logo} alt="" className="object-cover object-center" />
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-3xl">
               벨로가, 알람으로 하는 라벨링
             </h2>
             <p className="mt-3 text-xl text-white">
@@ -79,8 +78,8 @@ function MainPage() {
           </div>
         </div>
 
-        <div className="relative bg-lightGray">
-          <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center py-10">
+        <div className="relative bg-lightGray pb-10">
+          <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center pt-20 pb-10">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl ">
               제공하는 서비스
             </h2>
@@ -88,36 +87,11 @@ function MainPage() {
               Text annotation과 OCR 기술을 이용할 수 있습니다.
             </p>
           </div>
-          <div className="mx-auto max-w-2xl py-8 px-4 sm:py-10 sm:px-6 lg:max-w-7xl">
-            <div className="relative overflow-hidden rounded-lg lg:h-96">
-              <div className="absolute inset-0">
-                <img
-                  src={ocrImg}
-                  alt=""
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-              <div
-                aria-hidden="true"
-                className="relative h-96 w-full lg:hidden"
-              />
-              <div
-                aria-hidden="true"
-                className="relative h-32 w-full lg:hidden"
-              />
-              <div className="absolute inset-x-0 bottom-0 rounded-bl-lg py-10 rounded-br-lg bg-black bg-opacity-75 p-6 backdrop-blur backdrop-filter sm:flex sm:items-center sm:justify-between lg:inset-y-0 lg:inset-x-auto lg:w-96 lg:flex-col lg:items-start lg:rounded-tl-lg lg:rounded-br-none">
-                <div>
-                  <h2 className="text-xl font-bold text-white">OCR</h2>
-                  <p className="mt-1 text-sm text-gray-300">
-                    문장 성분을 분석합니다
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>{" "}
+
+          <LabelingServiceDescription />
         </div>
         <div className="relative bg-sky-400">
-          <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center py-10">
+          <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center pt-20 pb-10">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               라벨링 과정
             </h2>
@@ -129,16 +103,6 @@ function MainPage() {
           <LabelingProcess />
         </div>
       </body>
-      <footer className="bg-white">
-        <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
-          <div className="mt-8 md:order-1 md:mt-0">
-            <p className="text-base text-gray-400">Belloga</p>
-            <p className="text-center text-base text-gray-400">
-              &copy; 2022 devnus, Inc. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }

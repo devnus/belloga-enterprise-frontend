@@ -1,25 +1,22 @@
+import { useAxiosInterceptor } from "hooks/useAxiosInterceptors";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import "./App.css";
-import LabelingDetailPage from "./pages/LabelingDetailPage";
-import LoginPage from "./pages/SignInPage";
-import MainPage from "./pages/MainPage";
-import SignUpPage from "./pages/SignUpPage";
-import CreateLabelingRequestPage from "./pages/CreateLabelingRequestPage";
-import LabelingListPage from "./pages/LabelingListPage";
-import MobilePrivacyPolicy from "./pages/MobilePrivacyPolicy";
+import AppRouter from "./AppRouter";
+import Footer from "./components/Footer";
+import NavBar from "./components/NavBar";
+import { LoginState } from "./states/LoginState";
 
 function App() {
+  const [AuthState, setAuthState] = useRecoilState(LoginState);
+  useAxiosInterceptor(AuthState, setAuthState); // AxiosInterceptor 선언
+
   return (
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/signIn" element={<LoginPage />} />
-      <Route path="/signUp" element={<SignUpPage />} />
-      <Route path="/labeling/detail/:id" element={<LabelingDetailPage />} />
-      <Route path="/labeling/request" element={<CreateLabelingRequestPage />} />
-      <Route path="/labeling/list" element={<LabelingListPage />} />
-      <Route path="/privacy/mobile" element={<MobilePrivacyPolicy />} />
-    </Routes>
+    <>
+      <NavBar />
+      <AppRouter isLoggedIn={AuthState.authenticated} />
+      <Footer />
+    </>
   );
 }
 
