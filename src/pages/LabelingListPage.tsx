@@ -109,7 +109,7 @@ function LabelingListPage() {
 
   return (
     <>
-      <body className="z-0">
+      <body className="z-0 hide-scrollbar ">
         <div className="grid">
           <MainTop>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
