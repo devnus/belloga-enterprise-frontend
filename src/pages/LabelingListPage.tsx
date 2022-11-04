@@ -66,18 +66,34 @@ function LabelingListPage() {
       const myLabelingProjects = data.response.content;
 
       //Tab Bar에 라벨링 개수를 나타내줌
+      //대기 중인 프로젝트
       const pendingProjCount = myLabelingProjects.filter(
         (proj: any) => proj.isAgreed === false
       );
-      const completedProjCount = myLabelingProjects.filter(
+      //승인된 프로젝트
+      const approvedProjCount = myLabelingProjects.filter(
         (proj: any) => proj.isAgreed === true
       );
+
+      const processingProjects = approvedProjCount.filter(
+        (proj: any) => proj.progressRate !== 100
+      );
+
+      const completedProjects = approvedProjCount.filter(
+        (proj: any) => proj.progressRate === 100
+      );
+
+      setTabNames(() => (tabs[0].count = processingProjects.length));
+      setTabNames(() => (tabs[1].count = completedProjects.length));
       setTabNames(() => (tabs[2].count = pendingProjCount.length));
-      setTabNames(() => (tabs[0].count = completedProjCount.length));
 
       //api로 받아온 데이터를 저장
       //라벨링 중, 라벨링 완료, 라벨링 대기
-      setProjectList(() => [completedProjCount, [], pendingProjCount]);
+      setProjectList(() => [
+        processingProjects,
+        completedProjects,
+        pendingProjCount,
+      ]);
 
       //goal : project를 json array로 담아 어레이 세개로 저장한다.
     } catch (error) {
@@ -109,7 +125,7 @@ function LabelingListPage() {
 
   return (
     <>
-      <body className="z-0">
+      <body className="z-0 hide-scrollbar ">
         <div className="grid">
           <MainTop>
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -218,7 +234,11 @@ function LabelingListPage() {
                     projectList: project,
                     tabDescription: `${tabs[index].description}이 없습니다`,
                   };
-                  return <LabelingListTabContents {...props} />;
+                  return (
+                    <div key={project.projectId}>
+                      <LabelingListTabContents {...props} />
+                    </div>
+                  );
                 })}
               </>
             )}

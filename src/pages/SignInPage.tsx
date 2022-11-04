@@ -15,7 +15,6 @@ const SignInPageBody = () => {
   const navigate = useNavigate();
 
   const onSubmit = () => {
-    console.log("눌럿뜸");
     const signInValues = {
       password: password,
       userEmail: userEmail,

@@ -6,6 +6,9 @@ import AppRouter from "./AppRouter";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
 import { LoginState } from "./states/LoginState";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const [AuthState, setAuthState] = useRecoilState(LoginState);
@@ -13,9 +16,11 @@ function App() {
 
   return (
     <>
-      <NavBar />
-      <AppRouter isLoggedIn={AuthState.authenticated} />
-      <Footer />
+      <QueryClientProvider client={queryClient}>
+        <NavBar />
+        <AppRouter isLoggedIn={AuthState.authenticated} />
+        <Footer />
+      </QueryClientProvider>
     </>
   );
 }

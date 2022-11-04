@@ -1,19 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactJson from "react-json-view";
-import MainTop from "../components/MainTop";
-import NavBar from "../components/NavBar";
-import api from "../apis/tokenInterceptor";
-import axios from "axios";
+import MainTop from "../../components/MainTop";
+import NavBar from "../../components/NavBar";
+import api from "../../apis/tokenInterceptor";
 import { useLocation } from "react-router-dom";
-
-type BoundingBoxInfo = {
-  imageUrl: string;
-  reliability: number;
-  textLabel: string;
-  totalLabelerNum: number;
-  x: number[];
-  y: number[];
-};
+import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
+import { BoundingBoxInfo, drawOnCanvas } from "modules/drawBoundingBox";
+import { useQuery } from "react-query";
 
 type ProjectInfo = {
   createdDate: string;
@@ -27,24 +20,20 @@ type ProjectInfo = {
   zipUrl: string;
 };
 
+const type = "OCR";
+
 const LabelingDetailPageBody = ({}) => {
   const [openTab, setOpenTab] = useState(1);
-  const [labelingResult, setLabelingResult] = useState([]);
+  const [labelingResult, setLabelingResult] = useState<BoundingBoxInfo[]>([]);
   const [labelingResultJSON, setLabelingResultJSON] = useState({});
   const [projectInfo, setProjectInfo] = useState<ProjectInfo | undefined>();
   const [imageUrl, setImageUrl] = useState("");
   const [labeledText, setLabeledText] = useState<string[]>([]);
   const location = useLocation();
+  const projectId = location.pathname.split("/")[4];
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
-
-  //최초 로딩 시에 정보 가져오기
-  useEffect(() => {
-    // getLabelingInfo("OCR");
-    const projectId = location.pathname.split("/")[3];
-    getProjectInfo(projectId);
-  }, []);
 
   //api 불러온 후 url 할당, 정보 가공
   useEffect(() => {
@@ -61,127 +50,34 @@ const LabelingDetailPageBody = ({}) => {
       setImageUrl(boundingBoxInfo.imageUrl);
 
       //canvas에 불러온다
-
       if (canvasRef.current !== null) {
         canvasRef.current.focus();
       }
 
       if (canvasRef.current) {
-        canvasCtxRef.current = canvasRef.current.getContext("2d");
-        const ctx = canvasCtxRef.current;
-        const image = new Image();
-        image.src = boundingBoxInfo.imageUrl;
-
-        image.onload = function () {
-          const canvasEle: any = canvasRef.current;
-
-          canvasEle.width = image.width;
-          canvasEle.height = image.height;
-
-          const scale = Math.min(
-            canvasEle.width / image.width,
-            canvasEle.height / image.height
-          );
-
-          console.log(image.width, image.height);
-          // get the top left position of the image
-          const x = canvasEle.width / 2 - (image.width / 2) * scale;
-          const y = canvasEle.height / 2 - (image.height / 2) * scale;
-          ctx?.drawImage(
-            image,
-            x,
-            y,
-            image.width * scale,
-            image.height * scale
-          );
-
-          const nameList = labelingResult.map((boundingBoxInfo, index) =>
-            drawBoundingBox(boundingBoxInfo)
-          );
-
-          console.log(labelingResult);
-        };
+        drawOnCanvas(canvasCtxRef, canvasRef, boundingBoxInfo, labelingResult);
       }
     }
   }, [labelingResult]);
 
-  const drawBoundingBox = (boundingBoxInfo: BoundingBoxInfo) => {
-    const xArray = boundingBoxInfo.x;
-    const yArray = boundingBoxInfo.y;
+  const { data, isLoading, error } = useQuery(
+    ["labelingResult", type, projectId],
+    () => getLabelingInfo(type, projectId)
+  );
 
-    //boundingboxId, 왼쪽 위, 윈쪽아래, 오른쪽위, 오른쪽아래
-    const topPosition = Math.min(yArray[0], yArray[1]);
-    const bottomPosition = Math.max(yArray[2], yArray[3]);
-    const leftPosition = Math.min(xArray[0], xArray[3]);
-    const rightPosition = Math.max(xArray[2], xArray[1]);
-
-    const r2Info = {
-      x: leftPosition,
-      y: topPosition,
-      w: rightPosition - leftPosition,
-      h: bottomPosition - topPosition,
-    };
-    drawRect(r2Info);
-  };
-
-  const showLabeledText = (labelingText: string[]) => {};
-
-  const getLabelingInfo = async (type: string) => {
-    try {
-      await api
-        .get(
-          `http://a138b0b67de234557afc8eaf29aa97b6-1258302528.ap-northeast-2.elb.amazonaws.com/api/labeled-result/v1/verification/results/OCR`,
-          {
-            headers: {
-              "enterprise-id": "dusik",
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res.data.response);
-          setLabelingResult(() => res.data.response.content);
-          setLabelingResultJSON(() => res.data.response);
-        });
-    } catch (error) {
-      console.log(error);
-    } finally {
+  useEffect(() => {
+    if (isLoading === false) {
+      setLabelingResult(() => data.response.content);
+      setLabelingResultJSON(() => data.response);
     }
-  };
+  }, [isLoading, data]);
 
-  async function getProjectInfo(projectId: string) {
-    try {
-      const { data } = await api.get(
-        `/api/project/v1/user/project/${projectId}`
-      );
+  const getLabelingInfo = async (type: string, projectId: string) => {
+    const { data } = await api.get(
+      `/api/labeled-result/v1/verification/results/${type}/${projectId}`
+    );
 
-      setProjectInfo(() => data.response);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.log("error message: ", error.message);
-        return error.message;
-      } else {
-        console.log("unexpected error: ", error);
-        return "An unexpected error occurred";
-      }
-    }
-  }
-
-  // draw rectangle
-  const drawRect = (info: any, style: any = {}) => {
-    const { x, y, w, h } = info;
-    console.log(info);
-    const { borderColor = "red", borderWidth = 2 } = style;
-
-    if (canvasRef.current) {
-      canvasCtxRef.current = canvasRef.current.getContext("2d");
-      const ctx: any = canvasCtxRef.current;
-
-      ctx.beginPath();
-      ctx.strokeStyle = borderColor;
-      ctx.lineWidth = borderWidth;
-      ctx.rect(x, y, w, h);
-      ctx.stroke();
-    }
+    return data;
   };
 
   return (
@@ -194,42 +90,7 @@ const LabelingDetailPageBody = ({}) => {
         ></div>
 
         <div className="w-full">
-          <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
-            <div className="py-8 px-2 w-full mx-auto mx-20">
-              <div className="relative justify-between flex flex-row ">
-                <div className=" flex flex-row ">
-                  <p className="capitalize text-xl mb-1 text-gray-500">
-                    라벨링 시작일
-                  </p>
-                  <h2 className="font-semibold text-xl ml-5">
-                    {projectInfo?.createdDate.split("T")[0]}
-                  </h2>
-                </div>
-                <div className="flex flex-row ">
-                  <p className="capitalize text-xl mb-1 text-gray-500">
-                    담당자
-                  </p>
-                  <h2 className="font-semibold text-xl ml-5">홍길동</h2>
-                </div>
-                <div className="flex flex-row ">
-                  <p className="capitalize text-xl mb-1 text-gray-500">
-                    이메일 주소
-                  </p>
-                  <h2 className="font-semibold text-xl ml-5">
-                    test@belloga.com
-                  </h2>
-                </div>
-              </div>
-              <div className=" flex flex-row items-start my-5">
-                <p className="basis-1/6 text-xl mb-1 text-gray-500 ">
-                  라벨링 설명
-                </p>
-                <h2 className="font-semibold text-xl ml-5">
-                  {projectInfo?.description}
-                </h2>
-              </div>
-            </div>
-          </div>
+          <ProjectDescription projectId={projectId} />
         </div>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">

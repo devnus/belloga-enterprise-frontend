@@ -1,17 +1,29 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
 
 const LabelingInfoCard = ({ project }: any) => {
+  const { isAgreed, progressRate } = project;
+
+  //generate url
+  const targetUrl = (isAgreed: boolean, progressRate: number) => {
+    if (isAgreed === false) {
+      return `/labeling/waiting/detail/${project.projectId}`;
+    }
+    if (isAgreed === true && progressRate === 100) {
+      return `/labeling/completed/detail/${project.projectId}`;
+    }
+    if (isAgreed === true && progressRate !== 100) {
+      return `/labeling/detail/${project.projectId}`;
+    }
+
+    return "";
+  };
+
+  const detailUrl: string = targetUrl(isAgreed, progressRate);
+
   return (
-    <Link
-      className="text-sm font-medium hover:text-gray-800"
-      to={
-        project.isAgreed
-          ? `/labeling/detail/${project.projectId}`
-          : `/labeling/waiting/detail/${project.projectId}`
-      }
-    >
+    <Link className="text-sm font-medium hover:text-gray-800" to={detailUrl}>
       <li key={project.projectId} className="relative">
         <div className="group aspect-video block w-full flex justify-center overflow-hidden rounded-lg bg-gray-100 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 focus-within:ring-offset-gray-100">
           {project.source ? (
