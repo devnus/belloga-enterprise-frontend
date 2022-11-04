@@ -1,14 +1,15 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import LabelingDetailPage from "./pages/LabelingDetailPage";
 import LoginPage from "./pages/SignInPage";
 import MainPage from "./pages/MainPage";
 import SignUpPage from "./pages/SignUpPage";
 import CreateLabelingRequestPage from "./pages/CreateLabelingRequestPage";
 import LabelingListPage from "./pages/LabelingListPage";
 import MobilePrivacyPolicy from "./pages/MobilePrivacyPolicy";
-import NotApprovedProjectDetailPage from "pages/NotApprovedProjectDetailPage";
+import NotApprovedProjectDetailPage from "pages/ProjectDetailPages/NotApprovedProjectDetailPage";
+import ProcessingProjectDetailPage from "pages/ProjectDetailPages/ProcessingProjectDetailPage";
+import LabelingDetailPage from "./pages/ProjectDetailPages/CompletedProjectDetailPage";
 
 function AppRouter({ isLoggedIn = false }) {
   return (
@@ -20,10 +21,17 @@ function AppRouter({ isLoggedIn = false }) {
       {isLoggedIn === true ? (
         <>
           {/* 로그인이 된 경우 */}
-          <Route path="/labeling/detail/:id" element={<LabelingDetailPage />} />
+          <Route
+            path="/labeling/detail/:id"
+            element={<ProcessingProjectDetailPage />}
+          />
           <Route
             path="/labeling/waiting/detail/:id"
             element={<NotApprovedProjectDetailPage />}
+          />
+          <Route
+            path="/labeling/completed/detail/:id"
+            element={<LabelingDetailPage />}
           />
           <Route
             path="/labeling/request"

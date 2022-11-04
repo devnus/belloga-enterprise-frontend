@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactJson from "react-json-view";
-import MainTop from "../components/MainTop";
-import NavBar from "../components/NavBar";
-import api from "../apis/tokenInterceptor";
+import MainTop from "../../components/MainTop";
+import NavBar from "../../components/NavBar";
+import api from "../../apis/tokenInterceptor";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
