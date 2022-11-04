@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MainTop from "../../components/MainTop";
 import NavBar from "../../components/NavBar";
 
 import { useLocation } from "react-router-dom";
-import { getUploadUrlInfo, IFileTypes } from "apis/createLabelingApis";
-import DragDrop from "components/DragDrop";
+
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 
 const ProcessingPageBody = ({ projectId }: any) => {
@@ -30,7 +29,7 @@ const ProcessingProjectDetailPage = () => {
       <NavBar />
       <MainTop>
         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          진행중인 라벨링
+          승인 대기중 라벨링
         </h2>
         <nav className="text-white flex" aria-label="Breadcrumb">
           <ol
