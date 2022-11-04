@@ -9,7 +9,7 @@ import LabelingListPage from "./pages/LabelingListPage";
 import MobilePrivacyPolicy from "./pages/MobilePrivacyPolicy";
 import NotApprovedProjectDetailPage from "pages/ProjectDetailPages/NotApprovedProjectDetailPage";
 import ProcessingProjectDetailPage from "pages/ProjectDetailPages/ProcessingProjectDetailPage";
-import LabelingDetailPage from "./pages/ProjectDetailPages/CompletedProjectDetailPage";
+import CompletedProjectDetailPage from "./pages/ProjectDetailPages/CompletedProjectDetailPage";
 
 function AppRouter({ isLoggedIn = false }) {
   return (
@@ -31,7 +31,7 @@ function AppRouter({ isLoggedIn = false }) {
           />
           <Route
             path="/labeling/completed/detail/:id"
-            element={<LabelingDetailPage />}
+            element={<CompletedProjectDetailPage />}
           />
           <Route
             path="/labeling/request"

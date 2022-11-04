@@ -3,7 +3,6 @@ import ReactJson from "react-json-view";
 import MainTop from "../../components/MainTop";
 import NavBar from "../../components/NavBar";
 import api from "../../apis/tokenInterceptor";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 
@@ -36,7 +35,7 @@ const LabelingDetailPageBody = ({}) => {
   const [imageUrl, setImageUrl] = useState("");
   const [labeledText, setLabeledText] = useState<string[]>([]);
   const location = useLocation();
-  const projectId = location.pathname.split("/")[3];
+  const projectId = location.pathname.split("/")[4];
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
