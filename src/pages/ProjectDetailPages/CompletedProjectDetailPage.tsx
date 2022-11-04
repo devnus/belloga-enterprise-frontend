@@ -6,6 +6,7 @@ import api from "../../apis/tokenInterceptor";
 import { useLocation } from "react-router-dom";
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 import { BoundingBoxInfo, drawOnCanvas } from "modules/drawBoundingBox";
+import { useQuery } from "react-query";
 
 type ProjectInfo = {
   createdDate: string;
@@ -18,6 +19,8 @@ type ProjectInfo = {
   zipUUID: string;
   zipUrl: string;
 };
+
+const type = "OCR";
 
 const LabelingDetailPageBody = ({}) => {
   const [openTab, setOpenTab] = useState(1);
@@ -57,20 +60,24 @@ const LabelingDetailPageBody = ({}) => {
     }
   }, [labelingResult]);
 
-  const showLabeledText = (labelingText: string[]) => {};
+  const { data, isLoading, error } = useQuery(
+    ["labelingResult", type, projectId],
+    () => getLabelingInfo(type, projectId)
+  );
 
-  const getLabelingInfo = async (type: string) => {
-    try {
-      await api
-        .get(`/api/labeled-result/v1/verification/results/${type}/${projectId}`)
-        .then((res) => {
-          setLabelingResult(() => res.data.response.content);
-          setLabelingResultJSON(() => res.data.response);
-        });
-    } catch (error) {
-      console.log(error);
-    } finally {
+  useEffect(() => {
+    if (isLoading === false) {
+      setLabelingResult(() => data.response.content);
+      setLabelingResultJSON(() => data.response);
     }
+  }, [isLoading, data]);
+
+  const getLabelingInfo = async (type: string, projectId: string) => {
+    const { data } = await api.get(
+      `/api/labeled-result/v1/verification/results/${type}/${projectId}`
+    );
+
+    return data;
   };
 
   return (
