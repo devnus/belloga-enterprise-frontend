@@ -234,7 +234,7 @@ const LabelingDetailPage = ({}) => {
       <NavBar />
       <MainTop>
         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-          진행 중인 라벨링
+          완료한 라벨링
         </h2>
         <nav className="text-white flex" aria-label="Breadcrumb">
           <ol
