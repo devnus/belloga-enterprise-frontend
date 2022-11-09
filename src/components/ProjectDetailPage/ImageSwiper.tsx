@@ -60,6 +60,11 @@ type swiperCardProps = {
   imgUrl: string;
 };
 
+/**
+ * focusing 되지 않은 카드를 리턴하는 컴포넌트다.
+ * @param 파일명, 이미지 링크를 넣는다.
+ * @returns
+ */
 function SwiperInnerCard({ fileName, imgUrl }: swiperCardProps) {
   return (
     <div className="relative group h-40 overflow-hidden bg-black m-auto">
@@ -78,6 +83,11 @@ function SwiperInnerCard({ fileName, imgUrl }: swiperCardProps) {
   );
 }
 
+/**
+ * focusing 된 카드를 리턴한다. 일반과 비교하면 테두리가 쳐져 있는 차이점이 있다.
+ * @param 파일명, 이미지 링크를 넣는다.
+ * @returns
+ */
 function FocusSwiperInnerCard({ fileName, imgUrl }: swiperCardProps) {
   return (
     <div className="relative h-40 overflow-hidden m-auto border-4 border-mainBlue rounded-md">
