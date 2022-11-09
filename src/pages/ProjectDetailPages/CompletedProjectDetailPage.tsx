@@ -8,6 +8,7 @@ import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescript
 import { BoundingBoxInfo, drawOnCanvas } from "modules/drawBoundingBox";
 import { useQuery } from "react-query";
 import { resultJson } from "mocks/completeProject";
+import ImageSwiper from "components/ProjectDetailPage/ImageSwiper";
 
 type ProjectInfo = {
   createdDate: string;
@@ -90,6 +91,9 @@ const LabelingDetailPageBody = ({}) => {
         {/* <div className="w-full">
           <ProjectDescription projectId={projectId} />
         </div> */}
+        <div className="py-10">
+          <ImageSwiper focusIndex={1} />
+        </div>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
