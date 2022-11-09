@@ -1,13 +1,18 @@
 import customAxios from "apis/tokenInterceptor";
 import axios, { AxiosError, AxiosRequestHeaders } from "axios";
 import { useEffect } from "react";
+import { SetterOrUpdater } from "recoil";
+import { tokenInfo } from "states/LoginState";
 
 interface HeaderType extends AxiosRequestHeaders {
   ["Content-Type"]: string;
   Authorization: string;
 }
 
-export const useAxiosInterceptor = (tokenState: any, setTokenState: any) => {
+export const useAxiosInterceptor = (
+  tokenState: tokenInfo,
+  setTokenState: SetterOrUpdater<tokenInfo>
+) => {
   // requestHandler는 위와 같은 로직이기에 생략.
   const accessToken = tokenState.accessToken;
   const reqInterceptor = customAxios.interceptors.request.use(
