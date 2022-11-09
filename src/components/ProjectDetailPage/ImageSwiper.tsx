@@ -10,9 +10,10 @@ import { BoundingBoxInfo } from "modules/drawBoundingBox";
 type swiperProps = {
   imgData: BoundingBoxInfo[];
   focusIndex: number;
+  setFocusIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-function ImageSwiper({ focusIndex, imgData }: swiperProps) {
+function ImageSwiper({ focusIndex, imgData, setFocusIndex }: swiperProps) {
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -39,7 +40,12 @@ function ImageSwiper({ focusIndex, imgData }: swiperProps) {
           );
         } else {
           return (
-            <SwiperSlide key={index}>
+            <SwiperSlide
+              key={index}
+              onClick={() => {
+                setFocusIndex(() => index);
+              }}
+            >
               <SwiperInnerCard {...props} />
             </SwiperSlide>
           );

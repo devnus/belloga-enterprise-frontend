@@ -22,6 +22,11 @@ type ProjectInfo = {
   zipUrl: string;
 };
 
+type StringInfo = {
+  text: string;
+  reliability: number;
+};
+
 const type = "OCR";
 
 const LabelingDetailPageBody = ({}) => {
@@ -30,7 +35,10 @@ const LabelingDetailPageBody = ({}) => {
   const [labelingResultJSON, setLabelingResultJSON] = useState({});
   const [projectInfo, setProjectInfo] = useState<ProjectInfo | undefined>();
   const [imageUrl, setImageUrl] = useState("");
-  const [labeledText, setLabeledText] = useState<string[]>([]);
+  const [labeledText, setLabeledText] = useState<StringInfo | undefined>();
+
+  const [focusIndex, setFocusIndex] = useState<number>(0);
+
   const location = useLocation();
   const projectId = location.pathname.split("/")[4];
 
@@ -40,15 +48,13 @@ const LabelingDetailPageBody = ({}) => {
   //api 불러온 후 url 할당, 정보 가공
   useEffect(() => {
     if (labelingResult.length !== 0) {
-      const boundingBoxInfo: BoundingBoxInfo = labelingResult[0];
-      const labeledTextList: any = labelingResult.map(
-        (labelingInfo: BoundingBoxInfo) => [
-          labelingInfo.textLabel,
-          labelingInfo.reliability,
-        ]
-      );
+      const boundingBoxInfo: BoundingBoxInfo = labelingResult[focusIndex];
+      const labeledText: StringInfo = {
+        text: boundingBoxInfo.textLabel,
+        reliability: boundingBoxInfo.reliability,
+      };
 
-      setLabeledText(() => labeledTextList);
+      setLabeledText(() => labeledText);
       setImageUrl(boundingBoxInfo.imageUrl);
 
       //canvas에 불러온다
@@ -57,10 +63,10 @@ const LabelingDetailPageBody = ({}) => {
       }
 
       if (canvasRef.current) {
-        drawOnCanvas(canvasCtxRef, canvasRef, boundingBoxInfo, labelingResult);
+        drawOnCanvas(canvasCtxRef, canvasRef, boundingBoxInfo);
       }
     }
-  }, [labelingResult]);
+  }, [labelingResult, focusIndex]);
 
   // const { data, isLoading, error } = useQuery(
   //   ["labelingResult", type, projectId],
@@ -91,8 +97,12 @@ const LabelingDetailPageBody = ({}) => {
         {/* <div className="w-full">
           <ProjectDescription projectId={projectId} />
         </div> */}
-        <div className="py-10">
-          <ImageSwiper imgData={labelingResult} focusIndex={1} />
+        <div className="py-10 lg:max-w-7xl mx-auto">
+          <ImageSwiper
+            imgData={labelingResult}
+            focusIndex={focusIndex}
+            setFocusIndex={setFocusIndex}
+          />
         </div>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -170,22 +180,21 @@ const LabelingDetailPageBody = ({}) => {
                               id="link1"
                             >
                               <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-                                {labeledText &&
-                                  labeledText.map((labeledText: any, index) => (
-                                    <li
-                                      key={index}
-                                      className="pl-3 pr-4 py-3 flex items-center justify-between text-sm"
-                                    >
-                                      <div className="w-0 flex-1 flex items-center">
-                                        <span className="ml-2 flex-1 w-0 truncate">
-                                          {labeledText[0]}
-                                        </span>
-                                      </div>
-                                      <div className="ml-4 flex-shrink-0 font-medium text-mainBlue hover:text-indigo-500">
-                                        {(labeledText[1] * 100).toFixed(1)}%
-                                      </div>
-                                    </li>
-                                  ))}
+                                {labeledText && (
+                                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                    <div className="w-0 flex-1 flex items-center">
+                                      <span className="ml-2 flex-1 w-0 truncate">
+                                        {labeledText.text}
+                                      </span>
+                                    </div>
+                                    <div className="ml-4 flex-shrink-0 font-medium text-mainBlue hover:text-indigo-500">
+                                      {(labeledText.reliability * 100).toFixed(
+                                        1
+                                      )}
+                                      %
+                                    </div>
+                                  </li>
+                                )}
                               </ul>
                             </div>
 
