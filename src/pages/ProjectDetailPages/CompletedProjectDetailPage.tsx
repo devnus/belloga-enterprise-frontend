@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 import { BoundingBoxInfo, drawOnCanvas } from "modules/drawBoundingBox";
 import { useQuery } from "react-query";
+import { resultJson } from "mocks/completeProject";
 
 type ProjectInfo = {
   createdDate: string;
@@ -60,25 +61,22 @@ const LabelingDetailPageBody = ({}) => {
     }
   }, [labelingResult]);
 
-  const { data, isLoading, error } = useQuery(
-    ["labelingResult", type, projectId],
-    () => getLabelingInfo(type, projectId)
-  );
+  // const { data, isLoading, error } = useQuery(
+  //   ["labelingResult", type, projectId],
+  //   () => getLabelingInfo(type, projectId)
+  // );
 
   useEffect(() => {
-    if (isLoading === false) {
-      setLabelingResult(() => data.response.content);
-      setLabelingResultJSON(() => data.response);
-    }
-  }, [isLoading, data]);
+    setLabelingResult(() => resultJson.response.content);
+    setLabelingResultJSON(() => resultJson.response);
+  }, []);
 
-  const getLabelingInfo = async (type: string, projectId: string) => {
-    const { data } = await api.get(
-      `/api/labeled-result/v1/verification/results/${type}/${projectId}`
-    );
-
-    return data;
-  };
+  // useEffect(() => {
+  //   if (isLoading === false) {
+  //     setLabelingResult(() => resultJson.response.content);
+  //     setLabelingResultJSON(() => resultJson.response);
+  //   }
+  // }, [isLoading, data]);
 
   return (
     <>
@@ -89,9 +87,9 @@ const LabelingDetailPageBody = ({}) => {
           aria-modal="true"
         ></div>
 
-        <div className="w-full">
+        {/* <div className="w-full">
           <ProjectDescription projectId={projectId} />
-        </div>
+        </div> */}
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
@@ -306,3 +304,11 @@ const LabelingDetailPage = ({}) => {
 };
 
 export default LabelingDetailPage;
+
+const getLabelingInfo = async (type: string, projectId: string) => {
+  const { data } = await api.get(
+    `/api/labeled-result/v1/verification/results/${type}/${projectId}`
+  );
+
+  return data;
+};
