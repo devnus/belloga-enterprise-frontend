@@ -92,7 +92,7 @@ const LabelingDetailPageBody = ({}) => {
           <ProjectDescription projectId={projectId} />
         </div> */}
         <div className="py-10">
-          <ImageSwiper focusIndex={1} />
+          <ImageSwiper imgData={labelingResult} focusIndex={1} />
         </div>
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
