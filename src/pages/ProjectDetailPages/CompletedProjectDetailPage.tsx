@@ -10,6 +10,7 @@ import { useQuery } from "react-query";
 import { resultJson } from "mocks/completeProject";
 import ImageSwiper from "components/ProjectDetailPage/ImageSwiper";
 import MiniNavBar from "components/ProjectDetailPage/MiniNavBar";
+import TabButton from "components/ProjectDetailPage/TabButton";
 
 type ProjectInfo = {
   createdDate: string;
@@ -126,62 +127,24 @@ const LabelingDetailPageBody = ({}) => {
                       aria-orientation="horizontal"
                       role="tablist"
                     >
-                      <button
-                        id="tabs-1-tab-1"
-                        className={`
-                        ${
-                          openTab === 1
-                            ? "text-mainBlue font-bold"
-                            : "text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100"
-                        }  px-3 py-1.5 border border-transparent text-sm font-medium rounded-md`}
-                        aria-controls="tabs-1-panel-1"
-                        role="tab"
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setOpenTab(1);
-                        }}
-                      >
-                        텍스트
-                      </button>
-
-                      <button
-                        id="tabs-1-tab-2"
-                        className={`
-                        ${
-                          openTab === 2
-                            ? "text-mainBlue font-bold"
-                            : "text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100"
-                        }  px-3 py-1.5 border border-transparent text-sm font-medium rounded-md`}
-                        aria-controls="tabs-1-panel-2"
-                        role="tab"
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setOpenTab(2);
-                        }}
-                      >
-                        Json
-                      </button>
-
-                      <button
-                        id="tabs-1-tab-2"
-                        className={`
-                        ${
-                          openTab === 3
-                            ? "text-mainBlue font-bold"
-                            : "text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100"
-                        }  px-3 py-1.5 border border-transparent text-sm font-medium rounded-md`}
-                        aria-controls="tabs-1-panel-2"
-                        role="tab"
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setOpenTab(3);
-                        }}
-                      >
-                        전체 결과
-                      </button>
+                      <TabButton
+                        openTab={openTab}
+                        setOpenTab={setOpenTab}
+                        tabName={"텍스트"}
+                        targetNumber={1}
+                      />
+                      <TabButton
+                        openTab={openTab}
+                        setOpenTab={setOpenTab}
+                        tabName={"JSON"}
+                        targetNumber={2}
+                      />
+                      <TabButton
+                        openTab={openTab}
+                        setOpenTab={setOpenTab}
+                        tabName={"전체 결과"}
+                        targetNumber={3}
+                      />
                     </div>
                     {/* 탭에 따른 내용 */}
                     <div className="mt-2">
