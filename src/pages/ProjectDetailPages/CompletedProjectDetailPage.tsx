@@ -19,18 +19,7 @@ import { resultJson } from "mocks/completeProject";
 import LabeledText, {
   StringInfo,
 } from "components/ProjectDetailPage/LabeledText";
-
-type ProjectInfo = {
-  createdDate: string;
-  dataType: string;
-  description: string;
-  isAgreed: boolean;
-  name: string;
-  progressRate: number;
-  projectId: number;
-  zipUUID: string;
-  zipUrl: string;
-};
+import { exportJsonData, onClickCopy } from "modules/exportData";
 
 const type = "OCR";
 const BUTTONSTYLE =
@@ -91,6 +80,14 @@ const LabelingDetailPageBody = ({}) => {
     setLabelingResult(() => resultJson.response.content);
     setLabelingResultJSON(() => resultJson.response);
   }, []);
+
+  const tabVisible = (openTab: number, tabNumber: number) => {
+    const HIDDEN: string = "hidden overflow-auto";
+    const VISIBLE: string = "h-72 overflow-auto";
+
+    if (openTab === tabNumber) return VISIBLE;
+    return HIDDEN;
+  };
 
   return (
     <>
@@ -160,31 +157,13 @@ const LabelingDetailPageBody = ({}) => {
                     >
                       <div className="border border-gray-200">
                         <div className=" mx-px mt-px px-5 pt-3 pb-12 text-sm leading-5 text-gray-800 h-80">
-                          <div
-                            className={
-                              openTab === 1
-                                ? "block h-72 overflow-auto"
-                                : "hidden"
-                            }
-                          >
+                          <div className={tabVisible(openTab, 1)}>
                             <LabeledText labeledText={labeledText} />
                           </div>
-                          <div
-                            className={
-                              openTab === 2
-                                ? "overflow-auto h-72"
-                                : "hidden overflow-auto"
-                            }
-                          >
+                          <div className={tabVisible(openTab, 2)}>
                             <ReactJson src={labelingResult[focusIndex]} />
                           </div>
-                          <div
-                            className={
-                              openTab === 3
-                                ? "overflow-auto h-72"
-                                : "hidden overflow-auto"
-                            }
-                          >
+                          <div className={tabVisible(openTab, 3)}>
                             <ReactJson src={labelingResultJSON} />
                           </div>
                         </div>
@@ -214,7 +193,7 @@ const LabelingDetailPageBody = ({}) => {
                   <button
                     type="button"
                     onClick={() => {
-                      exportData(labelingResultJSON);
+                      exportJsonData(labelingResultJSON);
                     }}
                     className={BUTTONSTYLE}
                   >
@@ -255,36 +234,4 @@ const getLabelingInfo = async (type: string, projectId: string) => {
   );
 
   return data;
-};
-
-/**
- * 클릭했을때 함수를 클립보드에 복사하는 함수
- */
-const onClickCopy = (
-  openTab: number,
-  currentInfo: BoundingBoxInfo,
-  labelingResultJSON: {}
-) => {
-  if (openTab === 2) {
-    navigator.clipboard.writeText(JSON.stringify(currentInfo));
-  }
-  if (openTab === 3) {
-    navigator.clipboard.writeText(JSON.stringify(labelingResultJSON));
-  }
-};
-
-/**
- * 현재 프로젝트의 라벨링 결과를 json으로 내보내주는 버튼
- */
-const exportData = (labelingResultJSON: {}) => {
-  const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-    JSON.stringify(labelingResultJSON)
-  )}`;
-
-  //가상의 element를 하나 생성해서 click하는 방식으로 data를 다운로드 받음
-  const link = document.createElement("a");
-  link.href = jsonString;
-  link.download = "projectResult.json";
-
-  link.click();
 };
