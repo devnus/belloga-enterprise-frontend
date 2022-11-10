@@ -109,8 +109,8 @@ const LabelingDetailPageBody = ({}) => {
 
         <main className="mx-auto pt-14 pb-24 px-4 sm:pt-16 sm:pb-32 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:grid-rows-1 lg:grid-cols-7 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
-            <div className="lg:row-end-1 lg:col-span-4">
-              <div className="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden flex items-center ">
+            <div className="lg:row-end-1 lg:col-span-4 h-96">
+              <div className="h-full aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden flex items-center ">
                 <div className="object-contain m-auto">
                   <canvas ref={canvasRef} />
                 </div>
@@ -162,7 +162,6 @@ const LabelingDetailPageBody = ({}) => {
                                   ? "block h-72 overflow-auto"
                                   : "hidden"
                               }
-                              id="link1"
                             >
                               <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
                                 {labeledText && (
@@ -189,7 +188,6 @@ const LabelingDetailPageBody = ({}) => {
                                   ? "overflow-auto h-72"
                                   : "hidden overflow-auto"
                               }
-                              id="link2"
                             >
                               <ReactJson src={labelingResult[focusIndex]} />
                             </div>
@@ -199,7 +197,6 @@ const LabelingDetailPageBody = ({}) => {
                                   ? "overflow-auto h-72"
                                   : "hidden overflow-auto"
                               }
-                              id="link2"
                             >
                               <ReactJson src={labelingResultJSON} />
                             </div>
