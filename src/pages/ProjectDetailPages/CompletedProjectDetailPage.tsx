@@ -15,7 +15,7 @@ import {
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/solid";
 import ButtonWithTooltip from "components/ProjectDetailPage/ButtonWithTooltip";
-import { resultJson } from "mocks/completeProject";
+
 import LabeledText, {
   StringInfo,
 } from "components/ProjectDetailPage/LabeledText";
@@ -64,22 +64,17 @@ const LabelingDetailPageBody = ({}) => {
     }
   }, [labelingResult, focusIndex]);
 
-  // const { data, isLoading, error } = useQuery(
-  //   ["labelingResult", type, projectId],
-  //   () => getLabelingInfo(type, projectId)
-  // );
-
-  // useEffect(() => {
-  //   if (isLoading === false) {
-  //     setLabelingResult(() => data.response.content);
-  //     setLabelingResultJSON(() => data.response);
-  //   }
-  // }, [isLoading, data]);
+  const { data, isLoading, error } = useQuery(
+    ["labelingResult", type, projectId],
+    () => getLabelingInfo(type, projectId)
+  );
 
   useEffect(() => {
-    setLabelingResult(() => resultJson.response.content);
-    setLabelingResultJSON(() => resultJson.response);
-  }, []);
+    if (isLoading === false) {
+      setLabelingResult(() => data.response.content);
+      setLabelingResultJSON(() => data.response);
+    }
+  }, [isLoading, data]);
 
   const tabVisible = (openTab: number, tabNumber: number) => {
     const HIDDEN: string = "hidden overflow-auto";
@@ -98,9 +93,9 @@ const LabelingDetailPageBody = ({}) => {
           aria-modal="true"
         ></div>
 
-        {/* <div className="w-full">
+        <div className="w-full">
           <ProjectDescription projectId={projectId} />
-        </div> */}
+        </div>
         <div className="py-10 lg:max-w-7xl mx-auto">
           <ImageSwiper
             imgData={labelingResult}
