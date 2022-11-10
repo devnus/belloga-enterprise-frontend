@@ -1,5 +1,8 @@
 import React from "react";
-
+/**
+ *
+ * @returns 프로젝트 상세 페이지 상단에 있는 작은 네비게이션바를 리턴
+ */
 const MiniNavBar = () => {
   return (
     <nav className="text-white flex" aria-label="Breadcrumb">

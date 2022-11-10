@@ -6,6 +6,14 @@ type tabButtonProps = {
   targetNumber: number;
   tabName: string;
 };
+
+/**
+ * 프로젝트 상세 페이지의 탭 뷰 중 텍스트, JSON, 전체 결과 버튼을 따로 분리한 컴포넌트
+ * @openTab : number, 현재 열려있는 탭
+ * @setOpenTab : 열려있는 탭을 변경하는 setState
+ * @targetNumber : 각 탭이 부여받은 고유 넘버, 이 넘버와 tabNumber가 같으면 창이 열린다.
+ * @tabName : 탭 이름
+ */
 const TabButton = ({
   openTab,
   setOpenTab,
