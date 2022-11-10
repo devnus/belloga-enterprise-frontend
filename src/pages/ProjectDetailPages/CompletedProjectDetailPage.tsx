@@ -15,6 +15,7 @@ import {
   ArrowDownTrayIcon,
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/solid";
+import ButtonWithTooltip from "components/ProjectDetailPage/ButtonWithTooltip";
 
 type ProjectInfo = {
   createdDate: string;
@@ -53,23 +54,24 @@ const LabelingDetailPageBody = ({}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
 
-  //api 불러온 후 url 할당, 정보 가공
+  //canvas에 사진과 바운딩박스를 그리는 코드
   useEffect(() => {
     if (labelingResult.length !== 0) {
+      //focusing 된 index에 따라서 띄우는 값이 달라진다.
       const boundingBoxInfo: BoundingBoxInfo = labelingResult[focusIndex];
       const labeledText: StringInfo = {
         text: boundingBoxInfo.textLabel,
         reliability: boundingBoxInfo.reliability,
       };
 
+      //canvas에 그려줄 이미지 URL과 텍스트 탭에 띄워줄 정답과 신뢰도를 전달한다.
       setLabeledText(() => labeledText);
       setImageUrl(boundingBoxInfo.imageUrl);
 
-      //canvas에 불러온다
+      //캔버스에 이미지와 바운딩박스를 그린다.
       if (canvasRef.current !== null) {
         canvasRef.current.focus();
       }
-
       if (canvasRef.current) {
         drawOnCanvas(canvasCtxRef, canvasRef, boundingBoxInfo);
       }
@@ -93,6 +95,9 @@ const LabelingDetailPageBody = ({}) => {
   //   }
   // }, [isLoading, data]);
 
+  /**
+   * 클릭했을때 함수를 클립보드에 복사하는 함수
+   */
   const onClickCopy = () => {
     if (openTab === 2) {
       navigator.clipboard.writeText(JSON.stringify(labelingResult[focusIndex]));
@@ -100,6 +105,22 @@ const LabelingDetailPageBody = ({}) => {
     if (openTab === 3) {
       navigator.clipboard.writeText(JSON.stringify(labelingResultJSON));
     }
+  };
+
+  /**
+   * 현재 프로젝트의 라벨링 결과를 json으로 내보내주는 버튼
+   */
+  const exportData = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+      JSON.stringify(labelingResultJSON)
+    )}`;
+
+    //가상의 element를 하나 생성해서 click하는 방식으로 data를 다운로드 받음
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "projectResult.json";
+
+    link.click();
   };
 
   return (
@@ -217,22 +238,25 @@ const LabelingDetailPageBody = ({}) => {
                   </div>
                 </div>
                 <div className="mt-2 flex justify-end space-x-3">
-                  <button
-                    type="button"
-                    onClick={onClickCopy}
-                    className={BUTTONSTYLE}
-                  >
-                    <DocumentDuplicateIcon className="h-6 w-6 mr-2 text-white" />
-                    복사
-                  </button>
+                  {openTab !== 1 && (
+                    <div className="group cursor-pointer relative inline-block text-center">
+                      <ButtonWithTooltip
+                        onClickFunction={onClickCopy}
+                        tooltipDescription={"복사 완료 !"}
+                      >
+                        <DocumentDuplicateIcon className="h-6 w-6 mr-2 text-white" />
+                        <div>복사</div>
+                      </ButtonWithTooltip>
+                    </div>
+                  )}
 
                   <button
                     type="button"
-                    onClick={onClickCopy}
+                    onClick={exportData}
                     className={BUTTONSTYLE}
                   >
                     <ArrowDownTrayIcon className="h-6 w-6 mr-2 text-white" />
-                    결과 다운로드
+                    전체 결과 다운로드
                   </button>
                 </div>
               </form>

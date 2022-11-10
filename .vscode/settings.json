@@ -1,4 +1,4 @@
 {
   "typescript.tsdk": "$GLOBAL_NPM_PATH/typescript/lib",
-  "cSpell.words": ["swiper"]
+  "cSpell.words": ["flowbite", "swiper"]
 }
