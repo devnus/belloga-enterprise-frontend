@@ -44,6 +44,10 @@ function AppRouter({ isLoggedIn = false }) {
           {/* 로그인이 안된 경우 */}
           <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/signIn" element={<LoginPage />} />
+          <Route
+            path="/labeling/completed/detail/:id"
+            element={<CompletedProjectDetailPage />}
+          />
         </>
       )}
     </Routes>

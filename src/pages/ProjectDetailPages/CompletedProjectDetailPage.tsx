@@ -15,6 +15,7 @@ import {
   DocumentDuplicateIcon,
 } from "@heroicons/react/24/solid";
 import ButtonWithTooltip from "components/ProjectDetailPage/ButtonWithTooltip";
+import { resultJson } from "mocks/completeProject";
 
 type ProjectInfo = {
   createdDate: string;
@@ -41,7 +42,6 @@ const LabelingDetailPageBody = ({}) => {
   const [openTab, setOpenTab] = useState(1);
   const [labelingResult, setLabelingResult] = useState<BoundingBoxInfo[]>([]);
   const [labelingResultJSON, setLabelingResultJSON] = useState({});
-  const [projectInfo, setProjectInfo] = useState<ProjectInfo | undefined>();
   const [imageUrl, setImageUrl] = useState("");
   const [labeledText, setLabeledText] = useState<StringInfo | undefined>();
 
@@ -77,17 +77,22 @@ const LabelingDetailPageBody = ({}) => {
     }
   }, [labelingResult, focusIndex]);
 
-  const { data, isLoading, error } = useQuery(
-    ["labelingResult", type, projectId],
-    () => getLabelingInfo(type, projectId)
-  );
+  // const { data, isLoading, error } = useQuery(
+  //   ["labelingResult", type, projectId],
+  //   () => getLabelingInfo(type, projectId)
+  // );
+
+  // useEffect(() => {
+  //   if (isLoading === false) {
+  //     setLabelingResult(() => data.response.content);
+  //     setLabelingResultJSON(() => data.response);
+  //   }
+  // }, [isLoading, data]);
 
   useEffect(() => {
-    if (isLoading === false) {
-      setLabelingResult(() => data.response.content);
-      setLabelingResultJSON(() => data.response);
-    }
-  }, [isLoading, data]);
+    setLabelingResult(() => resultJson.response.content);
+    setLabelingResultJSON(() => resultJson.response);
+  }, []);
 
   /**
    * 클릭했을때 함수를 클립보드에 복사하는 함수
@@ -126,9 +131,9 @@ const LabelingDetailPageBody = ({}) => {
           aria-modal="true"
         ></div>
 
-        <div className="w-full">
+        {/* <div className="w-full">
           <ProjectDescription projectId={projectId} />
-        </div>
+        </div> */}
         <div className="py-10 lg:max-w-7xl mx-auto">
           <ImageSwiper
             imgData={labelingResult}
