@@ -16,6 +16,9 @@ import {
 } from "@heroicons/react/24/solid";
 import ButtonWithTooltip from "components/ProjectDetailPage/ButtonWithTooltip";
 import { resultJson } from "mocks/completeProject";
+import LabeledText, {
+  StringInfo,
+} from "components/ProjectDetailPage/LabeledText";
 
 type ProjectInfo = {
   createdDate: string;
@@ -27,11 +30,6 @@ type ProjectInfo = {
   projectId: number;
   zipUUID: string;
   zipUrl: string;
-};
-
-type StringInfo = {
-  text: string;
-  reliability: number;
 };
 
 const type = "OCR";
@@ -169,21 +167,7 @@ const LabelingDetailPageBody = ({}) => {
                                 : "hidden"
                             }
                           >
-                            <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-                              {labeledText && (
-                                <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                  <div className="w-0 flex-1 flex items-center">
-                                    <span className="ml-2 flex-1 w-0 truncate">
-                                      {labeledText.text}
-                                    </span>
-                                  </div>
-                                  <div className="ml-4 flex-shrink-0 font-medium text-mainBlue hover:text-indigo-500">
-                                    {(labeledText.reliability * 100).toFixed(1)}
-                                    %
-                                  </div>
-                                </li>
-                              )}
-                            </ul>
+                            <LabeledText labeledText={labeledText} />
                           </div>
                           <div
                             className={
@@ -242,12 +226,6 @@ const LabelingDetailPageBody = ({}) => {
             </div>
           </div>
         </main>
-
-        <footer aria-labelledby="footer-heading" className="bg-gray-50">
-          <h2 id="footer-heading" className="sr-only">
-            Footer
-          </h2>
-        </footer>
       </div>
     </>
   );
