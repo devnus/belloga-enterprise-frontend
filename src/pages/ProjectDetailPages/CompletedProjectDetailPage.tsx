@@ -11,6 +11,10 @@ import { resultJson } from "mocks/completeProject";
 import ImageSwiper from "components/ProjectDetailPage/ImageSwiper";
 import MiniNavBar from "components/ProjectDetailPage/MiniNavBar";
 import TabButton from "components/ProjectDetailPage/TabButton";
+import {
+  ArrowDownTrayIcon,
+  DocumentDuplicateIcon,
+} from "@heroicons/react/24/solid";
 
 type ProjectInfo = {
   createdDate: string;
@@ -30,6 +34,8 @@ type StringInfo = {
 };
 
 const type = "OCR";
+const BUTTONSTYLE =
+  "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-mainBlue hover:bg-mainLightBlue";
 
 const LabelingDetailPageBody = ({}) => {
   const [openTab, setOpenTab] = useState(1);
@@ -87,6 +93,15 @@ const LabelingDetailPageBody = ({}) => {
   //   }
   // }, [isLoading, data]);
 
+  const onClickCopy = () => {
+    if (openTab === 2) {
+      navigator.clipboard.writeText(JSON.stringify(labelingResult[focusIndex]));
+    }
+    if (openTab === 3) {
+      navigator.clipboard.writeText(JSON.stringify(labelingResultJSON));
+    }
+  };
+
   return (
     <>
       <div className="bg-white">
@@ -118,103 +133,109 @@ const LabelingDetailPageBody = ({}) => {
             </div>
 
             <div className="w-full mx-auto mt-14 sm:mt-16 lg:max-w-none lg:mt-0 lg:row-end-2 lg:row-span-2 lg:col-span-3 h-96">
-              <div className="flex flex-col-reverse  ">
-                <form action="#">
-                  <div>
-                    {/* 탭바 내용 */}
+              <form action="#">
+                <div>
+                  {/* 탭바 내용 */}
+                  <div
+                    className="flex items-center"
+                    aria-orientation="horizontal"
+                    role="tablist"
+                  >
+                    <TabButton
+                      openTab={openTab}
+                      setOpenTab={setOpenTab}
+                      tabName={"텍스트"}
+                      targetNumber={1}
+                    />
+                    <TabButton
+                      openTab={openTab}
+                      setOpenTab={setOpenTab}
+                      tabName={"JSON"}
+                      targetNumber={2}
+                    />
+                    <TabButton
+                      openTab={openTab}
+                      setOpenTab={setOpenTab}
+                      tabName={"전체 결과"}
+                      targetNumber={3}
+                    />
+                  </div>
+                  {/* 탭에 따른 내용 */}
+                  <div className="mt-2">
                     <div
-                      className="flex items-center"
-                      aria-orientation="horizontal"
-                      role="tablist"
+                      id="tabs-1-panel-2"
+                      className="p-0.5 -m-0.5 rounded-lg "
+                      aria-labelledby="tabs-1-tab-2"
+                      role="tabpanel"
                     >
-                      <TabButton
-                        openTab={openTab}
-                        setOpenTab={setOpenTab}
-                        tabName={"텍스트"}
-                        targetNumber={1}
-                      />
-                      <TabButton
-                        openTab={openTab}
-                        setOpenTab={setOpenTab}
-                        tabName={"JSON"}
-                        targetNumber={2}
-                      />
-                      <TabButton
-                        openTab={openTab}
-                        setOpenTab={setOpenTab}
-                        tabName={"전체 결과"}
-                        targetNumber={3}
-                      />
-                    </div>
-                    {/* 탭에 따른 내용 */}
-                    <div className="mt-2">
-                      <div
-                        id="tabs-1-panel-2"
-                        className="p-0.5 -m-0.5 rounded-lg "
-                        aria-labelledby="tabs-1-tab-2"
-                        role="tabpanel"
-                      >
-                        <div className="border border-gray-200">
-                          <div className=" mx-px mt-px px-5 pt-3 pb-12 text-sm leading-5 text-gray-800 h-80">
-                            <div
-                              className={
-                                openTab === 1
-                                  ? "block h-72 overflow-auto"
-                                  : "hidden"
-                              }
-                            >
-                              <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-                                {labeledText && (
-                                  <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
-                                    <div className="w-0 flex-1 flex items-center">
-                                      <span className="ml-2 flex-1 w-0 truncate">
-                                        {labeledText.text}
-                                      </span>
-                                    </div>
-                                    <div className="ml-4 flex-shrink-0 font-medium text-mainBlue hover:text-indigo-500">
-                                      {(labeledText.reliability * 100).toFixed(
-                                        1
-                                      )}
-                                      %
-                                    </div>
-                                  </li>
-                                )}
-                              </ul>
-                            </div>
-
-                            <div
-                              className={
-                                openTab === 2
-                                  ? "overflow-auto h-72"
-                                  : "hidden overflow-auto"
-                              }
-                            >
-                              <ReactJson src={labelingResult[focusIndex]} />
-                            </div>
-                            <div
-                              className={
-                                openTab === 3
-                                  ? "overflow-auto h-72"
-                                  : "hidden overflow-auto"
-                              }
-                            >
-                              <ReactJson src={labelingResultJSON} />
-                            </div>
+                      <div className="border border-gray-200">
+                        <div className=" mx-px mt-px px-5 pt-3 pb-12 text-sm leading-5 text-gray-800 h-80">
+                          <div
+                            className={
+                              openTab === 1
+                                ? "block h-72 overflow-auto"
+                                : "hidden"
+                            }
+                          >
+                            <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
+                              {labeledText && (
+                                <li className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                  <div className="w-0 flex-1 flex items-center">
+                                    <span className="ml-2 flex-1 w-0 truncate">
+                                      {labeledText.text}
+                                    </span>
+                                  </div>
+                                  <div className="ml-4 flex-shrink-0 font-medium text-mainBlue hover:text-indigo-500">
+                                    {(labeledText.reliability * 100).toFixed(1)}
+                                    %
+                                  </div>
+                                </li>
+                              )}
+                            </ul>
+                          </div>
+                          <div
+                            className={
+                              openTab === 2
+                                ? "overflow-auto h-72"
+                                : "hidden overflow-auto"
+                            }
+                          >
+                            <ReactJson src={labelingResult[focusIndex]} />
+                          </div>
+                          <div
+                            className={
+                              openTab === 3
+                                ? "overflow-auto h-72"
+                                : "hidden overflow-auto"
+                            }
+                          >
+                            <ReactJson src={labelingResultJSON} />
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-2 flex justify-end">
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-mainBlue hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                      Copy
-                    </button>
-                  </div>
-                </form>
-              </div>
+                </div>
+                <div className="mt-2 flex justify-end space-x-3">
+                  <button
+                    type="button"
+                    onClick={onClickCopy}
+                    className={BUTTONSTYLE}
+                  >
+                    <DocumentDuplicateIcon className="h-6 w-6 mr-2 text-white" />
+                    복사
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={onClickCopy}
+                    className={BUTTONSTYLE}
+                  >
+                    <ArrowDownTrayIcon className="h-6 w-6 mr-2 text-white" />
+                    결과 다운로드
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </main>
@@ -229,7 +250,7 @@ const LabelingDetailPageBody = ({}) => {
   );
 };
 
-const LabelingDetailPage = ({}) => {
+const LabelingDetailPage = () => {
   return (
     <>
       <NavBar />
