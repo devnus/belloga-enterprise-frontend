@@ -94,34 +94,6 @@ const LabelingDetailPageBody = ({}) => {
     setLabelingResultJSON(() => resultJson.response);
   }, []);
 
-  /**
-   * 클릭했을때 함수를 클립보드에 복사하는 함수
-   */
-  const onClickCopy = () => {
-    if (openTab === 2) {
-      navigator.clipboard.writeText(JSON.stringify(labelingResult[focusIndex]));
-    }
-    if (openTab === 3) {
-      navigator.clipboard.writeText(JSON.stringify(labelingResultJSON));
-    }
-  };
-
-  /**
-   * 현재 프로젝트의 라벨링 결과를 json으로 내보내주는 버튼
-   */
-  const exportData = () => {
-    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-      JSON.stringify(labelingResultJSON)
-    )}`;
-
-    //가상의 element를 하나 생성해서 click하는 방식으로 data를 다운로드 받음
-    const link = document.createElement("a");
-    link.href = jsonString;
-    link.download = "projectResult.json";
-
-    link.click();
-  };
-
   return (
     <>
       <div className="bg-white">
@@ -240,7 +212,13 @@ const LabelingDetailPageBody = ({}) => {
                   {openTab !== 1 && (
                     <div className="group cursor-pointer relative inline-block text-center">
                       <ButtonWithTooltip
-                        onClickFunction={onClickCopy}
+                        onClickFunction={() => {
+                          onClickCopy(
+                            openTab,
+                            labelingResult[focusIndex],
+                            labelingResultJSON
+                          );
+                        }}
                         tooltipDescription={"복사 완료 !"}
                       >
                         <DocumentDuplicateIcon className="h-6 w-6 mr-2 text-white" />
@@ -251,7 +229,9 @@ const LabelingDetailPageBody = ({}) => {
 
                   <button
                     type="button"
-                    onClick={exportData}
+                    onClick={() => {
+                      exportData(labelingResultJSON);
+                    }}
                     className={BUTTONSTYLE}
                   >
                     <ArrowDownTrayIcon className="h-6 w-6 mr-2 text-white" />
@@ -297,4 +277,36 @@ const getLabelingInfo = async (type: string, projectId: string) => {
   );
 
   return data;
+};
+
+/**
+ * 클릭했을때 함수를 클립보드에 복사하는 함수
+ */
+const onClickCopy = (
+  openTab: number,
+  currentInfo: BoundingBoxInfo,
+  labelingResultJSON: {}
+) => {
+  if (openTab === 2) {
+    navigator.clipboard.writeText(JSON.stringify(currentInfo));
+  }
+  if (openTab === 3) {
+    navigator.clipboard.writeText(JSON.stringify(labelingResultJSON));
+  }
+};
+
+/**
+ * 현재 프로젝트의 라벨링 결과를 json으로 내보내주는 버튼
+ */
+const exportData = (labelingResultJSON: {}) => {
+  const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+    JSON.stringify(labelingResultJSON)
+  )}`;
+
+  //가상의 element를 하나 생성해서 click하는 방식으로 data를 다운로드 받음
+  const link = document.createElement("a");
+  link.href = jsonString;
+  link.download = "projectResult.json";
+
+  link.click();
 };
