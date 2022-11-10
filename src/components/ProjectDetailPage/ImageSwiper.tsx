@@ -13,46 +13,6 @@ type swiperProps = {
   setFocusIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-function ImageSwiper({ focusIndex, imgData, setFocusIndex }: swiperProps) {
-  return (
-    <Swiper
-      modules={[Navigation, Pagination]}
-      spaceBetween={16}
-      slidesPerView={5}
-      navigation
-      scrollbar={{ draggable: true }}
-    >
-      {imgData.map((imgData: BoundingBoxInfo, index) => {
-        const imgName = imgData.imageUrl.split("/").slice(-1)[0];
-        const props = {
-          fileName: imgName,
-          imgUrl: imgData.imageUrl,
-        };
-
-        // 현재 사용자가 클릭한 인덱스에 따라서 다르게 컴포넌트 모양을 변경
-        if (index === focusIndex) {
-          return (
-            <SwiperSlide key={index}>
-              <FocusSwiperInnerCard {...props} />
-            </SwiperSlide>
-          );
-        } else {
-          return (
-            <SwiperSlide
-              key={index}
-              onClick={() => {
-                setFocusIndex(() => index);
-              }}
-            >
-              <SwiperInnerCard {...props} />
-            </SwiperSlide>
-          );
-        }
-      })}
-    </Swiper>
-  );
-}
-
 type swiperCardProps = {
   fileName: string;
   imgUrl: string;
@@ -101,6 +61,71 @@ function FocusSwiperInnerCard({ fileName, imgUrl }: swiperCardProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+type SwiperSlideCardTypes = {
+  props: swiperCardProps;
+  setFocusIndex: React.Dispatch<React.SetStateAction<number>>;
+  index: number;
+  isFocused: boolean;
+};
+
+function SwiperSlideCard({
+  props,
+  setFocusIndex,
+  index,
+  isFocused,
+}: SwiperSlideCardTypes) {
+  return (
+    // 현재 사용자가 클릭한 인덱스에 따라서 다르게 컴포넌트 모양을 변경
+    <SwiperSlide
+      key={index}
+      onClick={() => {
+        setFocusIndex(() => index);
+      }}
+    >
+      {() => {
+        if (isFocused) {
+          return <FocusSwiperInnerCard {...props} />;
+        } else {
+          return <SwiperInnerCard {...props} />;
+        }
+      }}
+    </SwiperSlide>
+  );
+}
+
+function ImageSwiper({ focusIndex, imgData, setFocusIndex }: swiperProps) {
+  const imgProps = imgData.map((imgData: BoundingBoxInfo) => {
+    const imgName = imgData.imageUrl.split("/").slice(-1)[0];
+    return {
+      fileName: imgName,
+      imgUrl: imgData.imageUrl,
+    };
+  });
+
+  return (
+    <Swiper
+      modules={[Navigation, Pagination]}
+      spaceBetween={16}
+      slidesPerView={5}
+      navigation
+      scrollbar={{ draggable: true }}
+    >
+      {imgProps.map((props, index) => {
+        const isFocused = index === focusIndex;
+
+        const swiperProps = {
+          props: props,
+          setFocusIndex: setFocusIndex,
+          index: index,
+          isFocused: isFocused,
+        };
+
+        return <SwiperSlideCard {...swiperProps} />;
+      })}
+    </Swiper>
   );
 }
 
