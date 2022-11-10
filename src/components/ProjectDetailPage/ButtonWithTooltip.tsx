@@ -39,7 +39,7 @@ const ButtonWithTooltip = ({
       <div
         className={
           (isTooltipVisible
-            ? "transition-opacity duration-1000 ease-out opacity-100 "
+            ? "transition-opacity duration-500 ease-out opacity-100 "
             : "opacity-0 ") +
           "absolute w-full bg-black text-white text-center text-mds rounded-lg py-2 z-10 group-focus:opacity-100 bottom-full pointer-events-none"
         }

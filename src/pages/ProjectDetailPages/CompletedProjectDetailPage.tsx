@@ -7,7 +7,6 @@ import { useLocation } from "react-router-dom";
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 import { BoundingBoxInfo, drawOnCanvas } from "modules/drawBoundingBox";
 import { useQuery } from "react-query";
-import { resultJson } from "mocks/completeProject";
 import ImageSwiper from "components/ProjectDetailPage/ImageSwiper";
 import MiniNavBar from "components/ProjectDetailPage/MiniNavBar";
 import TabButton from "components/ProjectDetailPage/TabButton";
@@ -78,22 +77,17 @@ const LabelingDetailPageBody = ({}) => {
     }
   }, [labelingResult, focusIndex]);
 
-  // const { data, isLoading, error } = useQuery(
-  //   ["labelingResult", type, projectId],
-  //   () => getLabelingInfo(type, projectId)
-  // );
+  const { data, isLoading, error } = useQuery(
+    ["labelingResult", type, projectId],
+    () => getLabelingInfo(type, projectId)
+  );
 
   useEffect(() => {
-    setLabelingResult(() => resultJson.response.content);
-    setLabelingResultJSON(() => resultJson.response);
-  }, []);
-
-  // useEffect(() => {
-  //   if (isLoading === false) {
-  //     setLabelingResult(() => resultJson.response.content);
-  //     setLabelingResultJSON(() => resultJson.response);
-  //   }
-  // }, [isLoading, data]);
+    if (isLoading === false) {
+      setLabelingResult(() => data.response.content);
+      setLabelingResultJSON(() => data.response);
+    }
+  }, [isLoading, data]);
 
   /**
    * 클릭했을때 함수를 클립보드에 복사하는 함수
@@ -132,9 +126,9 @@ const LabelingDetailPageBody = ({}) => {
           aria-modal="true"
         ></div>
 
-        {/* <div className="w-full">
+        <div className="w-full">
           <ProjectDescription projectId={projectId} />
-        </div> */}
+        </div>
         <div className="py-10 lg:max-w-7xl mx-auto">
           <ImageSwiper
             imgData={labelingResult}
