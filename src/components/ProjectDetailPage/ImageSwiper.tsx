@@ -17,12 +17,10 @@ function ImageSwiper({ focusIndex, imgData, setFocusIndex }: swiperProps) {
   return (
     <Swiper
       modules={[Navigation, Pagination]}
-      spaceBetween={50}
-      slidesPerView={4}
+      spaceBetween={16}
+      slidesPerView={5}
       navigation
       scrollbar={{ draggable: true }}
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log("slide change")}
     >
       {imgData.map((imgData: BoundingBoxInfo, index) => {
         const imgName = imgData.imageUrl.split("/").slice(-1)[0];
