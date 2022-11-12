@@ -15,7 +15,7 @@ const MiniNavBar = () => {
         <li>
           <div>
             <a href="#" className="text-gray-400 hover:text-gray-500">
-              <HomeIcon />
+              <HomeIcon className="flex-shrink-0 h-5 w-5" />
               <span className="sr-only">Home</span>
             </a>
           </div>
@@ -23,7 +23,7 @@ const MiniNavBar = () => {
 
         <li>
           <div className="flex items-center">
-            <SlashIcon />
+            <SlashIcon className="flex-shrink-0 h-5 w-5 text-gray-300" />
             <a
               href="#"
               className="ml-4 text-sm font-medium text-white hover:text-gray-700"
@@ -35,7 +35,7 @@ const MiniNavBar = () => {
 
         <li>
           <div className="flex items-center">
-            <SlashIcon />
+            <SlashIcon className="flex-shrink-0 h-5 w-5 text-gray-300" />
             <a
               href="#"
               className="ml-4 text-sm font-medium text-white hover:text-gray-700"

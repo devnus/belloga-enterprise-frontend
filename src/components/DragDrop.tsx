@@ -24,6 +24,7 @@ const DragDrop = ({ files, setFiles }: dragDropsProps) => {
 
   const onChangeFiles = useCallback(
     (e: ChangeEvent<HTMLInputElement> | any): void => {
+      console.log("asd");
       let selectFiles: File[] = [];
       let tempFiles: IFileTypes[] = files;
 
@@ -55,21 +56,23 @@ const DragDrop = ({ files, setFiles }: dragDropsProps) => {
     [files]
   );
 
-  const handleDragIn = useCallback((e: DragEvent): void => {
+  const stopBrowserEvent = (e: DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+  };
+
+  const handleDragIn = useCallback((e: DragEvent): void => {
+    stopBrowserEvent(e);
   }, []);
 
   const handleDragOut = useCallback((e: DragEvent): void => {
-    e.preventDefault();
-    e.stopPropagation();
+    stopBrowserEvent(e);
 
     setIsDragging(false);
   }, []);
 
   const handleDragOver = useCallback((e: DragEvent): void => {
-    e.preventDefault();
-    e.stopPropagation();
+    stopBrowserEvent(e);
 
     if (e.dataTransfer!.files) {
       setIsDragging(true);
@@ -78,8 +81,7 @@ const DragDrop = ({ files, setFiles }: dragDropsProps) => {
 
   const handleDrop = useCallback(
     (e: DragEvent): void => {
-      e.preventDefault();
-      e.stopPropagation();
+      stopBrowserEvent(e);
 
       onChangeFiles(e);
       setIsDragging(false);
@@ -149,7 +151,12 @@ const DragDrop = ({ files, setFiles }: dragDropsProps) => {
         >
           <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
             <div className="space-y-1 text-center">
-              <DragDropIcon />
+              <DragDropIcon
+                className="h-12 w-12 mx-auto"
+                // width={50}
+                // height={50} 와 같은 방식으로도 사이즈 변경이 가능하나 반응형 문제로 className을 통해 tailwind로 지정
+              />
+
               <div className="flex text-sm text-gray-600">
                 <label
                   htmlFor="file-upload"

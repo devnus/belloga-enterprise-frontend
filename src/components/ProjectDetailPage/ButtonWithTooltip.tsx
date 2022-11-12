@@ -46,7 +46,7 @@ const ButtonWithTooltip = ({
         }
       >
         {tooltipDescription}
-        <SpeechBalloon />
+        <SpeechBalloon className="absolute text-black h-2 w-full left-0 top-full" />
       </div>
     </div>
   );

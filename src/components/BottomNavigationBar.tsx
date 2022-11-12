@@ -22,7 +22,7 @@ const BottomNavigationBar = ({
         <li>
           <div className="block py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">
             <span className="sr-only">Previous</span>
-            <LeftArrow />
+            <LeftArrow className="w-5 h-5" />
           </div>
         </li>
         <li>
@@ -56,7 +56,7 @@ const BottomNavigationBar = ({
         <li>
           <div className="block py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ">
             <span className="sr-only">Next</span>
-            <RightArrow />
+            <RightArrow className="w-5 h-5" />
           </div>
         </li>
       </ul>
