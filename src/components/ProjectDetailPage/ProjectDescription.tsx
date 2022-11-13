@@ -34,8 +34,6 @@ export const ProjectDescription = ({ projectId = "" }) => {
     return data;
   }
 
-  console.log(data);
-
   return (
     <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
       <div className="py-8 px-10 w-full grid grid-cols-9 gap-4">

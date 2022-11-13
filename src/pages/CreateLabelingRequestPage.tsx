@@ -90,7 +90,7 @@ function CreateLabelingRequestPage() {
                         type="text"
                         name="projectTitle"
                         id="projectTitle"
-                        autoComplete="username"
+                        autoComplete="projectTitle"
                         placeholder="예시) 자율주행 자동차 인식 모델을 위한 표지판 OCR"
                         value={projectTitle}
                         onChange={onChange}

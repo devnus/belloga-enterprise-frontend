@@ -31,7 +31,7 @@ function MainPage() {
             </p>
             <Link
               className="mt-8 block w-full rounded-md border border-transparent bg-white text-mainBlue py-3 px-8 text-base text-xl rounded-3xl font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
-              to={isLoggedIn ? "/labeling/request" : "/signIn"}
+              to={isLoggedIn.authenticated ? "/labeling/request" : "/signIn"}
             >
               라벨링 하러가기
             </Link>

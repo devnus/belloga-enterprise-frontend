@@ -3,7 +3,7 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-type tokenInfo = {
+export type tokenInfo = {
   accessToken: string;
   refreshToken: string;
   authenticated: boolean;

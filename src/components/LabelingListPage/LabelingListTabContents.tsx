@@ -3,11 +3,17 @@ import { Link } from "react-router-dom";
 import EmptyCard from "./EmptyCard";
 import LabelingInfoCard from "./LabelingInfoCard";
 
+type LabelingListTabContentsProps = {
+  isTabOpened: boolean;
+  projectList: any;
+  tabDescription: string;
+};
+
 const LabelingListTabContents = ({
   isTabOpened,
   projectList,
   tabDescription,
-}: any) => {
+}: LabelingListTabContentsProps) => {
   const renderContents = () => {
     if (projectList.length === 0) {
       return (

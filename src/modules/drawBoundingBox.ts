@@ -10,8 +10,7 @@ export type BoundingBoxInfo = {
 export const drawOnCanvas = (
   canvasCtxRef: React.MutableRefObject<CanvasRenderingContext2D | null>,
   canvasRef: React.MutableRefObject<HTMLCanvasElement | null>,
-  boundingBoxInfo: BoundingBoxInfo,
-  labelingResult: BoundingBoxInfo[]
+  boundingBoxInfo: BoundingBoxInfo
 ) => {
   canvasCtxRef.current = canvasRef.current?.getContext(
     "2d"
@@ -36,9 +35,7 @@ export const drawOnCanvas = (
     const y = canvasEle.height / 2 - (image.height / 2) * scale;
     ctx?.drawImage(image, x, y, image.width * scale, image.height * scale);
 
-    const nameList = labelingResult.map((boundingBoxInfo, index) =>
-      drawBoundingBox(boundingBoxInfo, canvasCtxRef, canvasRef)
-    );
+    drawBoundingBox(boundingBoxInfo, canvasCtxRef, canvasRef);
   };
 };
 
