@@ -235,7 +235,7 @@ function LabelingListPage() {
                     tabDescription: `${tabs[index].description}이 없습니다`,
                   };
                   return (
-                    <div key={project.projectId}>
+                    <div key={project.projectId} className="my-10">
                       <LabelingListTabContents {...props} />
                     </div>
                   );
