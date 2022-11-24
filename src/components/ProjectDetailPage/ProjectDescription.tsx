@@ -1,6 +1,4 @@
 import React from "react";
-import { useQuery } from "react-query";
-import api from "apis/tokenInterceptor";
 import LineSkeleton from "components/LineSkeleton";
 
 type ProjectInfo = {
@@ -22,18 +20,15 @@ type dataType = {
   success: boolean;
 };
 
-export const ProjectDescription = ({ projectId = "" }) => {
-  const { data, isLoading, error } = useQuery<dataType>(
-    ["projectInfo", projectId],
-    () => getProjectInfo(projectId)
-  );
+type ProjectDescriptionProps = {
+  data: dataType;
+  isLoading: boolean;
+};
 
-  async function getProjectInfo(projectId: string) {
-    const { data } = await api.get(`/api/project/v1/user/project/${projectId}`);
-
-    return data;
-  }
-
+export const ProjectDescription = ({
+  data,
+  isLoading,
+}: ProjectDescriptionProps) => {
   return (
     <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
       <div className="py-8 px-10 w-full grid grid-cols-9 gap-4">

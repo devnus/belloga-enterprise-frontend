@@ -20,6 +20,7 @@ import LabeledText, {
   StringInfo,
 } from "components/ProjectDetailPage/LabeledText";
 import { exportJsonData, onClickCopy } from "modules/exportData";
+import { useGetProjectInfo } from "hooks/useGetProjectInfo";
 
 const type = "OCR";
 const BUTTONSTYLE =
@@ -36,6 +37,7 @@ const LabelingDetailPageBody = ({}) => {
 
   const location = useLocation();
   const projectId = location.pathname.split("/")[4];
+  const loadProjectInfo = useGetProjectInfo(projectId);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -94,7 +96,7 @@ const LabelingDetailPageBody = ({}) => {
         ></div>
 
         <div className="w-full">
-          <ProjectDescription projectId={projectId} />
+          <ProjectDescription {...loadProjectInfo} />
         </div>
         <div className="py-10 lg:max-w-7xl mx-auto">
           <ImageSwiper

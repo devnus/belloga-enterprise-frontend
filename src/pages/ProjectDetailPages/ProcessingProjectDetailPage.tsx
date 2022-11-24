@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 import MiniNavBar from "components/ProjectDetailPage/MiniNavBar";
 import MyResponsivePie from "components/ProjectDetailPage/PieChart";
+import { useGetProjectInfo } from "hooks/useGetProjectInfo";
 
 const ProcessingPageBody = ({ projectId }: any) => {
   return (
@@ -27,6 +28,7 @@ const ProcessingPageBody = ({ projectId }: any) => {
 const ProcessingProjectDetailPage = () => {
   const location = useLocation();
   const projectId = location.pathname.split("/")[3];
+  const loadProjectInfo = useGetProjectInfo(projectId);
 
   return (
     <>
@@ -38,7 +40,7 @@ const ProcessingProjectDetailPage = () => {
         <MiniNavBar />
       </MainTop>
 
-      <ProjectDescription projectId={projectId} />
+      <ProjectDescription {...loadProjectInfo} />
       <ProcessingPageBody projectId={projectId} />
     </>
   );

@@ -7,6 +7,7 @@ import { getUploadUrlInfo, IFileTypes } from "apis/createLabelingApis";
 import DragDrop from "components/DragDrop";
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 import MiniNavBar from "components/ProjectDetailPage/MiniNavBar";
+import { useGetProjectInfo } from "hooks/useGetProjectInfo";
 
 const NotApprovedProjectDetailPageBody = ({ projectId }: any) => {
   const [uploadUrl, setUploadUrl] = useState<string>("");
@@ -45,6 +46,7 @@ const NotApprovedProjectDetailPageBody = ({ projectId }: any) => {
 const NotApprovedProjectDetailPage = () => {
   const location = useLocation();
   const projectId = location.pathname.split("/")[4];
+  const loadProjectInfo = useGetProjectInfo(projectId);
 
   return (
     <>
@@ -56,7 +58,7 @@ const NotApprovedProjectDetailPage = () => {
         <MiniNavBar />
       </MainTop>
 
-      <ProjectDescription projectId={projectId} />
+      <ProjectDescription {...loadProjectInfo} />
       <NotApprovedProjectDetailPageBody projectId={projectId} />
     </>
   );
