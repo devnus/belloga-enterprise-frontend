@@ -39,7 +39,7 @@ const LabelingProcess = ({}) => {
       {processes.map((process, index) => (
         <div
           key={process.name}
-          className="aspect-square text-center mx-10 sm:flex sm:text-left lg:text-center flex flex-1 flex-col p-8 bg-white rounded-md shadow"
+          className="aspect-square text-center mx-1 lg:mx-10 sm:flex sm:text-left lg:text-center flex flex-1 flex-col p-8 bg-white rounded-md shadow"
         >
           <div className="my-auto">
             <div className="flex aspect-square w-10 text-lg rounded-full text-white bg-black mx-auto mb-5 items-center justify-center">
@@ -58,7 +58,7 @@ const LabelingProcess = ({}) => {
                 />
               </div>
             </div>
-            <p className="mt-2 text-sm text-gray-500 text-lg w-3/5 mx-auto break-normal">
+            <p className="mt-2 text-md lg:text-lg text-gray-500 w-3/5 mx-auto break-normal">
               {process.description}
             </p>
           </div>

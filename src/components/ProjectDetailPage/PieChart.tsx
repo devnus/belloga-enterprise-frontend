@@ -18,7 +18,7 @@ const MyResponsivePie = ({ processingrate = 0, completedrate = 100 }) => {
   ];
 
   return (
-    <div style={{ width: "800px", height: "500px", margin: "0 auto" }}>
+    <div className="w-96 lg:w-192 lg:h-192 h-96 mx-auto">
       <ResponsivePie
         data={data}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}

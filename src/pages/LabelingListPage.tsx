@@ -147,21 +147,21 @@ function LabelingListPage() {
               className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl "
               to="/labeling/request"
             >
-              <div className="py-8 px-10 rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mx-auto mx-20">
-                <div className="absolute inset-0 overflow-hidden rounded-md">
+              <div className="py-8 px-10 rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 w-full mx-auto lg:mx-20 mx-8 bg-white">
+                <div className="absolute inset-0 overflow-hidden rounded-md ">
                   <img
                     src={patternBanner}
                     alt=""
-                    className="h-full w-full object-cover object-center"
+                    className="h-full w-full object-cover object-center opacity-10 lg:opacity-100"
                   />
                 </div>
 
-                <div className="relative mx-auto flex pl-5 flex-col ">
-                  <h2 className="font-semibold text-2xl mb-3 mt-5">
+                <div className="relative mx-auto flex lg:pl-5 flex-col ">
+                  <h2 className="font-semibold text-xl lg:text-2xl mb-3 mt-5">
                     라벨링 의뢰하러 가기
                   </h2>
 
-                  <p className="capitalize text-xl mb-1 text-gray-500">
+                  <p className="capitalize text-md lg:text-xl mb-1 text-gray-500">
                     벨로가를 통해 쉽고 빠른 라벨링 의뢰를 해보세요
                   </p>
                 </div>
@@ -171,7 +171,7 @@ function LabelingListPage() {
         </div>
 
         <div>
-          <div className="sm:hidden">
+          <div className="sm:hidden hidden">
             <label htmlFor="tabs" className="sr-only">
               Select a tab
             </label>
@@ -188,7 +188,7 @@ function LabelingListPage() {
             </select>
           </div>
 
-          <div className="hidden sm:block ">
+          <div className="block ">
             <div className="mb-10 ">
               <nav className="flex space-x-8 justify-center" aria-label="Tabs">
                 {tabs.map((tab, index) => (
@@ -196,9 +196,9 @@ function LabelingListPage() {
                     key={tab.name}
                     className={classNames(
                       openTab === index
-                        ? "border-mainBlue text-mainBlue font-bold text-xl"
-                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200 text-xl",
-                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm align-middle"
+                        ? "border-mainBlue text-mainBlue font-bold"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200",
+                      "whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm align-middle lg:text-xl text-xl"
                     )}
                     aria-current={tab.current ? "page" : undefined}
                     onClick={(e) => {
@@ -213,7 +213,7 @@ function LabelingListPage() {
                           openTab === index
                             ? "bg-indigo-100 text-indigo-600"
                             : "bg-gray-100 text-gray-900",
-                          "ml-3 py-0.5 px-2.5 rounded-full font-medium text-lg "
+                          "ml-3 py-0.5 px-2.5 rounded-full font-medium text-lg hidden sm-block"
                         )}
                       >
                         {tab.count}

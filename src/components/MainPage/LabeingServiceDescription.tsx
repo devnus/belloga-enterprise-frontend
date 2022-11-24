@@ -6,13 +6,8 @@ const contents = [
   {
     name: "OCR",
     engName: "Data Request",
-    description: "OCR에 대한 설명입니다",
-    imageSrc: ocrImg,
-  },
-  {
-    name: "OCR",
-    engName: "Data Request",
-    description: "OCR에 대한 설명입니다",
+    description:
+      "OCR은 광학 문자 인식의 줄임말로, 사진 속 텍스트를 기계가 읽을 수 있게 변환하는 과정입니다.",
     imageSrc: ocrImg,
   },
 ];

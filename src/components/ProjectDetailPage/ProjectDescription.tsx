@@ -31,9 +31,9 @@ export const ProjectDescription = ({
 }: ProjectDescriptionProps) => {
   return (
     <div className="text-sm font-medium hover:text-gray-800 mx-auto flex max-w-7xl bg-lightGray rounded-xl mt-10">
-      <div className="py-8 px-10 w-full grid grid-cols-9 gap-4">
+      <div className="py-8 px-10 w-full grid lg:grid-cols-9 gap-4 ">
         <DetailTitle text={"라벨링 시작일"} />
-        <div className="col-span-2">
+        <div className="lg:col-span-2">
           {isLoading ? (
             <LineSkeleton />
           ) : (
@@ -44,14 +44,13 @@ export const ProjectDescription = ({
         </div>
 
         <DetailTitle text={"담당자"} />
-        <h2 className="font-semibold text-xl ml-5 col-span-2">홍길동</h2>
+        <h2 className="font-semibold text-xl ml-5 lg:col-span-2">홍길동</h2>
         <DetailTitle text={"이메일 주소"} />
-        <h2 className="font-semibold text-xl ml-5 col-span-2">
+        <h2 className="font-semibold text-xl ml-5 lg:col-span-2">
           test@belloga.com
         </h2>
-
         <DetailTitle text={"라벨링 설명"} />
-        <div className="col-span-8">
+        <div className="lg:col-span-8">
           {isLoading ? (
             <LineSkeleton />
           ) : (
@@ -67,7 +66,7 @@ export const ProjectDescription = ({
 
 const DetailTitle = ({ text = "" }) => {
   return (
-    <p className="basis-1/6 text-xl mb-1 text-gray-500 text-right col-span-1">
+    <p className="basis-1/6 text-xl mb-1 text-gray-500 sm:text-right lg:col-span-1">
       {text}
     </p>
   );
