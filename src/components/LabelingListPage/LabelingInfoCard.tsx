@@ -53,7 +53,7 @@ const LabelingInfoCard = ({ project }: any) => {
           총 10개의 응답
         </p> */}
         <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-500">
-          라벨링 시작일 | 2022.09.15
+          라벨링 시작일 | {project.createdDate.split("T")[0]}
         </p>
       </li>
     </Link>
