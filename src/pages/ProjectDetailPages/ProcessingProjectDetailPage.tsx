@@ -9,7 +9,8 @@ import MiniNavBar from "components/ProjectDetailPage/MiniNavBar";
 import MyResponsivePie from "components/ProjectDetailPage/PieChart";
 import { useGetProjectInfo } from "hooks/useGetProjectInfo";
 
-const ProcessingPageBody = ({ projectId }: any) => {
+const ProcessingPageBody = ({ projectId, progressRate = 0 }: any) => {
+  const completedrate = Math.ceil(progressRate * 10) / 10;
   return (
     <>
       <div className="bg-white">
@@ -19,7 +20,10 @@ const ProcessingPageBody = ({ projectId }: any) => {
           aria-modal="true"
         ></div>
 
-        <MyResponsivePie />
+        <MyResponsivePie
+          processingrate={100 - completedrate}
+          completedrate={completedrate}
+        />
       </div>
     </>
   );
@@ -41,7 +45,10 @@ const ProcessingProjectDetailPage = () => {
       </MainTop>
 
       <ProjectDescription {...loadProjectInfo} />
-      <ProcessingPageBody projectId={projectId} />
+      <ProcessingPageBody
+        projectId={projectId}
+        progressRate={loadProjectInfo.data?.response.progressRate}
+      />
     </>
   );
 };
