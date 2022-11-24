@@ -5,7 +5,7 @@ import { ReactComponent as SlashIcon } from "assets/svgs/Slash.svg";
  *
  * @returns 프로젝트 상세 페이지 상단에 있는 작은 네비게이션바를 리턴
  */
-const MiniNavBar = () => {
+const MiniNavBar = ({ projectTitle = "" }) => {
   return (
     <nav className="text-white flex" aria-label="Breadcrumb">
       <ol
@@ -41,7 +41,7 @@ const MiniNavBar = () => {
               className="ml-4 text-sm font-medium text-white hover:text-gray-700"
               aria-current="page"
             >
-              손글씨 OCR 라벨링
+              {projectTitle}
             </a>
           </div>
         </li>

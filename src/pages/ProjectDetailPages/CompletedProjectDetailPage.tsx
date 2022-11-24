@@ -26,7 +26,7 @@ const type = "OCR";
 const BUTTONSTYLE =
   "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-mainBlue hover:bg-mainLightBlue";
 
-const LabelingDetailPageBody = ({}) => {
+const LabelingDetailPageBody = ({ projectId = "0" }) => {
   const [openTab, setOpenTab] = useState(1);
   const [labelingResult, setLabelingResult] = useState<BoundingBoxInfo[]>([]);
   const [labelingResultJSON, setLabelingResultJSON] = useState({});
@@ -34,10 +34,6 @@ const LabelingDetailPageBody = ({}) => {
   const [labeledText, setLabeledText] = useState<StringInfo | undefined>();
 
   const [focusIndex, setFocusIndex] = useState<number>(0);
-
-  const location = useLocation();
-  const projectId = location.pathname.split("/")[4];
-  const loadProjectInfo = useGetProjectInfo(projectId);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = useRef<CanvasRenderingContext2D | null>(null);
@@ -94,10 +90,6 @@ const LabelingDetailPageBody = ({}) => {
           role="dialog"
           aria-modal="true"
         ></div>
-
-        <div className="w-full">
-          <ProjectDescription {...loadProjectInfo} />
-        </div>
         <div className="py-10 lg:max-w-7xl mx-auto">
           <ImageSwiper
             imgData={labelingResult}
@@ -208,6 +200,10 @@ const LabelingDetailPageBody = ({}) => {
 };
 
 const LabelingDetailPage = () => {
+  const location = useLocation();
+  const projectId = location.pathname.split("/")[4];
+  const loadProjectInfo = useGetProjectInfo(projectId);
+
   return (
     <>
       <NavBar />
@@ -215,10 +211,14 @@ const LabelingDetailPage = () => {
         <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
           완료한 라벨링
         </h2>
-        <MiniNavBar />
+        <MiniNavBar projectTitle={loadProjectInfo.data?.response.name} />
       </MainTop>
 
-      <LabelingDetailPageBody />
+      <div className="w-full">
+        <ProjectDescription {...loadProjectInfo} />
+      </div>
+
+      <LabelingDetailPageBody projectId={projectId} />
     </>
   );
 };
