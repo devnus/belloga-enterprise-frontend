@@ -1,8 +1,8 @@
 import customAxios from "apis/tokenInterceptor";
 import axios, { AxiosError, AxiosRequestHeaders } from "axios";
 import { useEffect } from "react";
-import { SetterOrUpdater } from "recoil";
-import { tokenInfo } from "states/LoginState";
+import { SetterOrUpdater, useRecoilState } from "recoil";
+import { LoginState, tokenInfo } from "states/LoginState";
 
 interface HeaderType extends AxiosRequestHeaders {
   ["Content-Type"]: string;
@@ -14,6 +14,7 @@ export const useAxiosInterceptor = (
   setTokenState: SetterOrUpdater<tokenInfo>
 ) => {
   // requestHandler는 위와 같은 로직이기에 생략.
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const accessToken = tokenState.accessToken;
   const reqInterceptor = customAxios.interceptors.request.use(
     (config) => {
@@ -73,9 +74,23 @@ export const useAxiosInterceptor = (
             "Content-Type": "application/json",
             Authorization: `${newAccessToken}`,
           };
-          const originalResponse = await axios.request(originalRequest);
 
-          return originalResponse.data.data;
+          try {
+            const originalResponse = await axios.request(originalRequest);
+
+            return originalResponse.data.data;
+          } catch (e) {
+            localStorage.removeItem("belloga-page"); //accessToken 제거
+            localStorage.removeItem("belloga-refresh"); //refreshToken 제거
+
+            const tokenInfo = {
+              accessToken: "",
+              refreshToken: "",
+              authenticated: false,
+            };
+            setIsLoggedIn(tokenInfo);
+            alert("토큰이 만료되어 로그아웃 되었습니다");
+          }
         }
       }
       customAxios.interceptors.response.eject(resInterceptor);
