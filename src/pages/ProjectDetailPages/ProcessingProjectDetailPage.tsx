@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 
 import { ProjectDescription } from "components/ProjectDetailPage/ProjectDescription";
 import MiniNavBar from "components/ProjectDetailPage/MiniNavBar";
+import MyResponsivePie from "components/ProjectDetailPage/PieChart";
 
 const ProcessingPageBody = ({ projectId }: any) => {
   return (
@@ -16,6 +17,8 @@ const ProcessingPageBody = ({ projectId }: any) => {
           role="dialog"
           aria-modal="true"
         ></div>
+
+        <MyResponsivePie />
       </div>
     </>
   );

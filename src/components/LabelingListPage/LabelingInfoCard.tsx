@@ -49,9 +49,9 @@ const LabelingInfoCard = ({ project }: any) => {
         <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
           {project.name}
         </p>
-        <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
+        {/* <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-900">
           총 10개의 응답
-        </p>
+        </p> */}
         <p className="pointer-events-none mt-2 block truncate text-sm font-medium text-gray-500">
           라벨링 시작일 | 2022.09.15
         </p>
